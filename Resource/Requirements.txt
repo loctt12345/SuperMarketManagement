@@ -1,0 +1,54 @@
+Feature : 
+Màn hình khách hàng:
+	Trang chủ : 
+		+ Log in / Log out / Sign up ( bắt buộc )
+		+ Scan QR code
+		+ Search/Filter/Show x
+		+ Show Cart (Edit)
+		+ Cart's History (rebuy)
+		+ Chăm sóc khác hàng ( maybe )
+		+ Thông báo
+
+
+	Chi tiết sản phẩm :
+		+ Detail of product 
+		+ Add to cart
+
+	Giỏ hàng
+		+ Show toàn bộ sản phẩm trong giỏ hàng 
+		+ Thêm sản phẩm, xóa sản phẩm, thay đổi sản phẩm 
+		+ Xác nhận đặt hàng : tại nhà hoặc tại cửa hàng
+
+	Xác nhận thanh toán
+		+ Thanh toán ( tiền mặt )   
+
+
+Màn hình nhân viên kho:
+	+ Trang chủ như nhau 
+	Màn hình nhận order của khách 
+	+ Ưu tiên cho nhân viên rảnh để nhận order của khách
+	+ Chi tiết giỏ hàng 
+	+ Xác nhận đã gói hàng
+
+Màn hình nhân viên giao hàng:
+	+ Trang chủ như nhau
+	+ Hàng đợi như nhân viên kho
+	+ Chi tiết giỏ hàng ( có giá tiền ) 
+	+ Xác nhận giao hàng thành công/thất bại
+
+Màn hình quản lý:
+	+ Trang chủ như nhau 
+	+ Quản lý nhân viên
+	+ CRUD, thêm hàng tạo QRcode cho sp đó
+	+ Show báo cáo
+
+Note:
+*Nó đã có tồn tại trên thị trường chưa.
+*Tránh boom hàng *BHxanh.
+*Thanh toán trước khi đóng gói.
+*Kho: Không cần app cho nv kho, in bill(pdf có bar code trên bill để người giao hàng có thể quét và xác nhận đã đóng gói). 															
+trạng thái đơn hàng: khởi tạo, chờ xác nhận, đã xác nhận, đang đóng hàng, đã đóng hàng, đang giao hàng, chờ xác nhận nhận hàng, đã nhận hàng.
+*Thêm lịch sử mua hàng.
+*Bán sản phẩm đóng gói, không bán đồ tươi.		
+*Góc nhìn : gói hàng, sản phẩm, khách hàng.
+*Năng suất nv.																																																										
