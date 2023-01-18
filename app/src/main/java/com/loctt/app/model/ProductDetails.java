@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.loctt.app.ProductDetails;
+package com.loctt.app.model;
 
 import javax.persistence.*;
 
@@ -13,20 +13,27 @@ import javax.persistence.*;
 //
 @Entity
 @Table(name = "Product_Details")
-public class ProductDetailsDTO {
+public class ProductDetails {
     @Id
     @GeneratedValue
+    @Column(name = "ProductID")
     private String productID;
+    @Column(name = "Name")
     private String name;
+    @Column(name = "Description")
     private String description;
+    @Column(name = "Category")
     private String category;
     @Column(name = "Sell_Price")
     private float sellprice;
-
-    public ProductDetailsDTO() {
+    @Column(name = "Image_Link")
+    private String imageLink;
+    
+    
+    public ProductDetails() {
     }
 
-    public ProductDetailsDTO(String productID, String name, String description, String category, float sellprice) {
+    public ProductDetails(String productID, String name, String description, String category, float sellprice) {
         this.productID = productID;
         this.name = name;
         this.description = description;
@@ -102,6 +109,20 @@ public class ProductDetailsDTO {
      */
     public void setSellprice(float sellprice) {
         this.sellprice = sellprice;
+    }
+
+    /**
+     * @return the imageLink
+     */
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    /**
+     * @param imageLink the imageLink to set
+     */
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
     
 
