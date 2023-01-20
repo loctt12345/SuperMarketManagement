@@ -26,7 +26,7 @@ public class ProductDetails {
     private String category;
     @Column(name = "Sell_Price")
     private float sellprice;
-    @Column(name = "Image_Link")
+    @Column(name = "Image")
     private String imageLink;
     
     

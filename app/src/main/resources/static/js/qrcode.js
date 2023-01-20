@@ -7,7 +7,7 @@
 
 function onScanSuccess(qrCodeMessage) {
     window.location.href =
-        "https://8ca7-2405-4802-a234-c320-87c-ac2d-7760-d75.ap.ngrok.io/product-detail/?productID="
+        "http://localhost:8080/product-detail/?productID="
         + qrCodeMessage;
 }
 
