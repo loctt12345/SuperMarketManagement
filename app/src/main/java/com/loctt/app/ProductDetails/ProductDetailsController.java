@@ -34,10 +34,6 @@ public class ProductDetailsController {
     //Find Product Details By ID
     @GetMapping("/api/test")
     public ProductDetailsDTO getProductByID(@RequestParam(name = "txtID", defaultValue = "0000")String productID) {
-        
-        
-        
-        
         ProductDetailsDTO productDetails = ProductDetailsRepo.findByProductID(productID);
         return productDetails;
     
