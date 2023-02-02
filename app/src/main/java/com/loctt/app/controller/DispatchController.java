@@ -4,6 +4,10 @@
  */
 package com.loctt.app.controller;
 
+import com.loctt.app.model.CartObject;
+import com.loctt.app.service.impl.CartService;
+import java.util.Map;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,5 +32,25 @@ public class DispatchController {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
-    
+    //Add new Item to Cart
+    @GetMapping("/addToCart")
+    public String addToCart(@RequestParam(name = "txtProductID") String txtProductID,
+                            @RequestParam(name = "txtNumber") String txtNumber, HttpSession session){
+        
+        //Initial Class, Do service
+        CartService addCart = new CartService();
+        addCart.addToCart(txtProductID, txtNumber, session);
+
+
+        //Testing service
+        CartObject cart = (CartObject)session.getAttribute("CART");
+        Map<String, Integer> items = cart.getItems();
+        if (items != null) {
+            for (Map.Entry<String, Integer> entry : items.entrySet()) {
+		System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+            }
+        }
+        
+        return "index";
+    }
 }

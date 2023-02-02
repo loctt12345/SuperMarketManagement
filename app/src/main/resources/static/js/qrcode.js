@@ -7,7 +7,7 @@
 
 function onScanSuccess(qrCodeMessage) {
     window.location.href =
-        "http://localhost:8080/product-detail/?productID="
+        "./product-detail/?productID="
         + qrCodeMessage;
 }
 
