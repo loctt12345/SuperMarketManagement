@@ -45,12 +45,18 @@ public class DispatchController {
         //Testing service
         CartObject cart = (CartObject)session.getAttribute("CART");
         Map<String, Integer> items = cart.getItems();
-        if (items != null) {
-            for (Map.Entry<String, Integer> entry : items.entrySet()) {
-		System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-            }
-        }
+//        if (items != null) {
+//            for (Map.Entry<String, Integer> entry : items.entrySet()) {
+//		System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+//            }
+//        }
         
         return "index";
     }
+    
+    @GetMapping("/showCart")
+    public String showCart() {
+        return "cart_page";
+    }
+    
 }

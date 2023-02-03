@@ -86,8 +86,12 @@ public class CartController {
     }
 
     @GetMapping("/api/cart/show/{pageNum}")
-    public ResponseEntity showCart(@RequestBody JSONObject object, Model model, HttpSession session) {
+    public ResponseEntity showCart(Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
-        return ResponseEntity.ok().body(cartService.showCart(cart));
+        if (cart != null && cart.getItems() != null)
+            return ResponseEntity.ok().body(cartService.showCart(cart));
+        else 
+            return ResponseEntity.ok().body(null);
+        
     }
 }

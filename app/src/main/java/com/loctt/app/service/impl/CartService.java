@@ -62,6 +62,7 @@ public class CartService implements ICartService {
     @Override
     public JSONObject showCart(CartObject cart) {
 //        Map<String, ProductDetails> result = new HashMap<>();
+
         JSONObject result = new JSONObject();
         int count = 0;
         for (String productID : cart.getItems().keySet()) {
@@ -78,6 +79,7 @@ public class CartService implements ICartService {
         }
         //JSONObject json = new JSONObject(result);
         //json.appendField("quantityInCart", cart.getItems().get)
+        System.out.println(result);
         return result;
     }
 
