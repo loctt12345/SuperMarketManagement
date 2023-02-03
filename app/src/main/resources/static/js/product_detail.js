@@ -20,12 +20,7 @@ function addQuantity() {
 
 function loadProduct() {
     let productID = document.getElementById("product_id").value;
-    fetch('/api/products', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({'productID': productID}),
+    fetch('/api/products?productID='+productID, {
     }).then(
             function (response) {
                 response.json().then(data => {

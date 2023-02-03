@@ -27,22 +27,12 @@ function addQuantity(id) {
     input.value = (parseInt(input.value) + 1).toString();
 }
 
-function setTotalPrice() {
-    var priceTags = document.getElementsByClassName('price');
-    var sum = 0;
-    for (var priceTag = 0; priceTag < priceTags.length; ++priceTag) {
-        var quantityTag = document.getElementById("quantity-input" + (priceTag + 1));
-        var priceText = priceTags[priceTag].textContent;
-        sum = sum + parseInt(priceText.substring(0, priceText.length - 1)) * quantityTag.value;
-    }
-    document.getElementById('totalPrice').innerHTML = sum + '₫';
-}
-
 function loadCart() {
-    fetch('/api/cart/show/2').then(function (response) {
+    var page = document.getElementById('page').value;
+    fetch('/api/cart/show/'+page).then(function (response) {
         response.json().then(data => {
-            console.log(data);
             let list = document.getElementById("list");
+            list.innerHTML = '';
             for (var k in data) {
                 var div = document.createElement('tr');
                 div.id = 'td'+k;
@@ -52,7 +42,7 @@ function loadCart() {
                                      id="img"/>
                             </td>
                             <td>
-                                <a href="#">
+                                <a href="/product-detail?productID=${data[k]['productID']}">
                                     <h5 class="title" id="title">
                                         ${data[k]['name']}
                                     </h5>
@@ -84,7 +74,6 @@ function loadCart() {
                 list.appendChild(div);
 
             }
-            setTotalPrice();
         });
     });
 
@@ -105,7 +94,6 @@ function update(index) {
         }).then(
                 function (response) {
                     response.json().then(data => {
-                        setTotalPrice();
                     });
                 }
         );
@@ -121,8 +109,8 @@ function update(index) {
                 function (response) {
                     response.json().then(data => {
                        document.getElementById('td'+index).style.display = 'none';
+                       document.getElementById('cartIcon').setAttribute('value', data['cartSize']);
                     });
-                    setTotalPrice();
                 }
         );
     }

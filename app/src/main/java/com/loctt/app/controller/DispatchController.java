@@ -8,55 +8,74 @@ import com.loctt.app.model.CartObject;
 import com.loctt.app.service.impl.CartService;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author Administrator
  */
-
 //FOR MAP MAIN PAGE
 @Controller
+@ControllerAdvice
+
 public class DispatchController {
-    
+
+    @Autowired
+    private CartService cartService;
+
+    @ModelAttribute
+    public void commonAttr(Model model, HttpSession session) {
+        CartObject cart = (CartObject) session.getAttribute("CART");
+        model.addAttribute("cartSize", this.cartService.getCartSize(cart));
+    }
+
     @GetMapping("/")
-    public String startWeb(){
+    public String startWeb() {
         return "index";
     }
-    
+
     @GetMapping("/product-detail")
-    public String showProduct(Model model, @RequestParam(name="productID") String productID) {
+    public String showProduct(Model model, @RequestParam(name = "productID") String productID) {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
+
     //Add new Item to Cart
     @GetMapping("/addToCart")
     public String addToCart(@RequestParam(name = "txtProductID") String txtProductID,
-                            @RequestParam(name = "txtNumber") String txtNumber, HttpSession session){
-        
+            @RequestParam(name = "txtNumber") String txtNumber, HttpSession session) {
+
         //Initial Class, Do service
         CartService addCart = new CartService();
         addCart.addToCart(txtProductID, txtNumber, session);
 
-
         //Testing service
-        CartObject cart = (CartObject)session.getAttribute("CART");
+        CartObject cart = (CartObject) session.getAttribute("CART");
         Map<String, Integer> items = cart.getItems();
 //        if (items != null) {
 //            for (Map.Entry<String, Integer> entry : items.entrySet()) {
 //		System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
 //            }
 //        }
-        
-        return "index";
+
+        return "redirect:/";
     }
-    
+
     @GetMapping("/showCart")
-    public String showCart() {
+    public String showCart(
+            @RequestParam(name = "page", required = false, defaultValue = "1") int page,
+            Model model,
+            HttpSession session) {
+        model.addAttribute("page", page);
+        CartObject cart = (CartObject) session.getAttribute("CART");
+        model.addAttribute("numPage", (int) Math.ceil((float) cartService.getCartSize(cart) / 6));
         return "cart_page";
     }
-    
+
 }

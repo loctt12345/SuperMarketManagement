@@ -22,4 +22,6 @@ public interface ICartService {
     public void removeItemInCart(String productID, CartObject cart);
 
     public JSONObject showCart(CartObject cart, int fromItemIndex, int maxItemIndex);
+    
+    public int getCartSize(CartObject cart);
 }

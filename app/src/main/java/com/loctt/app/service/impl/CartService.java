@@ -85,5 +85,11 @@ public class CartService implements ICartService {
         System.out.println(result);
         return result;
     }
+    
+    @Override
+    public int getCartSize(CartObject cart) {
+        if (cart == null || cart.getItems() == null) return 0;
+        return cart.getItems().size();
+    }
 
 }

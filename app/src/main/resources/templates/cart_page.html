@@ -22,9 +22,8 @@ and open the template in the editor.
         <link rel="stylesheet" href="./css/cart_page.css" />
     </head>
 
-    <body onload="loadCart()">
+    <body onload="loadCart(1)">
         <div class="container">
-
             <!--Header-->
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
@@ -88,7 +87,7 @@ and open the template in the editor.
                         </a>
 
                         <a href="/showCart">
-                            <i class="fa badge fa-lg" value=100>&#xf07a;</i>
+                            <i class="fa badge fa-lg" id="cartIcon" th:value="${cartSize}">&#xf07a;</i>
                         </a>
 
                         <button type="button" class="btn btn-info btn-light ml-3 mr-3" data-toggle="modal"
@@ -110,6 +109,19 @@ and open the template in the editor.
                 </h1>
             </div>
 
+            
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" 
+                       th:href="@{'/showCart?page=' + ${page - 1 >= 1 ? page - 1 : 1}}">Previous
+                    </a></li>
+                    <li th:if="${numPage > 0}" th:each="i : ${#numbers.sequence( 1, numPage)}" class="page-item">
+                    <a class="page-link" th:href="@{'/showCart?page=' + ${i}}" th:text="${i}"></a></li>
+                <li class="page-item">
+                    <a class="page-link" 
+                       th:href="@{'/showCart?page=' + ${page + 1 <= numPage ? page + 1 : numPage}}"
+                       >Next</a></li>
+            </ul>
             <div class="table-responsive-sm">
                 <table class="table table-striped table-bordered mt-3">
                     <thead>
@@ -123,14 +135,11 @@ and open the template in the editor.
                     </thead>
 
                     <tbody id="list">
-                         </tbody>
+                    </tbody>
                 </table>
             </div>
 
             <div class="row justify-content-center">
-                <h3 class="text mr-5">
-                    Total price: <span id="totalPrice">0₫</span>
-                </h3>
                 <a href="./paying.html">
                     <button class="btn btn-danger">
                         Pay
@@ -214,11 +223,12 @@ and open the template in the editor.
                 </footer>
                 <!-- Footer -->
 
-
+                
             </footer>
             <!-- Footer -->
-
+            
         </div>
+        <input type="hidden" th:value="${page}" id="page" />
         <script>includeHTML()</script>
     </body>
 
