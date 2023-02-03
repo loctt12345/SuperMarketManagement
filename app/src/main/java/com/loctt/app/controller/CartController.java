@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,12 +87,16 @@ public class CartController {
     }
 
     @GetMapping("/api/cart/show/{pageNum}")
-    public ResponseEntity showCart(Model model, HttpSession session) {
+    public ResponseEntity showCart(@PathVariable(value = "pageNum") Integer pageNum, Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
-        if (cart != null && cart.getItems() != null)
-            return ResponseEntity.ok().body(cartService.showCart(cart));
-        else 
+        int maxResult = 6;
+        int fromItemIndex = (pageNum - 1) * maxResult + 1;
+        int maxItemIndex = fromItemIndex + maxResult - 1;
+        if (cart != null && cart.getItems() != null) {
+            return ResponseEntity.ok().body(cartService.showCart(cart, fromItemIndex, maxItemIndex));
+        } else {
             return ResponseEntity.ok().body(null);
-        
+        }
+
     }
 }

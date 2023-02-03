@@ -60,12 +60,14 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public JSONObject showCart(CartObject cart) {
+    public JSONObject showCart(CartObject cart, int fromItemIndex, int maxItemIndex) {
 //        Map<String, ProductDetails> result = new HashMap<>();
 
         JSONObject result = new JSONObject();
         int count = 0;
         for (String productID : cart.getItems().keySet()) {
+            count++;
+            if(count >= fromItemIndex && count <= maxItemIndex){
             ProductDetails item = productService.findByProductID(productID);
             JSONObject element = new JSONObject();
             element.put("productID", item.getProductID());
@@ -75,7 +77,8 @@ public class CartService implements ICartService {
             element.put("sellprice", item.getSellprice());
             element.put("imageLink", item.getImageLink());
             element.put("quantityInCart", cart.getItems().get(productID));
-            result.put(Integer.toString(++count), element);
+            result.put(Integer.toString(count), element);
+            }
         }
         //JSONObject json = new JSONObject(result);
         //json.appendField("quantityInCart", cart.getItems().get)
