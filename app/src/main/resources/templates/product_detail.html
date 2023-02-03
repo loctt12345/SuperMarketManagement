@@ -103,6 +103,8 @@ and open the template in the editor.
                 <!--Header-->
 
                 <!--Content-->
+                
+                    
                 <div class="content">
                     <div class="product row p-5">
                         <div class="product-left col-12 col-md-4">
@@ -112,19 +114,23 @@ and open the template in the editor.
 
                         <div class="product-right col-12 col-md-8">
                             <h3 class="title">
-
+                                
                             </h3>
-
+                            
+                            <form action="addToCart" method="GET">
                             <div class="price pl-5 mt-4 pt-3 col-12 col-md-8 rounded">
-                                <h4> <strong>Price:</strong> <span id="price"></span></h4>
+                                <h4> <strong>Price:</strong> <span
+                                        id="price"></span></h4>
                                 <div class="">
+                                    
+                                    <input type="hidden" id="product_id" name="productid" th:value="${product_id}" />
                                     <h6>Số Lượng:</h6>
                                     <div class="form-group d-flex">
                                         <button class="btn btn-light" onclick="subQuantity()">
                                             <img src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-remove.svg"
                                                  alt="remove-icon" width="20" height="20" />
                                         </button>
-                                        <input type="text" value="1" id="quantity-input" class="form-control col-3 col-md-2" />
+                                        <input type="text" value="1" id="quantity-input" class="form-control col-3 col-md-2" name="quantity" /> 
                                         <button class="btn btn-light" onclick="addQuantity()">
                                             <img src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-add.svg"
                                                  alt="add-icon" width="20" height="20" />
@@ -132,11 +138,10 @@ and open the template in the editor.
                                     </div>
                                 </div>
                             </div>
-
-                            <button class="btn btn-danger mt-4">
-                                Add to cart
-                            </button>
-
+                            
+                            
+                            <input type="submit" class="btn btn-danger mt-4" value="Add to cart" />
+                            </form>
                             <div class="group-button"></div>
                         </div>
 
@@ -148,6 +153,7 @@ and open the template in the editor.
                         <p id="description" class="text"></p>
                     </div>
                 </div>
+                    
                 <!--Content-->
 
                 <!-- Footer -->
