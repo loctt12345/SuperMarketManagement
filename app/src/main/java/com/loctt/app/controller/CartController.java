@@ -6,13 +6,16 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
+import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.impl.CartService;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import net.minidev.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class CartController {
+
+    @Autowired
+    private CartService cartService;
 
     @PostMapping("/api/cart/update")
     public ResponseEntity updateProductInCart(@RequestBody JSONObject object, Model model, HttpSession session) {
@@ -37,7 +43,6 @@ public class CartController {
 //        cart.setItems(items);
         //
         if (cart != null) {
-            CartService cartService = new CartService();
             cartService.updateItemInCart(productID, quantityInCart, cart);
             session.setAttribute("CART", cart);
             response.put("productID", productID);
@@ -66,18 +71,23 @@ public class CartController {
 //        cart.setItems(items);
         //
         if (cart != null) {
-            CartService cartService = new CartService();
             cartService.removeItemInCart(productID, cart);
             session.setAttribute("CART", cart);
             response.put("productID", productID);
             //test remove
-            Map<String, Integer> items = cart.getItems();
-            if (items != null) {
-                for (Map.Entry<String, Integer> entry : items.entrySet()) {
-                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-                }
-            }
+//            Map<String, Integer> items = cart.getItems();
+//            if (items != null) {
+//                for (Map.Entry<String, Integer> entry : items.entrySet()) {
+//                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+//                }
+//            }
         }
         return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/api/cart/show/{pageNum}")
+    public ResponseEntity showCart(@RequestBody JSONObject object, Model model, HttpSession session) {
+        CartObject cart = (CartObject) session.getAttribute("CART");
+        return ResponseEntity.ok().body(cartService.showCart(cart));
     }
 }

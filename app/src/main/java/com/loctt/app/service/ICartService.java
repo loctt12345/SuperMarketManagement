@@ -7,13 +7,19 @@ package com.loctt.app.service;
 
 import com.loctt.app.model.CartObject;
 import javax.servlet.http.HttpSession;
+import net.minidev.json.JSONObject;
 
 /**
  *
  * @author ADMIN
  */
 public interface ICartService {
+
     public void addToCart(String productID, String txtNumber, HttpSession session);
+
     public void updateItemInCart(String productID, int quantityInCart, CartObject cart);
+
     public void removeItemInCart(String productID, CartObject cart);
+
+    public JSONObject showCart(CartObject cart);
 }
