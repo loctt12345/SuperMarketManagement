@@ -1,0 +1,44 @@
+
+
+.title{
+    margin-left: 300px;
+}
+
+.find-product{
+    margin-left: 50%;
+}
+
+.add-new-item{
+    margin-left: 30%;
+}
+
+
+.main-content{
+    display: flex;
+}
+
+.content{
+    flex-basis: 85%;
+}
+
+.side-bar{
+    
+    flex-basis: 15%;
+}
+
+
+.danh-sach-nhan-vien{
+    margin-left: 30px;
+}
+
+.quan-ly-qrcode{
+    position:absolute;
+    top: 250px;
+    margin-left: 30px;
+}
+
+.bao-cao{
+    position:absolute;
+    margin-left: 30px;
+    bottom: 5%;
+}

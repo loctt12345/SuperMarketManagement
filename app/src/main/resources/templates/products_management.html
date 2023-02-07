@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quản lý QRCode</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <h1 class="title">Quản lí QRCode</h1>
+        <hr>
+        <div class="navbar">
+            <form th:action="@{/findproduct}">
+                <input class="find-product" type="text" th:value="${keyword}">
+                <input tyoe="submit" class="search-product" value="Search"></input>
+            </form>
+            <select>
+                <option>productID</option>
+                <option>category</option>
+                <option>name</option>
+            </select>
+            <a th:href="@{/products/new}">Thêm mặt hàng mới</a>
+        </div>
+        <br>
+        <div class="main-content">     
+            <div class="side-bar">
+                <h1 class="dashboard">Dashboard</h1>
+                <a class="danh-sach-nhan-vien" href="#">Danh sách nhân viên</a>
+                <br>
+                <a class="quan-ly-qrcode" href="#">Quản lý QRCode</a>
+                <br>
+                <a class="bao-cao" href="#">Báo cáo</a>
+            </div>
+
+            <div class="content">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:text="${product.id}"></td>
+                            <td th:text="${product.name}"></td>
+                            <td th:text="${product.quantity}"></td>
+                            <td><img src="" alt=""></td>
+                            <td>
+                                <a th:href="@{/update?id={id}(id=${product.id})}">
+                                    update
+                                </a>
+                                /
+                                <a href="@{/delete?id={id}(id=${product.id})}">
+                                    delete
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+    </body>
+</html>
