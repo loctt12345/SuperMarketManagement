@@ -8,23 +8,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <title>Update Product</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
-        <h1>
-            Update Product
-        </h1>
-        <form th:action="@{/products/id} (id=${product.id})" th:object="${product}" method="POST">
-            <div class="form-group">
-                <input type="text" name="productID" th:field="*{productID}" placeholder="Enter productID" />
-                <br>
-                <input type="text" name="productName" th:field="*{productName}" placeholder="Enter productName" />
-                <br>
-                <input type="text" name="productQuantity" th:field="*{productQuantity}" placeholder="Enter productQuantity" />
-                <br>
-                <button type="submit">
-                    Update
-                </button>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                    <h1 class="text-center">Update Product</h1>
+                    <div class="card-body">
+                        <form th:action="@{/products}" th:object="${product}" method="POST">
+                            <div class="form-group">
+                                <label for="productName">Product Name: </label>
+                                <input class="form-control" type="text" name="productName" th:field="*{productName}" placeholder="Enter productName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="productSellPrice">Price: </label>
+                                <input class="form-control" type="text" name="productQuantity" th:field="*{product.sellprice}" placeholder="Enter productQuantity" />
+                            </div>
+                                <button class="btn btn-success" type="submit">
+                                    Update
+                                </button>
+                            </div>
+                        </form>
+                    </div>                    
+                </div>
             </div>
-        </form>
+        </div>
     </body>
 </html>

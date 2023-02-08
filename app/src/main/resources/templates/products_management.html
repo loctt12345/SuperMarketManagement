@@ -6,15 +6,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quản lý QRCode</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="stylesheet" href="/static/css/style.css">
     </head>
     <body>
+        <div class="container-fluid">
         <h1 class="title">Quản lí QRCode</h1>
         <hr>
-        <div class="navbar">
+
+        <!-- navbar -->
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand"></a>
+            <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+              <select name="find-product" class="btn ml-2">
+                <option value="productID">ProductID</option>
+                <option value="category">Category</option>
+                <option value="name">Name</option>
+              </select>
+              
+            </form>
+
+                <a class="btn btn-success" type="button" th:href="@{/products/new}">Thêm mặt hàng mới</a>
+            
+          </nav>
+        <!-- end navbar -->
+
+        <!-- <div class="navbar">
             <form th:action="@{/findproduct}">
-                <input class="find-product" type="text" th:value="${keyword}">
-                <input tyoe="submit" class="search-product" value="Search"></input>
+                <input class="find-product" type="text" th:value="" name="searchValue">
+                <input type="hidden" name="lastSearchValue" th:value="">
+                <input type="submit" class="search-product" value="Search"></input>
             </form>
             <select>
                 <option>productID</option>
@@ -22,52 +44,51 @@
                 <option>name</option>
             </select>
             <a th:href="@{/products/new}">Thêm mặt hàng mới</a>
-        </div>
+        </div> -->
         <br>
-        <div class="main-content">     
-            <div class="side-bar">
-                <h1 class="dashboard">Dashboard</h1>
-                <a class="danh-sach-nhan-vien" href="#">Danh sách nhân viên</a>
-                <br>
-                <a class="quan-ly-qrcode" href="#">Quản lý QRCode</a>
-                <br>
-                <a class="bao-cao" href="#">Báo cáo</a>
+        <div class="main-content">    
+                <div class="side-bar col-sm-2">
+                    <h1 class="">Dashboard</h1>
+                    <a class="btn btn-success" href="#">Danh sách nhân viên</a>
+                    <br>
+                    <a class="quan-li-qrcode btn btn-success" href="#">Quản lý QRCode</a>
+                    <br>
+                    <a class="bao-cao-button btn btn-danger" href="#">Báo cáo</a>
+                </div>
+
+                <div class="col-sm-10 table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Image</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+    
+                        <tbody>
+                            <tr th:each="product : ${products}">
+                                <td th:text="${product.id}"></td>
+                                <td th:text="${product.name}"></td>
+                                <td th:text="${product.quantity}"></td>
+                                <td><img src="" alt=""></td>
+                                <td th:text="${product.sellprice}"></td>
+                                <td>
+                                    <a class="btn btn-primary" th:href="@{/update?id={id}(id=${product.id})}">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-danger" th:href="@{/delete?id={id}(id=${product.id})}">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div class="content">
-                <table border="1">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Quantity</th>
-                            <th>Image</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr th:each="product : ${products}">
-                            <td th:text="${product.id}"></td>
-                            <td th:text="${product.name}"></td>
-                            <td th:text="${product.quantity}"></td>
-                            <td><img src="" alt=""></td>
-                            <td>
-                                <a th:href="@{/update?id={id}(id=${product.id})}">
-                                    update
-                                </a>
-                                /
-                                <a href="@{/delete?id={id}(id=${product.id})}">
-                                    delete
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
         </div>
-
-
     </body>
 </html>
