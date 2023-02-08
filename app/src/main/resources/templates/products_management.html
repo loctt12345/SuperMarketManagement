@@ -77,9 +77,13 @@
                                 <td><img src="" alt=""></td>
                                 <td th:text="${product.sellprice}"></td>
                                 <td>
-                                    <a class="btn btn-primary" th:href="@{/update?id={id}(id=${product.id})}">
-                                        Update
-                                    </a>
+                                    <form action="btAction">
+                                        <input type="hidden" id="product.id" name="" th:value="${product.id}" />
+                                        <input type="submit" class="btn btn-primary" >
+                                            Update
+                                        </input>
+                                    </form>
+                                    
                                     <a class="btn btn-danger" th:href="@{/delete?id={id}(id=${product.id})}">
                                         Delete
                                     </a>
