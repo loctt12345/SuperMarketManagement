@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Add New Item</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Add new item</h1>
+        <form th:action="@{/products}" th:object="${product}" method="POST">
+            <div class="form-group">
+                <label>Student First Name</label>
+                <br>
+                <input type="text" name="productID" th:field="*{productID}" placeholder="Enter productID" />
+                <br>
+                <input type="text" name="productName" th:field="*{productName}" placeholder="Enter productName" />
+                <br>
+                <input type="text" name="productQuantity" th:field="*{productQuantity}" placeholder="Enter productQuantity" />
+                <br>
+                <img src="src" alt="alt"/>
+                <br>
+                <button type="submit">
+                    Add
+                </button>
+            </div>
+        </form>
+    </body>
+</html>

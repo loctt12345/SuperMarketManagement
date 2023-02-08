@@ -6,6 +6,7 @@
 package com.loctt.app.service;
 
 import com.loctt.app.model.ProductDetails;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,8 @@ import com.loctt.app.model.ProductDetails;
  */
 public interface IProductService {
     public ProductDetails findByProductID(String productID);
+    public List<ProductDetails> findByCategoryContaining(String category);
+    public List<ProductDetails> findByNameContaining(String name);
+    public ProductDetails save(ProductDetails product);
+    public void deleteById(String productID);
 }

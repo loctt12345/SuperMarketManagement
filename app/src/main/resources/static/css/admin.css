@@ -42,3 +42,7 @@
     margin-left: 30px;
     bottom: 5%;
 }
+.action{
+    display: flex;
+    justify-content: space-around;
+}

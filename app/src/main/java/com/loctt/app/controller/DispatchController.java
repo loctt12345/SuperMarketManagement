@@ -39,13 +39,16 @@ public class DispatchController {
     public String startWeb() {
         return "index";
     }
-
+    //TestAdmin
+    @GetMapping("/admin-page")
+    public String adminPage() {
+        return "products_management";
+    }
     @GetMapping("/product-detail")
     public String showProduct(Model model, @RequestParam(name = "productID") String productID) {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
-
     //Add new Item to Cart
     @GetMapping("/addToCart")
     public String addToCart(@RequestParam(name = "txtProductID") String txtProductID,

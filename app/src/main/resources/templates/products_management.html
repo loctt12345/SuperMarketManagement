@@ -9,77 +9,85 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="/app/src/main/resources/static/css/admin.css">
     </head>
     <body>
         <div class="container-fluid">
-        <h1 class="title">Quản lí QRCode</h1>
-        <hr>
+            <h1 class="title">Quản lí QRCode</h1>
+            <hr>
 
-        <!-- navbar -->
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand"></a>
-            <form class="form-inline" th:action="@{/findproduct}">
-                    <input class="search-button form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" th:value="" name="searchValue">
-                    <input type="hidden" name="lastSearchValue" th:value="">
+            <!-- navbar -->
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand"></a>
+                <form class="form-inline" th:action="@{/admin/findProduct}">
+                    <input class="search-button form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" th:value="${lastSearchValue}" name="searchValue">
                     <input type="submit" class="btn btn-success my-2 my-sm-0" value="Search"></input>
-              <select name="find-product" class="btn ml-2">
-                <option th:value="">ProductID</option>
-                <option th:value="">Category</option>
-                <option th:value="">Name</option>
-              </select>
-              
-            </form>
+                    <select name="searchBy" class="btn ml-2">
+                        <option th:if="${lastSearchBy == 'id'}" th:value="id" selected="selected">ProductID</option>
+                        <option th:unless="${lastSearchBy == 'id'}" th:value="id" >ProductID</option>
+                        <option th:if="${lastSearchBy == 'category'}" th:value="category" selected="selected">Category</option>
+                        <option th:unless="${lastSearchBy == 'category'}" th:value="category">Category</option>
+                        <option th:if="${lastSearchBy == 'name'}" th:value="name" selected="selected">Name</option>
+                        <option th:unless="${lastSearchBy == 'name'}" th:value="name">Name</option>
+                    </select>
+
+                </form>
 
                 <input class="btn btn-success" data-toggle="modal" data-target="#myModal" type="submit" th:href="@{/products/new}" value="Thêm mặt hàng mới" name="" />
 
                 <div class="modal fade" id="myModal">
                     <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add new item</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                          </div>
-                        <div class="modal-body">
-                            <form th:action="@{/products}" th:object="${product}" method="POST">
-                                <div class="form-group">
-                                    <label for="productID">ProductID: </label>
-                                    <input class="form-control" type="text" name="productID" th:field="*{product.id}" placeholder="Enter productID" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="productName">Product Name: </label>
-                                    <input class="form-control" type="text" name="productName" th:field="*{product.name}" placeholder="Enter productName" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="productQuantity">Quantity: </label>
-                                    <input class="form-control" type="text" name="productQuantity" th:field="*{product.quantity}" placeholder="Enter productQuantity" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="productSellPrice">Price: </label>
-                                    <input class="form-control" type="text" name="productQuantity" th:field="*{product.sellprice}" placeholder="Enter productQuantity" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="addImage">Add Image: </label>
-                                    <input class="form-control" type="text" name="input-link-image" placeholder="input link Image">
-                                </div>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add new item</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{/admin/add-new-product}" method="POST">
+                                    <div class="form-group">
+                                        <label for="id">ProductID: </label>
+                                        <input class="form-control" type="text" name="id" placeholder="Enter Product ID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Product Name: </label>
+                                        <input class="form-control" type="text" name="name" placeholder="Enter Product Name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description: </label>
+                                        <input class="form-control" type="text" name="description" placeholder="Enter Product Description" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="category">Category: </label>
+                                        <input class="form-control" type="text" name="category" placeholder="Enter Product Category" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sellPrice">Price: </label>
+                                        <input class="form-control" type="text" name="sellPrice" placeholder="Enter productQuantity" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="image">Add Image: </label>
+                                        <input class="form-control" type="number" name="image" placeholder="Input Link Image">
+                                    </div>
+                                    <input type="hidden" name="lastSearchValue" th:value="${lastSearchValue}" />
+                                    <input type="hidden" name="lastSearchBy" th:value="${lastSearchBy}" />
                                     <button class="btn btn-success" type="submit" name="">
                                         Add
                                     </button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
 
-          </nav>
-        <!-- end navbar -->
-        
-        <br>
-        <div class="main-content">    
-                <div class="side-bar col-sm-2">
+            </nav>
+            <!-- end navbar -->
+
+            <br/>
+            <div class="main-content row">    
+                <div class="side-bar col-md-2">
                     <h1 class="">Dashboard</h1>
                     <a class="btn btn-success" href="#">Danh sách nhân viên</a>
                     <br>
@@ -88,67 +96,74 @@
                     <a class="bao-cao-button btn btn-danger" href="#">Báo cáo</a>
                 </div>
 
-                <div class="col-sm-10 table-responsive-md">
+                <div class="col-md-10 table-responsive-md" th:if="${PRODUCTS_RESULT ne null}">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
                                 <th>Image</th>
+                                <th>Name</th>
+                                <!--                                <th>Quantity</th>-->
+                                <th>Category</th>
                                 <th>Price</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-    
+
                         <tbody>
-                            <tr th:each="product : ${products}">
-                                <td th:text="${product.id}"></td>
+                            <tr th:each="product : ${PRODUCTS_RESULT}">
+                                <td th:text="${product.productID}"></td>
+                                <td><img class="img-fluid rounded img-thumbnail" th:src="@{${product.imageLink}}" alt="product image"></td>
                                 <td th:text="${product.name}"></td>
-                                <td th:text="${product.quantity}"></td>
-                                <td><img src="" alt=""></td>
+                                <!--                                <td th:text="${product.quantity}"></td>-->
+                                <td th:text="${product.category}"></td>
                                 <td th:text="${product.sellprice}"></td>
-                                <td class="form-inline">
+                                <td>
 
-
-                                        <input type="submit" class="btn btn-primary" value="Update" data-toggle="modal" data-target="#myModal1" name="" />
-
-                                        <div class="modal fade" id="myModal1">
-                                            <div class="modal-dialog">
-                                              <div class="modal-content">
+                                    <div class="p-3">
+                                        <input type="submit" class="btn btn-primary form-group row" value="Update" data-toggle="modal" data-target="#myModal1" name="" />
+                                    </div>
+                                    <div class="modal fade" id="myModal1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h4 class="modal-title">Update Product</h4>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form th:action="@{/products}" th:object="${product}" method="POST">
+                                                    <form th:action="@{/admin/update-product}" method="POST">
                                                         <div class="form-group">
                                                             <label for="productName">Product Name: </label>
-                                                            <input class="form-control" type="text" name="productName" th:field="*{productName}" placeholder="Enter productName" />
+                                                            <input class="form-control" type="text" name="productName" th:value="${product.name}" placeholder="Enter Product Name" />
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="productSellPrice">Price: </label>
-                                                            <input class="form-control" type="text" name="productSellPrice" th:field="*{product.sellprice}" placeholder="Enter Price" />
+                                                            <input class="form-control" type="number" name="sellPrice" th:value="${product.sellprice}" placeholder="Enter Price" />
                                                         </div>
-                                                            <button class="btn btn-success" type="submit">
-                                                                Update
-                                                            </button>
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-
-                                                            <input type="hidden" id="product.id" name="" th:value="${product.id}" />
+                                                        <button class="btn btn-success" type="submit">
+                                                            Update
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                        <input type="hidden" name="lastSearchValue" th:value="${lastSearchValue}" />
+                                                        <input type="hidden" name="productID" th:value="${product.productID}" />
+                                                        <input type="hidden" name="lastSearchBy" th:value="${lastSearchBy}" />
                                                     </form>
                                                 </div>
-                                               </div>
                                             </div>
                                         </div>
-                                    
-                                    <a class="btn btn-danger ml-4" th:href="@{/delete?id={id}(id=${product.id})}">
-                                        Delete
-                                    </a>
+                                    </div>
+                                    <div class="p-3">
+                                        <a class="btn btn-danger form-group row" th:href="@{/admin/delete-product(id=${product.productID},lastSearchValue=${lastSearchValue},lastSearchBy=${lastSearchBy})}">
+                                            Delete
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="col-md-10" th:unless="${PRODUCTS_RESULT ne null}">
+                    <h2>No result matched!</h2>
                 </div>
             </div>
         </div>
