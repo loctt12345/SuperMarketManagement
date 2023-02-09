@@ -2,7 +2,7 @@
 <html lang="vi">
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Quản lý QRCode</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -20,15 +20,15 @@
             <nav class="navbar navbar-light bg-light">
                 <a class="navbar-brand"></a>
                 <form class="form-inline" th:action="@{/admin/findProduct}">
-                    <input class="search-button form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" th:value="${lastSearchValue}" name="searchValue">
+                    <input class="search-button form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" th:value="${searchValue}" name="searchValue">
                     <input type="submit" class="btn btn-success my-2 my-sm-0" value="Search"></input>
                     <select name="searchBy" class="btn ml-2">
-                        <option th:if="${lastSearchBy == 'id'}" th:value="id" selected="selected">ProductID</option>
-                        <option th:unless="${lastSearchBy == 'id'}" th:value="id" >ProductID</option>
-                        <option th:if="${lastSearchBy == 'category'}" th:value="category" selected="selected">Category</option>
-                        <option th:unless="${lastSearchBy == 'category'}" th:value="category">Category</option>
-                        <option th:if="${lastSearchBy == 'name'}" th:value="name" selected="selected">Name</option>
-                        <option th:unless="${lastSearchBy == 'name'}" th:value="name">Name</option>
+                        <option th:if="${searchBy == 'id'}" th:value="id" selected="selected">ProductID</option>
+                        <option th:unless="${searchBy == 'id'}" th:value="id" >ProductID</option>
+                        <option th:if="${searchBy == 'category'}" th:value="category" selected="selected">Category</option>
+                        <option th:unless="${searchBy == 'category'}" th:value="category">Category</option>
+                        <option th:if="${searchBy == 'name'}" th:value="name" selected="selected">Name</option>
+                        <option th:unless="${searchBy == 'name'}" th:value="name">Name</option>
                     </select>
 
                 </form>
@@ -62,14 +62,14 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="sellPrice">Price: </label>
-                                        <input class="form-control" type="text" name="sellPrice" placeholder="Enter productQuantity" />
+                                        <input class="form-control" type="number" name="sellPrice" placeholder="Enter Sell Price" />
                                     </div>
                                     <div class="form-group">
                                         <label for="image">Add Image: </label>
                                         <input class="form-control" type="number" name="image" placeholder="Input Link Image">
                                     </div>
-                                    <input type="hidden" name="lastSearchValue" th:value="${lastSearchValue}" />
-                                    <input type="hidden" name="lastSearchBy" th:value="${lastSearchBy}" />
+                                    <input type="hidden" name="lastSearchValue" th:value="${searchValue}" />
+                                    <input type="hidden" name="lastSearchBy" th:value="${searchBy}" />
                                     <button class="btn btn-success" type="submit" name="">
                                         Add
                                     </button>
@@ -87,7 +87,7 @@
 
             <br/>
             <div class="main-content row">    
-                <div class="side-bar col-md-2">
+                <div class="side-bar bg-light col-md-2">
                     <h1 class="">Dashboard</h1>
                     <a class="btn btn-success" href="#">Danh sách nhân viên</a>
                     <br>
@@ -144,16 +144,16 @@
                                                             Update
                                                         </button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                                        <input type="hidden" name="lastSearchValue" th:value="${lastSearchValue}" />
+                                                        <input type="hidden" name="lastSearchValue" th:value="${searchValue}" />
                                                         <input type="hidden" name="productID" th:value="${product.productID}" />
-                                                        <input type="hidden" name="lastSearchBy" th:value="${lastSearchBy}" />
+                                                        <input type="hidden" name="lastSearchBy" th:value="${searchBy}" />
                                                     </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="p-3">
-                                        <a class="btn btn-danger form-group row" th:href="@{/admin/delete-product(id=${product.productID},lastSearchValue=${lastSearchValue},lastSearchBy=${lastSearchBy})}">
+                                        <a class="btn btn-danger form-group row" th:href="@{/admin/delete-product(id=${product.productID},lastSearchValue=${searchValue},lastSearchBy=${searchBy})}">
                                             Delete
                                         </a>
                                     </div>

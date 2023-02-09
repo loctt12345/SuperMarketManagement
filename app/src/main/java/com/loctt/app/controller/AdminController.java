@@ -7,6 +7,7 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.impl.ProductService;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -35,7 +37,7 @@ public class AdminController {
     private ProductService productService;
 
     @GetMapping("/findProduct")
-    public String findProducts(@RequestParam Map<String, String> allParams, Model model) {
+    public String findProducts(@RequestParam(required = false) Map<String, String> allParams, Model model) {
         List<ProductDetails> productDetails = new ArrayList<>();
         String searchBy = allParams.get("searchBy");
         String searchValue = allParams.get("searchValue");
@@ -54,14 +56,14 @@ public class AdminController {
         if (productDetails.size() > 0) {
             model.addAttribute("PRODUCTS_RESULT", productDetails);
         }
-        model.addAttribute("lastSearchValue", searchValue);
-        model.addAttribute("lastSearchBy", searchBy);
+        model.addAttribute("searchValue", searchValue);
+        model.addAttribute("searchBy", searchBy);
         return "products_management";
     }
 
     //add new Product
     @PostMapping("/add-new-product")
-    public String addNewProduct(@RequestParam Map<String, String> allParams, Model model) {
+    public String addNewProduct(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
         String productID = allParams.get("id");
         String productName = allParams.get("name");
         String productDes = allParams.get("description");
@@ -80,15 +82,15 @@ public class AdminController {
         }
         ProductDetails newProduct = new ProductDetails(productID, productName, productDes, productCategory, productImageLink, productSellPrice);
         productService.save(newProduct);
-        String lastSearchValue = allParams.get("lastSearchValue");
-        model.addAttribute("lastSearchValue", lastSearchValue);
+       String lastSearchValue = allParams.get("lastSearchValue");
+        redirectAttributes.addAttribute("searchValue", lastSearchValue);
         String lastSearchBy = allParams.get("lastSearchBy");
-        model.addAttribute("lastSearchBy", lastSearchBy);
-        return "redirect:/admin/findProduct?searchValue=" + lastSearchValue + "&searchBy=" + lastSearchBy;
+        redirectAttributes.addAttribute("searchBy", lastSearchBy);
+        return "redirect:/admin/findProduct";
     }
 
     @PostMapping("/update-product")
-    public String updateProduct(@RequestParam Map<String, String> allParams, Model model) {
+    public String updateProduct(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
         String productID = allParams.get("productID");
         String productName = allParams.get("productName");
         if (productName.equalsIgnoreCase("")) {
@@ -114,22 +116,22 @@ public class AdminController {
         updateProduct.setSellprice(sellPrice);
         productService.save(updateProduct);
         String lastSearchValue = allParams.get("lastSearchValue");
-        model.addAttribute("lastSearchValue", lastSearchValue);
+        redirectAttributes.addAttribute("searchValue", lastSearchValue);
         String lastSearchBy = allParams.get("lastSearchBy");
-        model.addAttribute("lastSearchBy", lastSearchBy);
-        return "redirect:/admin/findProduct?searchValue=" + lastSearchValue + "&searchBy=" + lastSearchBy;
+        redirectAttributes.addAttribute("searchBy", lastSearchBy);
+        return "redirect:/admin/findProduct";
     }
 
     @GetMapping("/delete-product")
-    public String deleteProductById(@RequestParam Map<String, String> allParams, Model model) {
+    public String deleteProductById(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
         String productID = allParams.get("id");
         if (this.productService.findByProductID(productID) != null) {
             this.productService.deleteById(productID);
         }
         String lastSearchValue = allParams.get("lastSearchValue");
-        model.addAttribute("lastSearchValue", lastSearchValue);
+        redirectAttributes.addAttribute("searchValue", lastSearchValue);
         String lastSearchBy = allParams.get("lastSearchBy");
-        model.addAttribute("lastSearchBy", lastSearchBy);
-        return "redirect:/admin/findProduct?searchValue=" + lastSearchValue + "&searchBy=" + lastSearchBy;
+        redirectAttributes.addAttribute("searchBy", lastSearchBy);
+        return "redirect:/admin/findProduct";
     }
 }
