@@ -1,7 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
     <head>
-        <title>Home page</title>
+        <title>Cart page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -10,11 +16,13 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
         <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="css/hder-fter.css" />
+        <link rel="stylesheet" href="./css/hder-fter.css" />
 
+        <script src="./js/cart_page.js"></script>
+        <link rel="stylesheet" href="./css/cart_page.css" />
     </head>
 
-    <body>
+    <body onload="loadCart(1)">
         <div class="container">
             <!--Header-->
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -78,7 +86,7 @@
                             <i class="fa-solid badge2 fa-bell" value="3"></i>
                         </a>
 
-                       <a href="/showCart">
+                        <a href="/showCart">
                             <i class="fa badge fa-lg" id="cartIcon" th:value="${cartSize}">&#xf07a;</i>
                         </a>
 
@@ -92,16 +100,61 @@
             </header>
             <!--Header-->
 
+
             <!--Content-->
-            <div class="content">
-                <div id="camera" class="row justify-content-center" style="margin-top: 50px;">
-                    <div class="col-12 col-md-5">
-                        <div style="height: 500px;" id="reader"></div>
-                    </div>
-                </div>
+
+            <div class="mt-2 text row justify-content-center">
+                <h1>
+                    CART
+                </h1>
             </div>
+
+
+
+            <div class="table-responsive-sm">
+                <table class="table table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="list">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row justify-content-center">
+                <h3 class="mr-3"> Total:&nbsp;<span id="totalPrice"></span> </h3>
+                
+                <a href="./paying.html">
+                    <button class="btn btn-danger">
+                        Pay
+                    </button>
+                </a>
+                
+            </div>
+
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" 
+                       th:href="@{'/showCart?page=' + ${page - 1 >= 1 ? page - 1 : 1}}">Previous
+                    </a></li>
+                <li th:if="${numPage > 0}" th:each="i : ${#numbers.sequence( 1, numPage)}" class="page-item">
+                    <a class="page-link" th:href="@{'/showCart?page=' + ${i}}" th:text="${i}"></a></li>
+                <li class="page-item">
+                    <a class="page-link" 
+                       th:href="@{'/showCart?page=' + ${page + 1 <= numPage ? page + 1 : numPage}}"
+                       >Next</a></li>
+            </ul>
+
             <!--Content-->
-            
+
+
             <!-- Footer -->
             <footer class="fter">
 
@@ -178,8 +231,7 @@
             <!-- Footer -->
 
         </div>
-        <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-        <script src="./js/qrcode.js"></script>
+        <input type="hidden" th:value="${page}" id="page" />
         <script>includeHTML()</script>
     </body>
 

@@ -24,5 +24,4 @@ public class ProductService implements IProductService{
     public ProductDetails findByProductID(String productID) {
         return  this.productRepository.findByProductID(productID);
     }
-    
 }

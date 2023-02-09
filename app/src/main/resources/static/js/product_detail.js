@@ -20,19 +20,21 @@ function addQuantity() {
 
 function loadProduct() {
     let productID = document.getElementById("product_id").value;
-    fetch('/api/products', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({'productID': productID}),
+    fetch('/api/products?productID=' + productID, {
     }).then(
             function (response) {
                 response.json().then(data => {
                     document.getElementById("imgProduct").src = data['imageLink'];
-                    document.getElementById("price").innerHTML = data['sellprice'] + "₫";
+                    document.getElementById("title").innerHTML = data['name'];
+                    document.getElementById("price").innerHTML = 
+                            data['sellprice'].toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
                     document.getElementById("description").innerHTML = data['description'];
+                }).catch((err) => {
+                    document.getElementById('content').innerHTML = `
+                        <h2 class="row justify-content-center"> The product is not in our super market </h2>
+                        `
                 });
             }
     );
 }
+
