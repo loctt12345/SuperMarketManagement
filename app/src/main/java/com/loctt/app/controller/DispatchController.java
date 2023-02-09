@@ -6,6 +6,7 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
 import com.loctt.app.service.impl.CartService;
+import com.loctt.app.service.impl.ProductService;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class DispatchController {
 
     @Autowired
     private CartService cartService;
+    @Autowired
+    private ProductService productService;
 
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
@@ -52,18 +55,8 @@ public class DispatchController {
             @RequestParam(name = "txtNumber") String txtNumber, HttpSession session) {
 
         //Initial Class, Do service
-        CartService addCart = new CartService();
-        addCart.addToCart(txtProductID, txtNumber, session);
-
-        //Testing service
-        CartObject cart = (CartObject) session.getAttribute("CART");
-        Map<String, Integer> items = cart.getItems();
-//        if (items != null) {
-//            for (Map.Entry<String, Integer> entry : items.entrySet()) {
-//		System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-//            }
-//        }
-
+        if (productService.findByProductID(txtProductID) != null)
+            cartService.addToCart(txtProductID, txtNumber, session);
         return "redirect:/";
     }
 

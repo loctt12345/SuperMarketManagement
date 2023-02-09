@@ -4,38 +4,15 @@
  * and open the template in the editor.
  */
 
-
-function subQuantity(id) {
-    let input = document.getElementById("quantity-input" + id);
-    if (input.value === "0") {
-
-    } else {
-        if (input.value === "1") {
-            let btnUpdate = document.getElementById("update" + id);
-            btnUpdate.innerHTML = "Remove";
-        }
-        input.value = (parseInt(input.value) - 1).toString();
-    }
-}
-
-function addQuantity(id) {
-    let input = document.getElementById("quantity-input" + id);
-    if (input.value === "0") {
-        let btnUpdate = document.getElementById("update" + id);
-        btnUpdate.innerHTML = "Update";
-    }
-    input.value = (parseInt(input.value) + 1).toString();
-}
-
 function loadCart() {
     var page = document.getElementById('page').value;
-    fetch('/api/cart/show/'+page).then(function (response) {
+    fetch('/api/cart/show/' + page).then(function (response) {
         response.json().then(data => {
             let list = document.getElementById("list");
             list.innerHTML = '';
             for (var k in data) {
                 var div = document.createElement('tr');
-                div.id = 'td'+k;
+                div.id = 'td' + k;
                 div.innerHTML = `
                             <td>
                                 <img src="${data[k]['imageLink']}" class="img-fluid rounded img-thumbnail col-md-9" 
@@ -49,24 +26,23 @@ function loadCart() {
                                 </a>
                             </td>
                             <td>
-                                <h5 class="price">${data[k]['sellprice']}₫</h5>
+                                <h5 class="price">${data[k]['sellprice']
+                        .toLocaleString('it-IT', {style: 'currency', currency: 'VND'})}</h5>
                             </td>
                             <td>
                                 <div class="form-group d-flex">
-                                    <button class="btn btn-light" onclick="subQuantity(${k})">
-                                        <img src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-remove.svg"
-                                             alt="remove-icon" width="20" height="20" />
-                                    </button>
-                                    <input type="text" value="${data[k]['quantityInCart']}" id="quantity-input${k}" class="form-control col-3 col-md-3" />
-                                    <button class="btn btn-light" onclick="addQuantity(${k})">
-                                        <img src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-add.svg"
-                                             alt="add-icon" width="20" height="20" />
-                                    </button>
+                                   
+                                    <input type="number" min="0" value="${data[k]['quantityInCart']}" 
+                                    id="quantity-input${k}" class="form-control col-7 col-md-7" />
+                                   
                                 </div>
                             </td>
-                            <td>
-                                <button id="update${k}" class="btn btn-danger btnUpdate" onclick="update(${k})">Update</button>
-                            </td>
+                            <td class="col-md-2 ">
+                                <button id="update${k}" class="btn btn-success" 
+                                            onclick="update(${k})"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button id="remove{k}" class="btn btn-danger" 
+                                            onclick="remove(${k})"><i class="fa-solid fa-trash-can"></i></button>
+                             </td>
                             
                         <input type="hidden" id="product_id${k}" name="" value="${data[k]['productID']}" />
 
@@ -74,6 +50,13 @@ function loadCart() {
                 list.appendChild(div);
 
             }
+
+            fetch('/api/cart/getTotalPriceInCart').then((response) => {
+                response.json().then((data) => {
+                    document.getElementById('totalPrice').innerHTML =
+                            data.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+                });
+            });
         });
     });
 
@@ -82,9 +65,10 @@ function loadCart() {
 function update(index) {
     var productID = document.getElementById('product_id' + index).value;
     var quantity = document.getElementById('quantity-input' + index).value;
-    var buttonName = document.getElementById('update' + index).innerHTML;
 
-    if (buttonName === "Update") {
+    if (quantity == 0) {
+        remove(index);
+    } else {
         fetch('/api/cart/update', {
             method: 'POST',
             headers: {
@@ -94,25 +78,43 @@ function update(index) {
         }).then(
                 function (response) {
                     response.json().then(data => {
-                    });
-                }
-        );
-    } else
-    if (buttonName === "Remove") {
-        fetch('/api/cart/remove', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({'productID': productID})
-        }).then(
-                function (response) {
-                    response.json().then(data => {
-                       document.getElementById('td'+index).style.display = 'none';
-                       document.getElementById('cartIcon').setAttribute('value', data['cartSize']);
+                    }).then(() => {
+                        fetch('/api/cart/getTotalPriceInCart').then((response) => {
+                            response.json().then((data) => {
+                                document.getElementById('totalPrice').innerHTML =
+                                        data.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+                            });
+                        });
                     });
                 }
         );
     }
+}
+
+function remove(index) {
+    var productID = document.getElementById('product_id' + index).value;
+    fetch('/api/cart/remove', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'productID': productID})
+    }).then(
+            function (response) {
+                response.json().then(data => {
+                    document.getElementById('td' + index).style.display = 'none';
+                    document.getElementById('cartIcon').setAttribute('value', data['cartSize']);
+                }).then(() => {
+                    fetch('/api/cart/getTotalPriceInCart').then((response) => {
+                        response.json().then((data) => {
+                            document.getElementById('totalPrice').innerHTML =
+                                    data.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+                        });
+                    });
+                }
+
+                );
+            }
+    );
 }
 

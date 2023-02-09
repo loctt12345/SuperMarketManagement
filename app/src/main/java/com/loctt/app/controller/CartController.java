@@ -8,6 +8,7 @@ package com.loctt.app.controller;
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.impl.CartService;
+import com.loctt.app.service.impl.ProductService;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -30,8 +31,9 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+    @Autowired
+    private ProductService productService;
 
-    
     @PostMapping("/api/cart/update")
     public ResponseEntity updateProductInCart(@RequestBody JSONObject object, Model model, HttpSession session) {
         String productID = object.getAsString("productID");
@@ -43,12 +45,12 @@ public class CartController {
             cartService.updateItemInCart(productID, quantityInCart, cart);
             session.setAttribute("CART", cart);
             response.put("productID", productID);
-            Map<String, Integer> items = cart.getItems();
-            if (items != null) {
-                for (Map.Entry<String, Integer> entry : items.entrySet()) {
-                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-                }
-            }
+            //          Map<String, Integer> items = cart.getItems();
+//            if (items != null) {
+//                for (Map.Entry<String, Integer> entry : items.entrySet()) {
+//                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+//                }
+//            }
         }
         return ResponseEntity.ok().body(response);
     }
@@ -79,5 +81,19 @@ public class CartController {
         } else {
             return ResponseEntity.ok().body(null);
         }
+    }
+
+    @GetMapping("/api/cart/getTotalPriceInCart")
+    public ResponseEntity getTotalPrice(HttpSession session) {
+        float result = 0;
+        CartObject cart = (CartObject) session.getAttribute("CART");
+        if (cart != null && cart.getItems() != null) {
+            for (Map.Entry<String, Integer> entry : cart.getItems().entrySet()) {
+                result
+                        += productService.findByProductID(entry.getKey()).getSellprice()
+                        * entry.getValue();
+            }
+        }
+        return ResponseEntity.ok().body(result);
     }
 }
