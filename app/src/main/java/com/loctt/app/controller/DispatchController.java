@@ -77,5 +77,12 @@ public class DispatchController {
         model.addAttribute("numPage", (int) Math.ceil((float) cartService.getCartSize(cart) / 6));
         return "cart_page";
     }
+    
+//    @GetMapping("/showPaying")
+//    public String showPaying() {
+//        return "paying";
+//    }
+    
+    
 
 }

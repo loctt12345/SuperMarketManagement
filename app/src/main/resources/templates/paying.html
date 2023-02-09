@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<!--
-To change this license header, choose License Headers in Project Properties.
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<!--To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+and open the template in the editor.-->
+
 <head>
   <title>Paying</title>
   <meta charset="UTF-8">
@@ -24,7 +24,7 @@ and open the template in the editor.
 <body>
 <div class="container">
   <header th:replace="header :: header"></header>
-  <!--Content-->
+  Content
   <div class="row mt-3 tittle justify-content-center">
     <h1 class="text">
       Paying page
@@ -32,8 +32,8 @@ and open the template in the editor.
   </div>
 
   <div class="row mt-3 justify-content-center">
-<!--    get paying to server for process with method post-->
-    <form action="paying" class="col-8" method="post">
+    get paying to server for process with method post
+    <form action="/payingA" class="col-8" method="post">
       <div class="form-group">
         <label for="email">Email address:</label>
         <input type="email" class="form-control" placeholder="Enter email" id="email" name="userEmail">
@@ -48,7 +48,7 @@ and open the template in the editor.
         <label for="phone">Phone number:</label>
         <input type="text" class="form-control" placeholder="Enter phone number" id="phone" name="userPhone">
       </div>
-
+    
       <div class="row justify-content-center mb-3">
         <div class="form-check mr-4">
           <label class="form-check-label">
@@ -89,8 +89,6 @@ and open the template in the editor.
 
   </div>
 
-
-  <!--Content-->
   <footer th:replace="footer :: footer"></footer>
 
 </div>

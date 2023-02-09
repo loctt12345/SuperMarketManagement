@@ -15,18 +15,37 @@
     </head>
 
     <body>
-        <div class="container">
+<!--        <div class="container">
             <header th:replace="header :: header"></header>
 
-            <!--Content-->
+            Content
             <div class="content">
                 <div id="camera" class="row justify-content-center" style="margin-top: 50px;">
                     <div class="col-12 col-md-5">
                         <div style="height: 500px;" id="reader"></div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!--Content-->
+            
+            <form action="/payingA" class="col-8" method="post">
+      <div class="form-group">
+        <label for="email">Email address:</label>
+        <input type="email" class="form-control" placeholder="Enter email" id="email" name="userEmail">
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" class="form-control" placeholder="Enter address" id="address" name="userAddress">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone number:</label>
+        <input type="text" class="form-control" placeholder="Enter phone number" id="phone" name="userPhone">
+      </div>
+                <input type="submit" value="Submit" name="btnSubmit" />
+    </form>
+            
             <footer th:replace="footer :: footer"></footer>
 
 
