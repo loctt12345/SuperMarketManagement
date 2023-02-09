@@ -78,10 +78,10 @@ public class DispatchController {
         return "cart_page";
     }
     
-//    @GetMapping("/showPaying")
-//    public String showPaying() {
-//        return "paying";
-//    }
+    @GetMapping("/showPaying")
+    public String showPaying() {
+        return "paying";
+    }
     
     
 
