@@ -34,7 +34,6 @@ public class CartController {
     @Autowired
     private ProductService productService;
 
-    
     @PostMapping("/api/cart/update")
     public ResponseEntity updateProductInCart(@RequestBody JSONObject object, Model model, HttpSession session) {
         String productID = object.getAsString("productID");
@@ -46,12 +45,12 @@ public class CartController {
             cartService.updateItemInCart(productID, quantityInCart, cart);
             session.setAttribute("CART", cart);
             response.put("productID", productID);
-            Map<String, Integer> items = cart.getItems();
-            if (items != null) {
-                for (Map.Entry<String, Integer> entry : items.entrySet()) {
-                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-                }
-            }
+            //          Map<String, Integer> items = cart.getItems();
+//            if (items != null) {
+//                for (Map.Entry<String, Integer> entry : items.entrySet()) {
+//                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+//                }
+//            }
         }
         return ResponseEntity.ok().body(response);
     }
@@ -83,7 +82,7 @@ public class CartController {
             return ResponseEntity.ok().body(null);
         }
     }
-    
+
     @GetMapping("/api/cart/getTotalPriceInCart")
     public ResponseEntity getTotalPrice(HttpSession session) {
         float result = 0;

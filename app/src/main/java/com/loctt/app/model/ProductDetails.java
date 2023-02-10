@@ -4,6 +4,7 @@
  */
 package com.loctt.app.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 /**
@@ -13,9 +14,9 @@ import javax.persistence.*;
 //
 @Entity
 @Table(name = "Product_Details")
-public class ProductDetails {
+public class ProductDetails implements Serializable {
     @Id
-    @GeneratedValue
+//    @GeneratedValue
     @Column(name = "ProductID")
     private String productID;
     @Column(name = "Name")
@@ -33,12 +34,13 @@ public class ProductDetails {
     public ProductDetails() {
     }
 
-    public ProductDetails(String productID, String name, String description, String category, float sellprice) {
+    public ProductDetails(String productID, String name, String description, String category, String imageLink, float sellprice) {
         this.productID = productID;
         this.name = name;
         this.description = description;
         this.category = category;
         this.sellprice = sellprice;
+        this.imageLink = imageLink;
     }
 
     /**

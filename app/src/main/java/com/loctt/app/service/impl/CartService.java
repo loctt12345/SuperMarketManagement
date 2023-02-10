@@ -82,7 +82,7 @@ public class CartService implements ICartService {
         }
         //JSONObject json = new JSONObject(result);
         //json.appendField("quantityInCart", cart.getItems().get)
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
     

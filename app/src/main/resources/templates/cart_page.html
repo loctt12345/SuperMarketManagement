@@ -24,81 +24,7 @@ and open the template in the editor.
 
     <body onload="loadCart(1)">
         <div class="container">
-            <!--Header-->
-            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom-0"> <button type="button" class="close" data-dismiss="modal"
-                                                                           aria-label="Close"> <span aria-hidden="true">×</span> </button> </div>
-                        <div class="modal-body">
-                            <div class="form-title text-center">
-                                <h4>Login</h4>
-                            </div>
-                            <div class="d-flex flex-column text-center">
-                                <form>
-                                    <div class="form-group"> <input type="email" class="form-control" id="email1"
-                                                                    placeholder="username"> </div>
-                                    <div class="form-group"> <input type="password" class="form-control" id="password1"
-                                                                    placeholder="password..."> </div> <button type="button"
-                                                                              class="btn btn-success btn-block btn-round">Login</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                            <div class="signup-section">Not a member yet? <a href="#a" class="text-info"> Sign Up</a>.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <header class="hder">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="/">SMM</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">About us</a>
-                            </li>
-
-
-                            <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li> -->
-                        </ul>
-                        <a href="#" class="notification">
-                            <i class="fa-solid badge2 fa-bell" value="3"></i>
-                        </a>
-
-                        <a href="/showCart">
-                            <i class="fa badge fa-lg" id="cartIcon" th:value="${cartSize}">&#xf07a;</i>
-                        </a>
-
-                        <button type="button" class="btn btn-info btn-light ml-3 mr-3" data-toggle="modal"
-                                data-target="#loginModal">
-                            Login
-                        </button>
-                    </div>
-
-                </nav>
-            </header>
-            <!--Header-->
+           <header th:replace="header :: header"></header>
 
 
             <!--Content-->
@@ -109,28 +35,17 @@ and open the template in the editor.
                 </h1>
             </div>
 
-            
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" 
-                       th:href="@{'/showCart?page=' + ${page - 1 >= 1 ? page - 1 : 1}}">Previous
-                    </a></li>
-                    <li th:if="${numPage > 0}" th:each="i : ${#numbers.sequence( 1, numPage)}" class="page-item">
-                    <a class="page-link" th:href="@{'/showCart?page=' + ${i}}" th:text="${i}"></a></li>
-                <li class="page-item">
-                    <a class="page-link" 
-                       th:href="@{'/showCart?page=' + ${page + 1 <= numPage ? page + 1 : numPage}}"
-                       >Next</a></li>
-            </ul>
+
+
             <div class="table-responsive-sm">
-                <table class="table table-striped table-bordered mt-3">
+                <table class="table table table-bordered mt-3">
                     <thead>
                         <tr>
                             <th></th>
                             <th>Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
-                            <th>Update</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -140,93 +55,34 @@ and open the template in the editor.
             </div>
 
             <div class="row justify-content-center">
+                <h3 class="mr-3"> Total:&nbsp;<span id="totalPrice"></span> </h3>
+                
                 <a href="./paying.html">
                     <button class="btn btn-danger">
                         Pay
                     </button>
                 </a>
+                
             </div>
 
-
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" 
+                       th:href="@{'/showCart?page=' + ${page - 1 >= 1 ? page - 1 : 1}}">Previous
+                    </a></li>
+                <li th:if="${numPage > 0}" th:each="i : ${#numbers.sequence( 1, numPage)}" class="page-item">
+                    <a class="page-link" th:href="@{'/showCart?page=' + ${i}}" th:text="${i}"></a></li>
+                <li class="page-item">
+                    <a class="page-link" 
+                       th:href="@{'/showCart?page=' + ${page + 1 <= numPage ? page + 1 : numPage}}"
+                       >Next</a></li>
+            </ul>
 
             <!--Content-->
 
 
-            <!-- Footer -->
-            <footer class="fter">
+            <footer th:replace="footer :: footer"></footer>
 
-                <footer class="text-center text-lg-start text-muted">
-                    <!-- Section: Social media -->
-                    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-
-                    </section>
-                    <!-- Section: Social media -->
-
-                    <!-- Section: Links  -->
-                    <section class="">
-                        <div class="container text-center text-md-start mt-5">
-                            <!-- Grid row -->
-                            <div class="row mt-3">
-                                <!-- Grid column -->
-                                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                                    <!-- Content -->
-                                    <h6 class="text-uppercase fw-bold mb-4">
-                                        <i class="fas fa-gem me-3 text-secondary"></i>Team
-                                    </h6>
-                                    <p>
-                                        Here you can use rows and columns to organize your footer content. Lorem ipsum
-                                        dolor sit amet, consectetur adipisicing elit.
-                                    </p>
-                                </div>
-                                <!-- Grid column -->
-
-                                <!-- Grid column -->
-                                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                                    <!-- Links -->
-                                    <h6 class="text-uppercase fw-bold mb-4">
-                                        Products
-                                    </h6>
-                                    <p>
-                                        <a href="#!" class="text-reset">Super Market Management</a>
-                                    </p>
-
-                                </div>
-                                <!-- Grid column -->
-
-
-
-                                <!-- Grid column -->
-                                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                                    <!-- Links -->
-                                    <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                                    <p><i class="fas fa-home me-3 text-secondary"></i> New York, NY 10012, US</p>
-                                    <p>
-                                        <i class="fas fa-envelope me-3 text-secondary"></i>
-                                        info@example.com
-                                    </p>
-                                    <p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 88</p>
-                                    <p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
-                                </div>
-                                <!-- Grid column -->
-                            </div>
-                            <!-- Grid row -->
-                        </div>
-                    </section>
-                    <!-- Section: Links  -->
-
-                    <!-- Copyright -->
-                    <div class="text-center p-4 fter-bot">
-                        © 2021 Copyright:
-                        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-                    </div>
-                    <!-- Copyright -->
-                </footer>
-                <!-- Footer -->
-
-                
-            </footer>
-            <!-- Footer -->
-            
         </div>
         <input type="hidden" th:value="${page}" id="page" />
         <script>includeHTML()</script>

@@ -5,6 +5,7 @@
 package com.loctt.app.repository;
 
 import com.loctt.app.model.ProductDetails;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IProductRepository extends JpaRepository<ProductDetails, String>{
     ProductDetails findByProductID(String ProductID);
+    List<ProductDetails> findByCategoryContaining(String category);
+    List<ProductDetails> findByNameContaining(String name);
+    ProductDetails save(ProductDetails product);
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Add New Item</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+                    <h1 class="text-center">Add new item</h1>
+                    <div class="card-body">
+                        <form th:action="@{/products}" th:object="${product}" method="POST">
+                            <div class="form-group">
+                                <label for="productID">ProductID: </label>
+                                <input class="form-control" type="text" name="productID" th:field="*{product.id}" placeholder="Enter productID" />
+                            </div>
+                            <div class="form-group">
+                                <label for="productName">Product Name: </label>
+                                <input class="form-control" type="text" name="productName" th:field="*{product.name}" placeholder="Enter productName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="productQuantity">Quantity: </label>
+                                <input class="form-control" type="text" name="productQuantity" th:field="*{product.quantity}" placeholder="Enter productQuantity" />
+                            </div>
+                            <div class="form-group">
+                                <label for="productSellPrice">Price: </label>
+                                <input class="form-control" type="text" name="productQuantity" th:field="*{product.sellprice}" placeholder="Enter productQuantity" />
+                            </div>
+                            <div class="form-group">
+                                <label for="addImage">Add Image: </label>
+                                <input class="form-control" type="text" name="input-link-image" placeholder="input link Image">
+                            </div>
+                                <button class="btn btn-success" type="submit">
+                                    Add
+                                </button>
+                            </div>
+                        </form>
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
