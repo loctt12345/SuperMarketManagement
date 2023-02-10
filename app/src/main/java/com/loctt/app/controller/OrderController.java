@@ -6,19 +6,14 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.PrimaryOrder;
-import com.loctt.app.model.OrderStatus;
 import com.loctt.app.service.IOrderService;
 import com.loctt.app.service.impl.GenerateUUID;
-import java.time.LocalDateTime;
 import java.util.Date;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
@@ -41,7 +36,7 @@ public class OrderController {
 //    }
     
     @PostMapping("/paying/order") 
-    public void savedOrder(@RequestParam(name="userEmail") String email, 
+    public String savedOrder(@RequestParam(name="userEmail") String email, 
                            @RequestParam(name="userPhone") String phone, 
                            @RequestParam(name="userAddress") String address,
                            HttpSession session)  {
@@ -74,7 +69,7 @@ public class OrderController {
 
             //2. call Add Order Details Service 
             orderService.saveOrderDetails(cart, orderID);
-        
+        return "redirect:/";
     }
     
 }

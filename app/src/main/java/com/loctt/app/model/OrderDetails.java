@@ -28,7 +28,7 @@ public class OrderDetails {
     @Column(name = "ProductID")
     private String productID;
     
-    @Column(name = "SOLDNUMBER")
+    @Column(name = "Sold_Number")
     private int soldNumber;
 
     public OrderDetails() {

@@ -9,5 +9,10 @@ function closeWalletInfo() {
 }
 
 function setTotalPrice() {
-    fetch('/api/cart/getTotalPriceInCart')
+    fetch('/api/cart/getTotalPriceInCart').then(function (response) {
+        response.json().then((data) => {
+            document.getElementById('totalPrice').innerHTML = data
+                    .toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        });
+    });
 }
