@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,22 +25,22 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Administrator
  */
 
-@RestController
+@Controller
 public class OrderController {
     
     @Autowired
     IOrderService orderService;
     
-    @GetMapping("/test")
-    public OrderStatus getOrderStatus(@RequestParam(name="txtID") String ID) {
-        
-        OrderStatus result = orderService.findorderStatusID(Integer.parseInt(ID));
-        
-        return result;
+//    @GetMapping("/test")
+//    public OrderStatus getOrderStatus(@RequestParam(name="txtID") String ID) {
+//        
+//        OrderStatus result = orderService.findorderStatusID(Integer.parseInt(ID));
+//        
+//        return result;
+//    
+//    }
     
-    }
-    
-    @PostMapping("/payingA") 
+    @PostMapping("/paying/order") 
     public void savedOrder(@RequestParam(name="userEmail") String email, 
                            @RequestParam(name="userPhone") String phone, 
                            @RequestParam(name="userAddress") String address,
