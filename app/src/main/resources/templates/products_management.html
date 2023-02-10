@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="image">Add Image: </label>
-                                        <input class="form-control" type="number" name="image" placeholder="Input Link Image">
+                                        <input class="form-control" type="text" name="image" placeholder="Input Link Image">
                                     </div>
                                     <input type="hidden" name="lastSearchValue" th:value="${searchValue}" />
                                     <input type="hidden" name="lastSearchBy" th:value="${searchBy}" />
@@ -89,11 +89,11 @@
             <div class="main-content row">    
                 <div class="side-bar bg-light col-md-2">
                     <h1 class="">Dashboard</h1>
-                    <a class="btn btn-success" href="#">Danh sách nhân viên</a>
+                    <a class="btn btn-success col-md-10 mb-3" href="#">Danh sách nhân viên</a>
                     <br>
-                    <a class="quan-li-qrcode btn btn-success" href="#">Quản lý QRCode</a>
+                    <a class="quan-li-qrcode btn btn-success col-md-10 mb-3" href="#">Quản lý QRCode</a>
                     <br>
-                    <a class="bao-cao-button btn btn-danger" href="#">Báo cáo</a>
+                    <a class="bao-cao-button btn btn-danger col-md-10" href="#">Báo cáo</a>
                 </div>
 
                 <div class="col-md-10 table-responsive-md" th:if="${PRODUCTS_RESULT ne null}">
