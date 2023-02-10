@@ -10,15 +10,8 @@ import com.loctt.app.model.ProductDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.loctt.app.service.IProductService;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.minidev.json.JSONObject;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**

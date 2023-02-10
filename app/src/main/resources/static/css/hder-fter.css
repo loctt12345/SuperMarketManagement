@@ -10,10 +10,7 @@ and open the template in the editor.
 
 .hder {
     background-color: #8EFFAB;
-    border-left: rgb(128, 116, 116) solid 2px;
-    border-bottom: rgb(128, 116, 116) solid 1px;
-    border-radius: 10px;
-    margin-top: 5px;
+
 }
 
 .badge2:after {
@@ -45,10 +42,6 @@ and open the template in the editor.
 
 .fter-bot {
     background-color: #8EFFAB;
-    border-left: rgb(128, 116, 116) solid 2px;
-    border-bottom: rgb(128, 116, 116) solid 1px;
-    border-radius: 10px;
-    margin-bottom: 5px;
 }
 
 
