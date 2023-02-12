@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Employee Management</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- <link rel="stylesheet" href="/app/src/main/resources/static/css/admin.css"> -->
+        <link rel="stylesheet" href="/app/src/main/resources/static/css/admin.css">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1 class="title">Employee Management</h1>
+            <hr>
+
+
+            <nav class="navbar navbar-light bg-light">
+                <a class="navbar-brand"></a>
+                <form class="form-inline" th:action="@{}">
+                    <input class="search-button form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" th:value="${lastSearchValue}" name="searchValue">
+                    <input type="submit" class="btn btn-success my-2 my-sm-0" value="Search"></input>
+                    <select name="searchBy" class="btn ml-2">
+                        <option th:if="${lastSearchBy == 'id'}" th:value="id" selected="selected">employeeID</option>
+                        <option th:unless="${lastSearchBy == 'id'}" th:value="id" >employeeID</option>
+                        <option th:if="${lastSearchBy == 'name'}" th:value="name" selected="selected">Name</option>
+                        <option th:unless="${lastSearchBy == 'name'}" th:value="name">Name</option>
+                    </select>
+
+                </form>
+
+                <input class="btn btn-success" data-toggle="modal" data-target="#myModal" type="submit" th:href="@{}" value="Add New Employee" name="" />
+
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add New Employee</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form th:action="@{}" method="POST"> <!-- add -->
+                                    <div class="form-group">
+                                        <label for="id">ID: </label>
+                                        <input class="form-control" type="text" name="id" placeholder="Enter Employee ID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Name: </label>
+                                        <input class="form-control" type="text" name="name" placeholder="Enter Employee Name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phonenNumber">Phone: </label>
+                                        <input class="form-control" type="number" name="phonenNumber" placeholder="Enter Phone Number" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email: </label>
+                                        <input class="form-control" type="text" name="email" placeholder="Enter Employee Email" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Addres: </label>
+                                        <input class="form-control" type="text" name="address" placeholder="Enter Address" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="salary">Salary: </label>
+                                        <input class="form-control" type="number" name="salary" placeholder="Enter Salary">
+                                    </div>
+                                    <input type="hidden" name="lastSearchValue" th:value="${lastSearchValue}" />
+                                    <input type="hidden" name="lastSearchBy" th:value="${lastSearchBy}" />
+                                    <button class="btn btn-success" type="submit" name="">
+                                        Add
+                                    </button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <br/>
+            <div class="main-content row">    
+                <div class="side-bar col-md-2">
+                    <h1 class="">Dashboard</h1>
+                    <a class="btn btn-success" href="#">Employee Management</a>
+                    <br>
+                    <a class="quan-li-qrcode btn btn-success" href="#">QRCode Management</a>
+                    <br>
+                    <a class="bao-cao-button btn btn-success" href="#">Report</a>
+                </div>
+
+                <div class="col-md-10 table-responsive-md" th:if="${}">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>FullName</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="employee : ${}"> <!-- add -->
+                                <td th:text="${employee.employeeID}"></td>
+                                <td th:text="${employee.fullName}"></td>
+                                <td th:text="${employee.phone}"></td>
+                                <td th:text="${employee.email}"></td>
+                                <td th:text="${employee.address}"></td>
+                                <td th:text="${employee.salary}"></td>
+                                <td>
+
+                                    <div class="p-3">
+                                        <input type="submit" class="btn btn-primary form-group row" value="Update" data-toggle="modal" data-target="#myModal1" name="" />
+                                    </div>
+                                    <div class="modal fade" id="myModal1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Update Employee Information</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:action="@{}" method="POST"> <!-- add -->
+                                                        <div class="form-group">
+                                                            <label for="employeePhoneNumber">Phone Number: </label>
+                                                            <input class="form-control" type="number" name="employeePhoneNumber" th:value="${employee.phone}" placeholder="Enter Employee Phone Number" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="employeeEmail">Email: </label>
+                                                            <input class="form-control" type="text" name="employeeEmail" th:value="${employee.email}" placeholder="Enter Employee Email" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="employeeAddress">Address: </label>
+                                                            <input class="form-control" type="text" name="employeeAddress" th:value="${employee.address}" placeholder="Enter Employee Address" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="employeeSalary">Salary: </label>
+                                                            <input class="form-control" type="number" name="employeeSalary" th:value="${employee.salary}" placeholder="Enter Employee Salary" />
+                                                        </div>
+                                                        <button class="btn btn-success" type="submit">
+                                                            Update
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                        <input type="hidden" name="lastSearchValue" th:value="${lastSearchValue}" />
+                                                        <input type="hidden" name="productID" th:value="${product.productID}" />
+                                                        <input type="hidden" name="lastSearchBy" th:value="${lastSearchBy}" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3">
+                                        <a class="btn btn-danger form-group row" th:href="@{/admin/delete-employee(id=${employee.employeeID},lastSearchValue=${lastSearchValue},lastSearchBy=${lastSearchBy})}">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-10" th:unless="${}">  <!-- add -->
+                    <h2>No result matched!</h2>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
