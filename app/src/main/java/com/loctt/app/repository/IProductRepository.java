@@ -18,5 +18,6 @@ public interface IProductRepository extends JpaRepository<ProductDetails, String
     ProductDetails findByProductID(String ProductID);
     List<ProductDetails> findByCategoryContaining(String category);
     List<ProductDetails> findByNameContaining(String name);
+    //List<ProductDetails> findAll();
     ProductDetails save(ProductDetails product);
 }

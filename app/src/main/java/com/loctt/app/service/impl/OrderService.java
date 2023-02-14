@@ -13,6 +13,7 @@ import com.loctt.app.repository.IOrderStatusRepository;
 import com.loctt.app.repository.IPrimaryOrderRepository;
 import com.loctt.app.repository.IProductRepository;
 import com.loctt.app.service.IOrderService;
+import com.loctt.app.service.IProductService;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,9 @@ public class OrderService implements IOrderService{
     @Autowired
     IProductRepository productRepository;
     
+//    @Autowired
+//    IProductService productService;
+    
     @Override
     public OrderStatus findorderStatusID(int id) {
         return this.orderStatusRepository.findByorderStatusID(id);
@@ -59,8 +63,18 @@ public class OrderService implements IOrderService{
             for (Map.Entry<String, Integer> entry : items.entrySet()) {
                 //Generate ID for items
                 String id = GenerateUUID.getUUID();
+                
+                //Get sellPrice of Product
+                float sellPrice = productRepository
+                                  .findByProductID(entry.getKey())
+                                  .getSellprice();
+                
+                //Amount of this Product
+                float amount = sellPrice * entry.getValue();
+                
+                
                 //Generate the OrderDetails to save Database
-                OrderDetails orderItems = new OrderDetails(id, orderID, entry.getKey(), entry.getValue());
+                OrderDetails orderItems = new OrderDetails(id, orderID, entry.getKey(), entry.getValue(), amount);
                 orderDetailsRepository.save(orderItems);
                 
             }

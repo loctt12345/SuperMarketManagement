@@ -29,30 +29,34 @@ public class OrderDetails {
     private String productID;
     
     @Column(name = "Sold_Number")
+    
     private int soldNumber;
 
+    @Column(name = "Amount")
+    private float amount;
     public OrderDetails() {
     }
 
-    public OrderDetails(String orderDetailsID, String orderID, String productID, int soldNumber) {
+    public OrderDetails(String orderDetailsID, String orderID, String productID, int soldNumber, float amount) {
         this.orderDetailsId = orderDetailsID;
         this.orderID = orderID;
         this.productID = productID;
         this.soldNumber = soldNumber;
+        this.amount = amount;
     }
 
     /**
      * @return the orderDetailsID
      */
     public String getOrderDetailsID() {
-        return orderDetailsId;
+        return getOrderDetailsId();
     }
 
     /**
      * @param orderDetailsID the orderDetailsID to set
      */
     public void setOrderDetailsID(String orderDetailsID) {
-        this.orderDetailsId = orderDetailsID;
+        this.setOrderDetailsId(orderDetailsID);
     }
 
     /**
@@ -95,6 +99,34 @@ public class OrderDetails {
      */
     public void setSoldNumber(int soldNumber) {
         this.soldNumber = soldNumber;
+    }
+
+    /**
+     * @return the orderDetailsId
+     */
+    public String getOrderDetailsId() {
+        return orderDetailsId;
+    }
+
+    /**
+     * @param orderDetailsId the orderDetailsId to set
+     */
+    public void setOrderDetailsId(String orderDetailsId) {
+        this.orderDetailsId = orderDetailsId;
+    }
+
+    /**
+     * @return the amount
+     */
+    public float getAmount() {
+        return amount;
+    }
+
+    /**
+     * @param amount the amount to set
+     */
+    public void setAmount(float amount) {
+        this.amount = amount;
     }
     
     
