@@ -6,7 +6,7 @@
 package com.loctt.app.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 
@@ -50,7 +50,7 @@ public class CartObject implements Serializable{
         
         //Kiem tra gio ton tai chua
         if (this.items == null) {
-            this.items = new HashMap<>();
+            this.items = new LinkedHashMap<>();
         } // items have not existed
         
         //Gio ton tai thi tang so luong ngoai gio

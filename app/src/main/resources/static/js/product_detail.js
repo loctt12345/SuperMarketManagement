@@ -38,3 +38,10 @@ function loadProduct() {
     );
 }
 
+function addToCart() {
+    var txtProductID = document.getElementById('product_id').value;
+    var txtNumber = document.getElementById('quantity-input').value;
+    fetch('/api/cart/addToCart?txtProductID='+txtProductID+'&txtNumber='+txtNumber).then((response) => {
+           window.location.href = "/";
+    });
+}

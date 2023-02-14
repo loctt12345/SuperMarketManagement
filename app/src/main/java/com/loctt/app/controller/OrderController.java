@@ -68,7 +68,10 @@ public class OrderController {
             
 
             //2. call Add Order Details Service 
-            orderService.saveOrderDetails(cart, orderID);
+            orderService.saveOrderDetails(cart, orderID); 
+            
+            //3. remove cart after checkout
+            cart.getItems().clear();
         return "redirect:/";
     }
     

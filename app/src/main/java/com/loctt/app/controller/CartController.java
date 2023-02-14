@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -45,12 +46,6 @@ public class CartController {
             cartService.updateItemInCart(productID, quantityInCart, cart);
             session.setAttribute("CART", cart);
             response.put("productID", productID);
-            //          Map<String, Integer> items = cart.getItems();
-//            if (items != null) {
-//                for (Map.Entry<String, Integer> entry : items.entrySet()) {
-//                    System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
-//                }
-//            }
         }
         return ResponseEntity.ok().body(response);
     }
@@ -95,5 +90,14 @@ public class CartController {
             }
         }
         return ResponseEntity.ok().body(result);
+    }
+    
+    //Add new Item to Cart
+    @GetMapping("api/cart/addToCart")
+    public ResponseEntity addToCart(@RequestParam(name = "txtProductID") String txtProductID,
+            @RequestParam(name = "txtNumber") String txtNumber, HttpSession session) {
+        if (productService.findByProductID(txtProductID) != null)
+            cartService.addToCart(txtProductID, txtNumber, session);
+        return ResponseEntity.ok().body(null);
     }
 }
