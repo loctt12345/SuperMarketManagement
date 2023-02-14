@@ -18,4 +18,5 @@ public interface IProductService {
     public List<ProductDetails> findByNameContaining(String name);
     public ProductDetails save(ProductDetails product);
     public void deleteById(String productID);
+    public List<ProductDetails> findAll();
 }

@@ -44,7 +44,8 @@ public class DispatchController {
     }
     //TestAdmin
     @GetMapping("/admin-page")
-    public String adminPage() {
+    public String adminPage(Model model) {
+        model.addAttribute("PRODUCTS_RESULT", productService.findAll());
         return "products_management";
     }
     @GetMapping("/product-detail")
