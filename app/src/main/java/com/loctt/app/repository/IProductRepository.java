@@ -14,9 +14,17 @@ import org.springframework.stereotype.Repository;
  * @author Administrator
  */
 @Repository
-public interface IProductRepository extends JpaRepository<ProductDetails, String>{
+public interface IProductRepository extends JpaRepository<ProductDetails, String> {
+
     ProductDetails findByProductID(String ProductID);
-    List<ProductDetails> findByCategoryContaining(String category);
-    List<ProductDetails> findByNameContaining(String name);
+
+    ProductDetails findByProductIDAndStatusNot(String ProductID, boolean status);
+
+    List<ProductDetails> findByCategoryContainingAndStatusNot(String category, boolean status);
+
+    List<ProductDetails> findByNameContainingAndStatusNot(String name, boolean status);
+
     ProductDetails save(ProductDetails product);
+
+    List<ProductDetails> findByStatusNot(boolean status);
 }

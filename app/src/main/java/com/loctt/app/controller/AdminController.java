@@ -7,19 +7,14 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.impl.ProductService;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -80,12 +75,10 @@ public class AdminController {
                 ex.printStackTrace();
             }
         }
-        ProductDetails newProduct = new ProductDetails(productID, productName, productDes, productCategory, productImageLink, productSellPrice);
-        productService.save(newProduct);
-       String lastSearchValue = allParams.get("lastSearchValue");
-        redirectAttributes.addAttribute("searchValue", lastSearchValue);
-        String lastSearchBy = allParams.get("lastSearchBy");
-        redirectAttributes.addAttribute("searchBy", lastSearchBy);
+        ProductDetails newProduct = new ProductDetails(productID, productName, productDes, productCategory, productSellPrice, productImageLink);
+        this.productService.save(newProduct);
+        redirectAttributes.addAttribute("searchBy", "id");
+        redirectAttributes.addAttribute("searchValue", productID);
         return "redirect:/admin/findProduct";
     }
 
@@ -116,10 +109,14 @@ public class AdminController {
         updateProduct.setSellprice(sellPrice);
         productService.save(updateProduct);
         String lastSearchValue = allParams.get("lastSearchValue");
-        redirectAttributes.addAttribute("searchValue", lastSearchValue);
         String lastSearchBy = allParams.get("lastSearchBy");
-        redirectAttributes.addAttribute("searchBy", lastSearchBy);
-        return "redirect:/admin/findProduct";
+        if (lastSearchBy.isEmpty() || lastSearchValue.isEmpty()) {
+            return "redirect:/admin-page";
+        } else {
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            return "redirect:/admin/findProduct";
+        }
     }
 
     @GetMapping("/delete-product")
@@ -129,9 +126,13 @@ public class AdminController {
             this.productService.deleteById(productID);
         }
         String lastSearchValue = allParams.get("lastSearchValue");
-        redirectAttributes.addAttribute("searchValue", lastSearchValue);
         String lastSearchBy = allParams.get("lastSearchBy");
-        redirectAttributes.addAttribute("searchBy", lastSearchBy);
-        return "redirect:/admin/findProduct";
+        if (lastSearchBy.isEmpty() || lastSearchValue.isEmpty()) {
+            return "redirect:/admin-page";
+        } else {
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            return "redirect:/admin/findProduct";
+        }
     }
 }

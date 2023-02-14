@@ -68,8 +68,6 @@
                                         <label for="image">Add Image: </label>
                                         <input class="form-control" type="text" name="image" placeholder="Input Link Image">
                                     </div>
-                                    <input type="hidden" name="lastSearchValue" th:value="${searchValue}" />
-                                    <input type="hidden" name="lastSearchBy" th:value="${searchBy}" />
                                     <button class="btn btn-success" type="submit" name="">
                                         Add
                                     </button>
@@ -113,7 +111,7 @@
                         <tbody>
                             <tr th:each="product : ${PRODUCTS_RESULT}">
                                 <td th:text="${product.productID}"></td>
-                                <td><img class="img-fluid rounded img-thumbnail" th:src="@{${product.imageLink}}" alt="product image"></td>
+                                <td><img class="rounded img-thumbnail" th:src="@{${product.imageLink}}" alt="product image"></td>
                                 <td th:text="${product.name}"></td>
                                 <!--                                <td th:text="${product.quantity}"></td>-->
                                 <td th:text="${product.category}"></td>
@@ -162,8 +160,8 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-10" th:unless="${PRODUCTS_RESULT ne null}">
-                    <h2>No result matched!</h2>
+                <div class="col-md-10 text-center text-danger" th:unless="${PRODUCTS_RESULT ne null}">
+                    <h2>No result found!</h2>
                 </div>
             </div>
         </div>

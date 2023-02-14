@@ -19,7 +19,7 @@ public class OrderDetails {
     //Cơ chế của Spring Boot - Viết mà Kiểu con Rắn ThisSnake -> Generate: this_snake, 
     //Viết Chữ Hoa thì sẽ ko bị biến thành dấu _
     @Id
-    @Column(name = "ORDERDETAILSID")
+    @Column(name = "OrderDetailsID")
     private String orderDetailsId;
     
     @Column(name = "OrderID")
@@ -30,12 +30,29 @@ public class OrderDetails {
     
     @Column(name = "Sold_Number")
     private int soldNumber;
+    @Column(name = "Amount")
+    private float amount;
 
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
     public OrderDetails() {
     }
 
-    public OrderDetails(String orderDetailsID, String orderID, String productID, int soldNumber) {
+    public OrderDetails(String orderDetailsID, String orderID, String productID, int soldNumber, float amount) {
         this.orderDetailsId = orderDetailsID;
+        this.orderID = orderID;
+        this.productID = productID;
+        this.soldNumber = soldNumber;
+        this.amount = amount;
+    }
+
+    public OrderDetails(String orderDetailsId, String orderID, String productID, int soldNumber) {
+        this.orderDetailsId = orderDetailsId;
         this.orderID = orderID;
         this.productID = productID;
         this.soldNumber = soldNumber;
