@@ -76,6 +76,7 @@ public class AdminController {
             }
         }
         ProductDetails newProduct = new ProductDetails(productID, productName, productDes, productCategory, productSellPrice, productImageLink);
+        newProduct.setStatus(true);
         this.productService.save(newProduct);
         redirectAttributes.addAttribute("searchBy", "id");
         redirectAttributes.addAttribute("searchValue", productID);
@@ -107,6 +108,7 @@ public class AdminController {
         updateProduct.setDescription(productService.findByProductID(productID).getDescription());
         updateProduct.setImageLink(productService.findByProductID(productID).getImageLink());
         updateProduct.setSellprice(sellPrice);
+        updateProduct.setStatus(true);
         productService.save(updateProduct);
         String lastSearchValue = allParams.get("lastSearchValue");
         String lastSearchBy = allParams.get("lastSearchBy");

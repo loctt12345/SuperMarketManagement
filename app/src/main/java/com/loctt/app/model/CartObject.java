@@ -34,10 +34,10 @@ public class CartObject implements Serializable{
     public void setItems(Map<String, Integer> items) {
         this.items = items;
     }
+    
     public void addItemToCart(String productID, int quantity) {
         if (productID == null) {
             return;
-        
         }
         
         if (productID.trim().isEmpty()) {

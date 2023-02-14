@@ -44,7 +44,9 @@ public class ProductService implements IProductService {
 
     @Override
     public void deleteById(String productID) {
-        this.productRepository.save(this.productRepository.findByProductIDAndStatusNot(productID, false));
+        ProductDetails product = this.productRepository.findByProductIDAndStatusNot(productID, false);
+        product.setStatus(false);
+        this.productRepository.save(product);
     }
 
     @Override
