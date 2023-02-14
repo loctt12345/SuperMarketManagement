@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Delivery Process and Order Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+	<link rel="stylesheet" type="text/css" href="payment.css">
+	<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+</head>
+
+<body>
+	<header class="hder">
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header border-bottom-0"> <button type="button" class="close" data-dismiss="modal"
+							aria-label="Close"> <span aria-hidden="true">×</span> </button> </div>
+					<div class="modal-body">
+						<div class="form-title text-center">
+							<h4>Login</h4>
+						</div>
+						<div class="d-flex flex-column text-center">
+							<form>
+								<div class="form-group"> <input type="email" class="form-control" id="email1"
+										placeholder="username"> </div>
+								<div class="form-group"> <input type="password" class="form-control" id="password1"
+										placeholder="password..."> </div> <button type="button"
+									class="btn btn-success btn-block btn-round">Login</button>
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<div class="signup-section">Not a member yet? <a href="#a" class="text-info"> Sign Up</a>.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<nav class="navbar navbar-expand-lg navbar-light">
+			<a class="navbar-brand" href="/">SMM</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">About us</a>
+					</li>
+
+
+					<!-- <li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Dropdown
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				<a class="dropdown-item" href="#">Action</a>
+				<a class="dropdown-item" href="#">Another action</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#">Something else here</a>
+			</div>
+		</li> -->
+				</ul>
+				<a href="#" class="notification">
+					<i class="fa-solid badge2 fa-bell" value="3"></i>
+				</a>
+
+				<a href="/showCart">
+					<i class="fa badge fa-lg" id="cartIcon" th:value="${cartSize}">&#xf07a;</i>
+				</a>
+
+				<button type="button" class="btn btn-info btn-light ml-3 mr-3" data-toggle="modal"
+					data-target="#loginModal">
+					Login
+				</button>
+			</div>
+
+		</nav>
+	</header>
+	<!--Header-->
+
+	<!-- content -->
+	<div class="container">
+
+		<!-- use for to scan progress -->
+		<div class="progress">
+			<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+				aria-valuemin="0" aria-valuemax="100" style="width: 100%">			
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-3 mt-3 progresss-container">
+			
+			<div class="col-md-2">
+				<div class="ship-step">
+					<div class="ship-icon">
+						<i class="fas fa-shopping-cart"></i>
+					</div>
+					<div class="ship-content">
+						<h3>Order Placed</h3>
+						<p>Your order has been placed successfully</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2">
+				<div class="ship-step">
+					<div class="ship-icon">
+						<i class="fas fa-box"></i>
+					</div>
+					<div class="ship-content">
+						<h3>Packing the package</h3>
+						<p>Your order has been packing</p>
+					</div>
+				</div>
+			</div>
+
+
+
+			<!-- <div class="crossbar col-md-1.5"> -->
+
+
+			<div class="col-md-2">
+				<div class="ship-step">
+					<div class="ship-icon">
+						<i class="fas fa-check"></i>
+					</div>
+					<div class="ship-content">
+						<h3>Order Received</h3>
+						<p>Your order has been processed</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-2">
+				<div class="ship-step">
+					<div class="ship-icon">
+						<i class="fas fa-check-double"></i>
+					</div>
+					<div class="ship-content">
+						<h3>Order Received</h3>
+						<p>Your order has been delivering</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- <div class="crossbar col-md-1.5"> -->
+
+
+			<div class="col-md-2">
+				<div class="ship-step">
+					<div class="ship-icon">
+						<i class="fas fa-truck"></i>
+					</div>
+					<div class="ship-content">
+						<h3>Order Delivered</h3>
+						<p>Your order has been delivered successfully</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="customer-information mb-3">
+			<h3>Order Information</h3>
+			<h4>Order ID: Push Data to this field</h4>
+			<h4>Order Date: Push Data to this field</h4>
+			<h4>Customer Name: Push Data to this field</h4>
+			<h4>Customer Address: Push Data to this field</h4>
+			<h4>Customer Phone: Push Data to this field</h4>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="order-list">
+					<h3>Order List</h3>
+				</div>
+				<div class="order-demo">
+					<div class="order-item">
+						<img src="https://cdn.tgdd.vn/Products/Images/2565/77622/bhx/mi-hao-hao-vi-tom-chua-cay-goi-75g-202110110919568290.JPG"
+							alt="Product Image">
+						<div class="order-info">
+							<h4>Product Name</h4>
+							<p>Quantity: 1</p>
+							<p>Price: $10.00</p>
+						</div>
+					</div>
+					<div class="order-item">
+						<img src="https://cdn.tgdd.vn/Products/Images/2565/77622/bhx/mi-hao-hao-vi-tom-chua-cay-goi-75g-202110110919568290.JPG"
+							alt="Product Image">
+						<div class="order-info">
+							<h4>Product Name</h4>
+							<p>Quantity: 2</p>
+							<p>Price: $20.00</p>
+						</div>
+					</div>
+					<div class="order-item">
+						<img src="https://cdn.tgdd.vn/Products/Images/2565/77622/bhx/mi-hao-hao-vi-tom-chua-cay-goi-75g-202110110919568290.JPG"
+							alt="Product Image">
+						<div class="order-info">
+							<h4>Product Name</h4>
+							<p>Quantity: 1</p>
+							<p>Price: $15.00</p>
+						</div>
+					</div>
+					<div class="order-total">
+						<div class="paying-method">
+							<p>Total: $45.00</p>
+							<p>Method: #</p>
+						</div>
+
+						<!-- <button class="delivery-button">
+							<a href="#">Back to Home</a>
+						</button> -->
+
+						<div class="button-trigger">
+
+							<!-- Button modal -->
+							<button id="delivery-button" type="button" class="btn btn-primary">Confirm Delivery</button>
+
+							<!-- Modal -->
+							<div id="delivery-modal" class="modal">
+								<div id="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Delivery Successful</h5>
+										<button class="close">&times;</button>
+									</div>
+									<div class="modal-body">
+										<p>Your order has been delivered successfully</p>
+										<h6>Press any where to close</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- content -->
+
+	<!-- Footer -->
+	<footer class="fter">
+
+		<footer class="text-center text-lg-start text-muted">
+			<!-- Section: Social media -->
+			<section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+
+			</section>
+			<!-- Section: Social media -->
+
+			<!-- Section: Links  -->
+			<section class="">
+				<div class="container text-center text-md-start mt-5">
+					<!-- Grid row -->
+					<div class="row mt-3">
+						<!-- Grid column -->
+						<div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+							<!-- Content -->
+							<h6 class="text-uppercase fw-bold mb-4">
+								<i class="fas fa-gem me-3 text-secondary"></i>Team
+							</h6>
+							<p>
+								Tran Thien Loc <br />
+								Phan Nhat Tan <br />
+								Lo Hung Khanh <br />
+								Nguyen Chanh Nhat Minh <br />
+								Huynh Nhat Thien Hoang <br />
+							</p>
+						</div>
+						<!-- Grid column -->
+
+						<!-- Grid column -->
+						<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+							<!-- Links -->
+							<h6 class="text-uppercase fw-bold mb-4">
+								Products
+							</h6>
+							<p>
+								<a href="#!" class="text-reset">Super Market Management</a>
+							</p>
+
+						</div>
+						<!-- Grid column -->
+
+						<!-- Grid column -->
+						<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+							<!-- Links -->
+							<h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+							<p>
+								<i class="fas fa-envelope me-3 text-secondary"></i>
+								locttse160275@fpt.edu.vn
+							</p>
+							<p><i class="fas fa-phone me-3 text-secondary"></i> 0365129033</p>
+						</div>
+						<!-- Grid column -->
+					</div>
+					<!-- Grid row -->
+				</div>
+			</section>
+			<!-- Section: Links  -->
+
+			<!-- Copyright -->
+			<div class="text-center p-4 fter-bot">
+				© 2023 Copyright
+			</div>
+			<!-- Copyright -->
+		</footer>
+		<!-- Footer -->
+
+
+	</footer>
+	<!-- Footer -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js"></script>
+	<script src="assets/js/pages/sweetalerts.init.js"></script>
+	<script>
+		// Get the modal
+		var modal = document.getElementById("delivery-modal");
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("delivery-button");
+
+		// When the user clicks on the button, open the modal
+		btn.onclick = function () {
+			modal.style.display = "block";
+		};
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		};
+	</script>
+</body>
