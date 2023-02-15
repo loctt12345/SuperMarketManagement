@@ -19,7 +19,7 @@ public class OrderDetails {
     //Cơ chế của Spring Boot - Viết mà Kiểu con Rắn ThisSnake -> Generate: this_snake, 
     //Viết Chữ Hoa thì sẽ ko bị biến thành dấu _
     @Id
-    @Column(name = "OrderDetailsID")
+    @Column(name = "ORDERDETAILSID")
     private String orderDetailsId;
     
     @Column(name = "OrderID")

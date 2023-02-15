@@ -53,9 +53,4 @@ public class ProductService implements IProductService {
     public List<ProductDetails> findAll() {
         return this.productRepository.findByStatusNot(false);
     }
-
-    @Override
-    public List<ProductDetails> findAll() {
-        return productRepository.findAll();
-    }
 }
