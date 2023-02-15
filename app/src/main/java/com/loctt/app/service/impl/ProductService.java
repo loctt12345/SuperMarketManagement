@@ -17,23 +17,24 @@ import java.util.List;
  * @author loc12345
  */
 @Service
-public class ProductService implements IProductService{
+public class ProductService implements IProductService {
+
     @Autowired
     private IProductRepository productRepository;
-    
+
     @Override
     public ProductDetails findByProductID(String productID) {
-        return  this.productRepository.findByProductID(productID);
+        return this.productRepository.findByProductIDAndStatusNot(productID, false);
     }
 
     @Override
     public List<ProductDetails> findByCategoryContaining(String category) {
-        return this.productRepository.findByCategoryContaining(category);
+        return this.productRepository.findByCategoryContainingAndStatusNot(category, false);
     }
 
     @Override
     public List<ProductDetails> findByNameContaining(String name) {
-        return this.productRepository.findByNameContaining(name);
+        return this.productRepository.findByNameContainingAndStatusNot(name, false);
     }
 
     @Override
@@ -43,7 +44,14 @@ public class ProductService implements IProductService{
 
     @Override
     public void deleteById(String productID) {
-        this.productRepository.deleteById(productID);
+        ProductDetails product = this.productRepository.findByProductIDAndStatusNot(productID, false);
+        product.setStatus(false);
+        this.productRepository.save(product);
+    }
+
+    @Override
+    public List<ProductDetails> findAll() {
+        return this.productRepository.findByStatusNot(false);
     }
 
     @Override

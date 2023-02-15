@@ -8,8 +8,12 @@ package com.loctt.app.service.impl;
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.ICartService;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpSession;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,23 +65,27 @@ public class CartService implements ICartService {
 
     @Override
     public JSONObject showCart(CartObject cart, int fromItemIndex, int maxItemIndex) {
-//        Map<String, ProductDetails> result = new HashMap<>();
 
         JSONObject result = new JSONObject();
+        
+        // Inverst order to iterate
+        List<String> keySet = new ArrayList<>(cart.getItems().keySet());
+        Collections.reverse(keySet);
+        
         int count = 0;
-        for (String productID : cart.getItems().keySet()) {
+        for (String productID : keySet) {
             count++;
-            if(count >= fromItemIndex && count <= maxItemIndex){
-            ProductDetails item = productService.findByProductID(productID);
-            JSONObject element = new JSONObject();
-            element.put("productID", item.getProductID());
-            element.put("name", item.getName());
-            element.put("description", item.getDescription());
-            element.put("category", item.getCategory());
-            element.put("sellprice", item.getSellprice());
-            element.put("imageLink", item.getImageLink());
-            element.put("quantityInCart", cart.getItems().get(productID));
-            result.put(Integer.toString(count), element);
+            if (count >= fromItemIndex && count <= maxItemIndex) {
+                ProductDetails item = productService.findByProductID(productID);
+                JSONObject element = new JSONObject();
+                element.put("productID", item.getProductID());
+                element.put("name", item.getName());
+                element.put("description", item.getDescription());
+                element.put("category", item.getCategory());
+                element.put("sellprice", item.getSellprice());
+                element.put("imageLink", item.getImageLink());
+                element.put("quantityInCart", cart.getItems().get(productID));
+                result.put(Integer.toString(count), element);
             }
         }
         //JSONObject json = new JSONObject(result);
@@ -85,10 +93,12 @@ public class CartService implements ICartService {
         //System.out.println(result);
         return result;
     }
-    
+
     @Override
     public int getCartSize(CartObject cart) {
-        if (cart == null || cart.getItems() == null) return 0;
+        if (cart == null || cart.getItems() == null) {
+            return 0;
+        }
         return cart.getItems().size();
     }
 

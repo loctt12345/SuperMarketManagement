@@ -19,6 +19,4 @@ public interface IProductService {
     public ProductDetails save(ProductDetails product);
     public void deleteById(String productID);
     public List<ProductDetails> findAll();
-    
-    
 }

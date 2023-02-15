@@ -29,18 +29,37 @@ public class ProductDetails implements Serializable {
     private float sellprice;
     @Column(name = "Image")
     private String imageLink;
-    
+    @Column(name = "Status")
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
     
     public ProductDetails() {
     }
 
-    public ProductDetails(String productID, String name, String description, String category, String imageLink, float sellprice) {
+    public ProductDetails(String productID, String name, String description, String category, float sellprice, String imageLink) {
         this.productID = productID;
         this.name = name;
         this.description = description;
         this.category = category;
         this.sellprice = sellprice;
         this.imageLink = imageLink;
+    }
+
+    public ProductDetails(String productID, String name, String description, String category, String imageLink, float sellprice, boolean status) {
+        this.productID = productID;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.sellprice = sellprice;
+        this.imageLink = imageLink;
+        this.status = status;
     }
 
     /**
