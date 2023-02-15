@@ -44,7 +44,8 @@ public class DispatchController {
     }
     //TestAdmin
     @GetMapping("/admin-page")
-    public String adminPage() {
+    public String adminPage(Model model) {
+        model.addAttribute("PRODUCTS_RESULT", productService.findAll());
         return "products_management";
     }
     @GetMapping("/product-detail")
@@ -52,16 +53,7 @@ public class DispatchController {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
-    //Add new Item to Cart
-    @GetMapping("/addToCart")
-    public String addToCart(@RequestParam(name = "txtProductID") String txtProductID,
-            @RequestParam(name = "txtNumber") String txtNumber, HttpSession session) {
-
-        //Initial Class, Do service
-        if (productService.findByProductID(txtProductID) != null)
-            cartService.addToCart(txtProductID, txtNumber, session);
-        return "redirect:/";
-    }
+    
 
     @GetMapping("/showCart")
     public String showCart(
