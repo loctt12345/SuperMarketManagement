@@ -41,7 +41,7 @@ public class CartController {
         HashMap<String, String> response = new HashMap<>();
         int quantityInCart = Integer.parseInt(object.getAsString("quantityInCart"));
         CartObject cart = (CartObject) session.getAttribute("CART");
-
+        
         if (cart != null) {
             cartService.updateItemInCart(productID, quantityInCart, cart);
             session.setAttribute("CART", cart);

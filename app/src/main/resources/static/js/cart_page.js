@@ -33,13 +33,13 @@ function loadCart() {
                                 <div class="form-group d-flex">
                                    
                                     <input type="number" min="0" value="${data[k]['quantityInCart']}" 
-                                    id="quantity-input${k}" class="form-control col-7 col-md-7" />
+                                    id="quantity-input${k}" 
+                                    onblur="update(${k})"
+                                    class="form-control col-7 col-md-7" />
                                    
                                 </div>
                             </td>
                             <td class="col-md-2 ">
-                                <button id="update${k}" class="btn btn-success" 
-                                            onclick="update(${k})"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button id="remove{k}" class="btn btn-danger" 
                                             onclick="remove(${k})"><i class="fa-solid fa-trash-can"></i></button>
                              </td>
@@ -66,29 +66,29 @@ function update(index) {
     var productID = document.getElementById('product_id' + index).value;
     var quantity = document.getElementById('quantity-input' + index).value;
 
-    if (quantity == 0) {
-        remove(index);
-    } else {
-        fetch('/api/cart/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({'productID': productID, 'quantityInCart': quantity})
-        }).then(
-                function (response) {
-                    response.json().then(data => {
-                    }).then(() => {
-                        fetch('/api/cart/getTotalPriceInCart').then((response) => {
-                            response.json().then((data) => {
-                                document.getElementById('totalPrice').innerHTML =
-                                        data.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
-                            });
+    if (quantity <= 0) {
+        quantity = '1';
+        document.getElementById('quantity-input' + index).value = quantity;
+    }
+    fetch('/api/cart/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({'productID': productID, 'quantityInCart': quantity})
+    }).then(
+            function (response) {
+                response.json().then(data => {
+                }).then(() => {
+                    fetch('/api/cart/getTotalPriceInCart').then((response) => {
+                        response.json().then((data) => {
+                            document.getElementById('totalPrice').innerHTML =
+                                    data.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
                         });
                     });
-                }
-        );
-    }
+                });
+            }
+    );
 }
 
 function remove(index) {
