@@ -18,6 +18,7 @@ public interface IProductRepository extends JpaRepository<ProductDetails, String
 
     ProductDetails findByProductID(String ProductID);
 
+
     ProductDetails findByProductIDAndStatusNot(String ProductID, boolean status);
 
     List<ProductDetails> findByCategoryContainingAndStatusNot(String category, boolean status);
