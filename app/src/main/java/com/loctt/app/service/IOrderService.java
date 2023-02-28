@@ -25,4 +25,7 @@ public interface IOrderService {
     public void saveOrderDetails(CartObject cart, String orderID);
     
     public float getTotalOfOrder(CartObject cart);
+    
+    public void updateOrderStatus(String orderID, int status);
+    public PrimaryOrder getPrimaryOrder(String orderId);
 }

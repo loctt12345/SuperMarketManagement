@@ -15,5 +15,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IPrimaryOrderRepository extends JpaRepository<PrimaryOrder, String>{
-    
 }

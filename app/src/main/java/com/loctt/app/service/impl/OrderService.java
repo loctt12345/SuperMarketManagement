@@ -13,8 +13,8 @@ import com.loctt.app.repository.IOrderStatusRepository;
 import com.loctt.app.repository.IPrimaryOrderRepository;
 import com.loctt.app.repository.IProductRepository;
 import com.loctt.app.service.IOrderService;
-import com.loctt.app.service.IProductService;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -103,6 +103,34 @@ public class OrderService implements IOrderService{
         }
         return total;
     }
+
+    @Override
+    public void updateOrderStatus(String orderId, int status) {
+        try{
+            PrimaryOrder order = primaryOrderRepository.findById(orderId).get();
+            order.setStatusID(status);
+            primaryOrderRepository.save(order);
+            
+        
+        } catch(NoSuchElementException ex) {
+            System.out.println("No " + orderId + " exist!!!!");
+        
+        }
+    }
+    
+    @Override
+    public PrimaryOrder getPrimaryOrder(String orderId) {
+        try{
+            return primaryOrderRepository.findById(orderId).get();
+            
+        
+        } catch(NoSuchElementException ex) {
+            System.out.println("No " + orderId + " exist!!!!");
+        
+        }
+        return null;
+    }
+    
 
     
 }
