@@ -20,7 +20,7 @@
 
             <nav class="navbar navbar-light bg-light">
                 <a class="navbar-brand"></a>
-                <form class="form-inline" th:action="@{}">
+                <form class="form-inline" th:action="@{/admin/findEmployee}">
                     <input class="search-button form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" th:value="${lastSearchValue}" name="searchValue">
                     <input type="submit" class="btn btn-success my-2 my-sm-0" value="Search"></input>
                     <select name="searchBy" class="btn ml-2">
@@ -32,7 +32,7 @@
 
                 </form>
 
-                <input class="btn btn-success" data-toggle="modal" data-target="#myModal" type="submit" th:href="@{}" value="Add New Employee" name="" />
+                <input class="btn btn-success" data-toggle="modal" data-target="#myModal" type="submit" th:href="@{/employee/new}" value="Add New Employee" name="" />
 
                 <div class="modal fade" id="myModal">
                     <div class="modal-dialog">
@@ -42,10 +42,14 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body">
-                                <form th:action="@{}" method="POST"> <!-- add -->
+                                <form th:action="@{/admin/add-new-employee}" method="POST"> <!-- add -->
                                     <div class="form-group">
-                                        <label for="id">ID: </label>
-                                        <input class="form-control" type="text" name="id" placeholder="Enter Employee ID" />
+                                        <label for="employeeID">Employee ID: </label>
+                                        <input class="form-control" type="text" name="employeeID" placeholder="Enter Employee ID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="roleID">Role ID: </label>
+                                        <input class="form-control" type="text" name="roleID" placeholder="Enter Role ID" />
                                     </div>
                                     <div class="form-group">
                                         <label for="name">Name: </label>
@@ -60,7 +64,7 @@
                                         <input class="form-control" type="text" name="email" placeholder="Enter Employee Email" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="address">Addres: </label>
+                                        <label for="address">Address: </label>
                                         <input class="form-control" type="text" name="address" placeholder="Enter Address" />
                                     </div>
                                     <div class="form-group">
@@ -91,11 +95,12 @@
                     <a class="bao-cao-button btn btn-success" href="#">Report</a>
                 </div>
 
-                <div class="col-md-10 table-responsive-md" th:if="${}">
+                <div class="col-md-10 table-responsive-md" th:if="${PEMPLOYEE_RESULT ne null}">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Employee ID</th>
+                                <th>Role ID</th>
                                 <th>FullName</th>
                                 <th>Phone</th>
                                 <th>Email</th>
@@ -105,8 +110,9 @@
                         </thead>
 
                         <tbody>
-                            <tr th:each="employee : ${}"> <!-- add -->
+                            <tr th:each="employee : ${EMPLOYEE_RESULT}"> <!-- add -->
                                 <td th:text="${employee.employeeID}"></td>
+                                <td th:text="${employee.roleID}"></td>
                                 <td th:text="${employee.fullName}"></td>
                                 <td th:text="${employee.phone}"></td>
                                 <td th:text="${employee.email}"></td>
@@ -125,7 +131,11 @@
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form th:action="@{}" method="POST"> <!-- add -->
+                                                    <form th:action="@{/admin/update-employee}" method="POST"> <!-- add -->
+                                                        <div class="form-group">
+                                                            <label for="employeeRole">Role ID </label>
+                                                            <input class="form-control" type="text" name="employeeRole" th:value="${employee.roleID}" placeholder="Enter Employee Role ID" />
+                                                        </div>
                                                         <div class="form-group">
                                                             <label for="employeePhoneNumber">Phone Number: </label>
                                                             <input class="form-control" type="number" name="employeePhoneNumber" th:value="${employee.phone}" placeholder="Enter Employee Phone Number" />
@@ -164,7 +174,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-10" th:unless="${}">  <!-- add -->
+                <div class="col-md-10" th:unless="${EMPLOYEE_RESULT ne null}">  <!-- add -->
                     <h2>No result matched!</h2>
                 </div>
             </div>
