@@ -7,7 +7,6 @@ package com.loctt.app.controller;
 import com.loctt.app.model.CartObject;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.ProductService;
-import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,6 +70,14 @@ public class DispatchController {
         return "paying";
     }
     
+    @GetMapping("/repoStaff")
+    public String showRepoStaff() {
+        return "repo_staff_screen";
+    }
     
+    @GetMapping("/shipStaff")
+    public String showShipStaff() {
+        return "ship_staff_screen";
+    }
 
 }

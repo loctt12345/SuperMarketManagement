@@ -80,7 +80,7 @@ public class ProductManagerService implements IProductManagerService{
             String productID =  productDetails.getProductID();
             System.out.println(productID);
             if (productManagerRepository.findByProductID(productID) == null) {
-                ProductManager newProductManager = new ProductManager(productID, 0, 0);
+                ProductManager newProductManager = new ProductManager(productID, 1000, 0);
                
                 productManagerRepository.save(newProductManager);
             }

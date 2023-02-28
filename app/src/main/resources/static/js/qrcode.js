@@ -17,4 +17,5 @@ var html5QrcodeScanner = new Html5QrcodeScanner(
         fps: 10, qrbox: { width: 250, height: 200 } });
 html5QrcodeScanner.render(onScanSuccess);
 
-$(document).ready(function () { $('#loginModal').modal('show'); $(function () { $('[data-toggle="tooltip"]').tooltip() }) });
+$(document).ready(function () 
+{ $('#loginModal').modal('show'); $(function () { $('[data-toggle="tooltip"]').tooltip() }) });
