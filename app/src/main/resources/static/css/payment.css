@@ -180,11 +180,8 @@ body {
 }
 
 .progress {
-  margin : 10px;
-}
-
-.progress-bar {
-  
+  position: relative;
+  top : 55px;
 }
 
 .progress-container {
