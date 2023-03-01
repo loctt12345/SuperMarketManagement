@@ -179,11 +179,18 @@ body {
   padding: 30px;
 }
 
+.progress {
+  margin : 10px;
+}
+
+.progress-bar {
+  
+}
+
 .progress-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px;
 }
 
 .ship-step {
