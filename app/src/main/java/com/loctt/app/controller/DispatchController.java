@@ -5,9 +5,10 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
+import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.ProductService;
-import java.util.Map;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,8 +45,9 @@ public class DispatchController {
     }
     //TestAdmin
     @GetMapping("/admin-page")
-    public String adminPage(Model model) {
-        model.addAttribute("PRODUCTS_RESULT", productService.findAll());
+    public String adminPage( Model model) {
+        List<ProductDetails> listProduct = productService.findAll();
+        model.addAttribute("PRODUCTS_RESULT", listProduct);
         return "products_management";
     }
     @GetMapping("/product-detail")
