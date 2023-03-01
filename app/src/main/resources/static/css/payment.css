@@ -1,0 +1,398 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 18, 2023, 2:06:55 PM
+    Author     : loc12345
+*/
+.hder {
+  background-color: #8EFFAB;
+
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #E5FDD1;
+}
+
+
+.badge2:after {
+  content: attr(value);
+  font-size: 12px;
+  color: #fff;
+  background: red;
+  border-radius: 50%;
+  padding: 0 5px;
+  position: relative;
+  left: -8px;
+  top: -10px;
+  opacity: 0.9;
+}
+
+.badge:after {
+  content: attr(value);
+  font-size: 12px;
+  color: #fff;
+  background: red;
+  border-radius: 50%;
+  padding: 0 5px;
+  position: relative;
+  left: -8px;
+  top: -10px;
+  opacity: 0.9;
+}
+
+
+.fter-bot {
+  background-color: #8EFFAB;
+}
+
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 400px;
+  }
+
+  .modal-dialog .modal-content {
+    padding: 1rem;
+  }
+}
+
+.modal-header .close {
+  margin-top: -1.5rem;
+}
+
+.form-title {
+  margin: -2rem 0rem 2rem;
+}
+
+.btn-round {
+  border-radius: 3rem;
+}
+
+.delimiter {
+  padding: 1rem;
+}
+
+.social-buttons .btn {
+  margin: 0 0.5rem 1rem;
+}
+
+.signup-section {
+  padding: 0.3rem 0rem;
+}
+
+.notification {
+  position: relative;
+  display: inline-block;
+}
+
+
+/* customer */
+/* .customer-information {
+  margin : 20px;
+}
+
+.customer-information h4 {
+	font-size: 15px;
+} */
+
+/* .customer-information {
+  background-color: #f2f2f2;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.customer-information h3 {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #262626;
+}
+
+.customer-information h4 {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #262626;
+}
+
+.customer-information p {
+  font-size: 16px;
+  margin: 0;
+  color: #404040;
+}
+
+.customer-information h4:before {
+  content: "\2022";
+  margin-right: 10px;
+  color: #999999;
+} */
+
+.customer-information {
+  background-color: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.customer-information h3 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #404040;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.customer-information h4 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  color: #757575;
+  font-weight: bold;
+}
+
+.customer-information p {
+  font-size: 16px;
+  margin: 0;
+  color: #404040;
+}
+
+.customer-information h4:before {
+  margin-right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #d1d1d1;
+}
+
+/* Ship Progress */
+
+.container {
+  padding: 30px;
+}
+
+.progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+}
+
+.ship-step {
+  position: relative;
+  text-align: center;
+  color: #777;
+}
+
+.ship-icon {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ship-icon i {
+  font-size: 24px;
+  color: #3f51b5;
+}
+
+.ship-step:before {
+  content: '';
+  position: absolute;
+  top: 27px;
+  left: 58px;
+  width: 120px;
+  height: 6px;
+  background-color: #ddd;
+}
+
+.ship-step:after {
+  content: '';
+  position: absolute;
+  top: 27px;
+  left: 178px;
+  width: 120px;
+  height: 6px;
+  background-color: #ddd;
+}
+
+.ship-step:first-child:before {
+  display: none;
+}
+
+.ship-step:last-child:after {
+  display: none;
+}
+
+.ship-content {
+  margin-top: 20px;
+}
+
+.ship-content h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.ship-content p {
+  font-size: 16px;
+}
+
+.crossbar {
+  width: 50px;
+  height: 2px;
+  background-color: lightgray;
+}
+
+/* Order Demo */
+.order-demo {
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.order-item img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.order-info h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.order-info p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.order-total p {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3f51b5;
+}
+
+.paying-method p {
+  justify-content: center;
+  font-size: 20px;
+  color: orange
+}
+
+/* Style the modal container */
+/* .modal { 
+	justify-content: center;
+	transition: 1.5s;
+}
+
+.modal-content {
+	background-color: #fff;
+	border-radius: 5px;
+	width: 60%;
+  } */
+
+/* Style the modal header */
+/* .modal-header {
+	background-color: #007bff;
+	color: #fff;
+	border-radius: 5px 5px 0 0;
+	width: 100%;
+  } */
+
+/* Style the modal title */
+/* .modal-title {
+	font-size: 1.25rem;
+	font-weight: 600;
+  } */
+
+/* Style the modal body */
+/* .modal-body {
+	padding: 1rem;
+  } */
+
+/* Style the modal footer */
+/* .modal-footer {
+	border-radius: 0 0 5px 5px;
+  } */
+
+/* Modal Styling */
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 99999;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Black w/ opacity */
+}
+
+/* Modal Content */
+#modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  /* 10% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 35%;
+  /* Could be more or less, depending on screen size */
+  transition: all 1.5s ease-in-out;
+  /* 1.5s transition */
+}
+
+.delivery-button {
+  background-color: #007bff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  border : none; 
+}
+
+.delivery-button a { 
+  text-decoration: none;
+  color : black;
+}
+
+/* Modal Header */
+.modal-header { 
+  background-color: rgb(94, 94, 225);
+}
+
+/* Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
