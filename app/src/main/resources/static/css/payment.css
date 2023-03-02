@@ -7,86 +7,10 @@ and open the template in the editor.
     Created on : Jan 18, 2023, 2:06:55 PM
     Author     : loc12345
 */
-.hder {
-  background-color: #8EFFAB;
-
-}
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #E5FDD1;
-}
-
-
-.badge2:after {
-  content: attr(value);
-  font-size: 12px;
-  color: #fff;
-  background: red;
-  border-radius: 50%;
-  padding: 0 5px;
-  position: relative;
-  left: -8px;
-  top: -10px;
-  opacity: 0.9;
-}
-
-.badge:after {
-  content: attr(value);
-  font-size: 12px;
-  color: #fff;
-  background: red;
-  border-radius: 50%;
-  padding: 0 5px;
-  position: relative;
-  left: -8px;
-  top: -10px;
-  opacity: 0.9;
-}
-
-
-.fter-bot {
-  background-color: #8EFFAB;
-}
-
-
-@media (min-width: 576px) {
-  .modal-dialog {
-    max-width: 400px;
-  }
-
-  .modal-dialog .modal-content {
-    padding: 1rem;
-  }
-}
-
-.modal-header .close {
-  margin-top: -1.5rem;
-}
-
-.form-title {
-  margin: -2rem 0rem 2rem;
-}
-
-.btn-round {
-  border-radius: 3rem;
-}
-
-.delimiter {
-  padding: 1rem;
-}
-
-.social-buttons .btn {
-  margin: 0 0.5rem 1rem;
-}
-
-.signup-section {
-  padding: 0.3rem 0rem;
-}
-
-.notification {
-  position: relative;
-  display: inline-block;
+  background-color: #fff;
 }
 
 
@@ -132,7 +56,7 @@ body {
   margin-right: 10px;
   color: #999999;
 } */
-
+/* 
 .customer-information {
   background-color: #ffffff;
   border: 1px solid #e2e2e2;
@@ -171,94 +95,10 @@ body {
   border-radius: 50%;
   display: inline-block;
   background-color: #d1d1d1;
+} */
+.btn{
+  margin-right: 30px;
 }
-
-/* Ship Progress */
-
-.container {
-  padding: 30px;
-}
-
-.progress {
-  position: relative;
-  top : 55px;
-}
-
-.progress-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ship-step {
-  position: relative;
-  text-align: center;
-  color: #777;
-}
-
-.ship-icon {
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  border-radius: 50%;
-  background-color: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.ship-icon i {
-  font-size: 24px;
-  color: #3f51b5;
-}
-
-.ship-step:before {
-  content: '';
-  position: absolute;
-  top: 27px;
-  left: 58px;
-  width: 120px;
-  height: 6px;
-  background-color: #ddd;
-}
-
-.ship-step:after {
-  content: '';
-  position: absolute;
-  top: 27px;
-  left: 178px;
-  width: 120px;
-  height: 6px;
-  background-color: #ddd;
-}
-
-.ship-step:first-child:before {
-  display: none;
-}
-
-.ship-step:last-child:after {
-  display: none;
-}
-
-.ship-content {
-  margin-top: 20px;
-}
-
-.ship-content h3 {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.ship-content p {
-  font-size: 16px;
-}
-
-.crossbar {
-  width: 50px;
-  height: 2px;
-  background-color: lightgray;
-}
-
 /* Order Demo */
 .order-demo {
   padding: 20px;
@@ -299,104 +139,128 @@ body {
   font-size: 20px;
   color: orange
 }
-
-/* Style the modal container */
-/* .modal { 
-	justify-content: center;
-	transition: 1.5s;
+.btn a{
+  color: #fff;
+  text-decoration: none;
+}
+#orderidText{
+  font-size: xx-small;
 }
 
-.modal-content {
-	background-color: #fff;
-	border-radius: 5px;
-	width: 60%;
-  } */
+.card {
+  z-index: 0;
+  background-color: #ECEFF1;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
 
-/* Style the modal header */
-/* .modal-header {
-	background-color: #007bff;
-	color: #fff;
-	border-radius: 5px 5px 0 0;
-	width: 100%;
-  } */
+.top {
+  padding-top: 40px;
+  padding-left: 13% !important;
+  padding-right: 13% !important;
+}
 
-/* Style the modal title */
-/* .modal-title {
-	font-size: 1.25rem;
-	font-weight: 600;
-  } */
+/*Icon progressbar*/
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: #455A64;
+  padding-left: 0px;
+  margin-top: 30px;
+} 
 
-/* Style the modal body */
-/* .modal-body {
-	padding: 1rem;
-  } */
+#progressbar li {
+  list-style-type: none;
+  font-size: 13px;
+  width: 20%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+}
+#progressbar .step1:before {
+  font-family: FontAwesome;
+  content: "\f110";
+  color: #fff;
+}
+#progressbar .step2:before {
+  font-family: FontAwesome;
+  content: "\f218";
+  color: #fff;
+}
+#progressbar .step3:before {
+  font-family: FontAwesome;
+  content: "\f187";
+  color: #fff;
+}
+#progressbar .step4:before {
+  font-family: FontAwesome;
+  content: "\f0d1";
+  color: #fff;
+}
+#progressbar .step5:before {
+  font-family: FontAwesome;
+  content: "\f00c";
+  color: #fff;
+}
+#progressbar li:before {
+  width: 40px;
+  height: 40px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  background: #C5CAE9;
+  border-radius: 50%;
+  margin: auto;
+  padding: 0px;
+}
 
-/* Style the modal footer */
-/* .modal-footer {
-	border-radius: 0 0 5px 5px;
-  } */
-
-/* Modal Styling */
-.modal {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  /* Stay in place */
-  z-index: 99999;
-  /* Sit on top */
-  left: 0;
-  top: 0;
+/*ProgressBar connectors*/
+#progressbar li:after {
+  content: '';
   width: 100%;
-  /* Full width */
-  height: 100%;
-  /* Full height */
-  overflow: auto;
-  /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.6);
-  /* Black w/ opacity */
+  height: 12px;
+  background: #C5CAE9;
+  position: absolute;
+  left: 0;
+  top: 16px;
+  z-index: -1;
 }
 
-/* Modal Content */
-#modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
-  /* 10% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 35%;
-  /* Could be more or less, depending on screen size */
-  transition: all 1.5s ease-in-out;
-  /* 1.5s transition */
+#progressbar li:last-child:after {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  position: absolute;
+  left: -50%;
 }
 
-.delivery-button {
-  background-color: #007bff;
-  border-radius: 5px;
-  padding: 10px 20px;
-  border : none; 
+/* #progressbar li:nth-child(2):after, #progressbar li:nth-child(3):after {
+  left: -50%;
+} */
+
+#progressbar li:first-child:after {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  position: absolute;
+  left: 50%;
 }
 
-.delivery-button a { 
-  text-decoration: none;
-  color : black;
+#progressbar li:last-child:after {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
-/* Modal Header */
-.modal-header { 
-  background-color: rgb(94, 94, 225);
+#progressbar li:first-child:after {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
-/* Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+/*Color number of the step and the connector before it*/
+#progressbar li.active:before, #progressbar li.active:after {
+  background: #651FFF;
 }
 
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+#progressbar li.active:before {
+  font-family: FontAwesome;
 }

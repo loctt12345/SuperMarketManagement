@@ -8,6 +8,9 @@ import com.loctt.app.model.CartObject;
 import com.loctt.app.model.OrderDetails;
 import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.OrderStatus;
+import com.loctt.app.model.ProductDetails;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -25,4 +28,7 @@ public interface IOrderService {
     public void saveOrderDetails(CartObject cart, String orderID);
     
     public float getTotalOfOrder(CartObject cart);
+    public PrimaryOrder findByOrderID(String orderID);
+    public List<OrderDetails> getOrderDetails(String orderID);
+    public Map<ProductDetails, Integer> getListProduct(String orderID);
 }
