@@ -86,7 +86,7 @@ public class OrderController {
 
         //Set Customer
         orderSaved.setUserID("CUS011");
-        orderSaved.setStatusID(1);
+        orderSaved.setStatusID(2);
         orderSaved.setTime(new Date());
 
         //Set Total For order
