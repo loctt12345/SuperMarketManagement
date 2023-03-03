@@ -88,7 +88,7 @@ public class OrderController {
             //Set Total For order
             float total = orderService.getTotalOfOrder(cart);
             orderSaved.setTotal(total);
-            System.out.println("This is order: " + orderSaved.toString());
+            //System.out.println("This is order: " + orderSaved.toString());
             orderService.saveOrder(orderSaved);
             
             
@@ -97,7 +97,7 @@ public class OrderController {
             
             //3. remove cart after checkout
             cart.getItems().clear();
-
+            System.out.println("http://localhost:8080/showBill?orderId="+orderID);
         return "redirect:/";
     }
     
