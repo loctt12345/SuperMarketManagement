@@ -30,5 +30,7 @@ public interface IOrderService {
     public float getTotalOfOrder(CartObject cart);
     public PrimaryOrder findByOrderID(String orderID);
     public List<OrderDetails> getOrderDetails(String orderID);
-    public Map<ProductDetails, Integer> getListProduct(String orderID);
+    public Map<ProductDetails, Integer> getListProduct(String orderID);    
+    public void updateOrderStatus(String orderID, int status);
+    public PrimaryOrder getPrimaryOrder(String orderId);
 }

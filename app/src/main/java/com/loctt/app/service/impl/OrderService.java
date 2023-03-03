@@ -18,6 +18,7 @@ import com.loctt.app.service.IOrderService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -129,5 +130,30 @@ public class OrderService implements IOrderService{
         return listProduct;
     }
     
+    public void updateOrderStatus(String orderId, int status) {
+        try{
+            PrimaryOrder order = primaryOrderRepository.findById(orderId).get();
+            order.setStatusID(status);
+            primaryOrderRepository.save(order);
+            
+        
+        } catch(NoSuchElementException ex) {
+            System.out.println("No " + orderId + " exist!!!!");
+        
+        }
+    }
     
+    @Override
+    public PrimaryOrder getPrimaryOrder(String orderId) {
+        try{
+            return primaryOrderRepository.findById(orderId).get();
+            
+        
+        } catch(NoSuchElementException ex) {
+            System.out.println("No " + orderId + " exist!!!!");
+        
+        }
+        return null;
+    }
+        
 }
