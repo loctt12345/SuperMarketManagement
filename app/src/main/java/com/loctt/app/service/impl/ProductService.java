@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.loctt.app.repository.IProductRepository;
 import java.util.List;
+import net.minidev.json.JSONObject;
 
 /**
  *
@@ -53,4 +54,19 @@ public class ProductService implements IProductService {
     public List<ProductDetails> findAll() {
         return this.productRepository.findByStatusNot(false);
     }
+
+//    @Override
+//    public JSONObject searchProductInAdmin(int fromItemIndex, int maxItemIndex) {
+//        JSONObject result = new JSONObject();
+//        int count = 0;
+//        List<ProductDetails> listProduct = this.findAll();
+//        for (ProductDetails product : listProduct) {
+//            count++;
+//            if (count >= fromItemIndex && count <= maxItemIndex) {
+//                result.put(Integer.toString(count),product);
+//            }
+//        }
+//        result.put("ResultSize",count);
+//        return result;
+//    }
 }

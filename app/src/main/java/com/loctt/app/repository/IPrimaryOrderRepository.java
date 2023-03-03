@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IPrimaryOrderRepository extends JpaRepository<PrimaryOrder, String>{
+    PrimaryOrder findByOrderID(String orderID);
 }

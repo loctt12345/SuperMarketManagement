@@ -50,6 +50,7 @@ public class AdminController {
         }
         if (productDetails.size() > 0) {
             model.addAttribute("PRODUCTS_RESULT", productDetails);
+            model.addAttribute("numPage", productDetails.size()/6 + 1);
         }
         model.addAttribute("searchValue", searchValue);
         model.addAttribute("searchBy", searchBy);

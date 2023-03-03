@@ -8,11 +8,15 @@ import com.loctt.app.model.CartObject;
 import com.loctt.app.model.OrderDetails;
 import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.OrderStatus;
+import com.loctt.app.model.ProductDetails;
 import com.loctt.app.repository.IOrderDetailsRepository;
 import com.loctt.app.repository.IOrderStatusRepository;
 import com.loctt.app.repository.IPrimaryOrderRepository;
 import com.loctt.app.repository.IProductRepository;
+import com.loctt.app.repository.IUserRepository;
 import com.loctt.app.service.IOrderService;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,8 @@ public class OrderService implements IOrderService{
     @Autowired
     IProductRepository productRepository;
     
+    @Autowired
+    IUserRepository userRepository;
 //    @Autowired
 //    IProductService productService;
     
@@ -105,6 +111,25 @@ public class OrderService implements IOrderService{
     }
 
     @Override
+    public PrimaryOrder findByOrderID(String orderID) {
+        return primaryOrderRepository.findByOrderID(orderID);
+    }
+
+    @Override
+    public List<OrderDetails> getOrderDetails(String orderID) {
+        return orderDetailsRepository.findByOrderID(orderID);
+    }
+
+    @Override
+    public Map<ProductDetails, Integer> getListProduct(String orderID) {
+        List<OrderDetails> listOrderDetails = this.getOrderDetails(orderID);
+        Map<ProductDetails, Integer> listProduct = new HashMap<>();
+        for (OrderDetails orderDetail : listOrderDetails) {
+            listProduct.put(productRepository.findByProductIDAndStatusNot(orderDetail.getProductID(), false),orderDetail.getSoldNumber());
+        }
+        return listProduct;
+    }
+    
     public void updateOrderStatus(String orderId, int status) {
         try{
             PrimaryOrder order = primaryOrderRepository.findById(orderId).get();
@@ -130,7 +155,5 @@ public class OrderService implements IOrderService{
         }
         return null;
     }
-    
-
-    
+        
 }

@@ -29,4 +29,18 @@ public class ProductController {
         ProductDetails productDetails = this.productService.findByProductID(productID);
         return ResponseEntity.ok().body(productDetails);
     }
+//    @GetMapping("/admin/showProductsResult/page{pageNum}")
+//    public ResponseEntity showProduct(@PathVariable(value = "pageNum") Integer pageNum, Model model, HttpSession session) {
+//        int maxResult = 6;
+//        int fromItemIndex = (pageNum - 1) * maxResult + 1;
+//        int maxItemIndex = fromItemIndex + maxResult - 1;
+//        List<ProductDetails> wholeResult = (List<ProductDetails>) session.getAttribute("PRODUCTS_RESULT");
+//        JSONObject response = new JSONObject();
+//        if(wholeResult != null && !wholeResult.isEmpty()){
+//            model.addAttribute("numPage", wholeResult.size()/6 +1);
+//            return ResponseEntity.ok().body(response);
+//        }else{
+//            return ResponseEntity.ok().body(null);
+//        }
+//    }
 }
