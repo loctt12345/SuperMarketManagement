@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Trạng thái đơn hàng</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/payment.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/hder-fter.css}">
+    </head>
+
+    <body>
+        <!--Header-->
+        <!-- content -->
+        <div class="container">
+            <header th:replace="header :: header"></header>
+            <div th:if="${order ne null}">
+                <div class="px-1 px-md-4 pt-5 pb-2 mt-auto">
+                    <div class="card">
+                        <div class="row d-flex justify-content-between px-3 top">
+                            <div class="d-flex">
+                                <h4>ORDER <span id="orderidText" th:text="${order.orderID}"></span></h4>
+                            </div>
+                            <div class="d-flex flex-column text-sm-right">
+                                <p class="mb-0"><span th:text="${#dates.format(order.time, 'dd/MMM/yyyy')}"></span></p>
+                                <!-- <p>USPS <span class="font-weight-bold">234094567242423422898</span></p> -->
+                            </div>
+                        </div>
+                        <!-- Add class 'active' to progress -->
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-12">
+                                <ul id="progressbar" class="text-center">
+                                    <li class="step1"><br />Chờ nhận đơn</li>
+                                    <li class="step2"><br />Chờ gói hàng</li>
+                                    <li class="step3"><br />Chờ vận chuyển</li>
+                                    <li class="step4"><br />Đang vận chuyển</li>
+                                    <li class="step5"><br />Đã giao</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- other form fields here -->
+
+                <button type="submit" class="btn btn-primary float-right"><a th:href="@{/orderProgress(orderID=${order.orderID})}">Cập
+                        nhật trạng thái</a></button>
+
+                <div class="row mt-5 ml-3">
+                    <div class="col-md-12">
+                        <div class="order-list">
+                            <h3 class="font-weight-bold ml-1">Order List</h3>
+                        </div>
+                        <div class="order-demo">
+                            <div th:each="product, stats : ${PRODUCTS_IN_ORDER}">
+                                <div class="order-item">
+                                    <img th:src="${product.key.imageLink}" alt="Product Image">
+                                    <div class="order-info">
+                                        <h4 class="font-weight-bold pb-2" th:text="${product.key.name}"></h4>
+                                        <p th:text="'Quantity: ' + ${product.value}"></p>
+                                        <p
+                                            th:text="'Price: ' + ${#numbers.formatDecimal(product.key.sellprice,3,'POINT',0,'COMMA')} + ₫">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="order-total">
+                                <div class="paying-method">
+                                    <p th:text="'Total: ' +${#numbers.formatDecimal(TotalOfOrder,3,'POINT',0,'COMMA')} + ₫">
+                                    </p>
+                                    <!-- <p>Method: #</p> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 text-center text-danger" th:unless="${order ne null}">
+                <h2>No order found!</h2>
+            </div>
+            <!-- Footer -->
+            <footer th:replace="footer :: footer"></footer>
+        <!-- Footer -->
+        </div>
+        <!-- content -->
+        <script>
+            let orderStatus = [[${ order.statusID }]];
+        </script>
+        <script th:src="@{/js/payingSuccess.js}"></script>
+    </body>

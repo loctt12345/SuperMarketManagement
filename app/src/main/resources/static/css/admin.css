@@ -46,9 +46,6 @@
     display: flex;
     justify-content: space-around;
 }
-/*.product-img{
-    width: 20%;
-    img {
-        width: 80px;
-    }
-}*/
+.product-img{
+    width: 180px;
+}
