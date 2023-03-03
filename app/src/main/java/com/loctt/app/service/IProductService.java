@@ -7,6 +7,7 @@ package com.loctt.app.service;
 
 import com.loctt.app.model.ProductDetails;
 import java.util.List;
+import net.minidev.json.JSONObject;
 
 /**
  *
@@ -19,4 +20,5 @@ public interface IProductService {
     public ProductDetails save(ProductDetails product);
     public void deleteById(String productID);
     public List<ProductDetails> findAll();
+//    public JSONObject searchProductInAdmin(int fromItemIndex, int maxItemIndex);
 }

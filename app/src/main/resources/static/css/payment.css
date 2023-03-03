@@ -1,0 +1,266 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 18, 2023, 2:06:55 PM
+    Author     : loc12345
+*/
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fff;
+}
+
+
+/* customer */
+/* .customer-information {
+  margin : 20px;
+}
+
+.customer-information h4 {
+	font-size: 15px;
+} */
+
+/* .customer-information {
+  background-color: #f2f2f2;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.customer-information h3 {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #262626;
+}
+
+.customer-information h4 {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #262626;
+}
+
+.customer-information p {
+  font-size: 16px;
+  margin: 0;
+  color: #404040;
+}
+
+.customer-information h4:before {
+  content: "\2022";
+  margin-right: 10px;
+  color: #999999;
+} */
+/* 
+.customer-information {
+  background-color: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.customer-information h3 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #404040;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.customer-information h4 {
+  font-size: 16px;
+  margin-top: 16px;
+  margin-bottom: 4px;
+  color: #757575;
+  font-weight: bold;
+}
+
+.customer-information p {
+  font-size: 16px;
+  margin: 0;
+  color: #404040;
+}
+
+.customer-information h4:before {
+  margin-right: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #d1d1d1;
+} */
+.btn{
+  margin-right: 30px;
+}
+/* Order Demo */
+.order-demo {
+  padding: 20px;
+  margin-top: 50px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.order-item img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.order-info h4 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.order-info p {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.order-total p {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3f51b5;
+}
+
+.paying-method p {
+  justify-content: center;
+  font-size: 20px;
+  color: orange
+}
+.btn a{
+  color: #fff;
+  text-decoration: none;
+}
+#orderidText{
+  font-size: xx-small;
+}
+
+.card {
+  z-index: 0;
+  background-color: #ECEFF1;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.top {
+  padding-top: 40px;
+  padding-left: 13% !important;
+  padding-right: 13% !important;
+}
+
+/*Icon progressbar*/
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: #455A64;
+  padding-left: 0px;
+  margin-top: 30px;
+} 
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 13px;
+  width: 20%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+}
+#progressbar .step1:before {
+  font-family: FontAwesome;
+  content: "\f110";
+  color: #fff;
+}
+#progressbar .step2:before {
+  font-family: FontAwesome;
+  content: "\f218";
+  color: #fff;
+}
+#progressbar .step3:before {
+  font-family: FontAwesome;
+  content: "\f187";
+  color: #fff;
+}
+#progressbar .step4:before {
+  font-family: FontAwesome;
+  content: "\f0d1";
+  color: #fff;
+}
+#progressbar .step5:before {
+  font-family: FontAwesome;
+  content: "\f00c";
+  color: #fff;
+}
+#progressbar li:before {
+  width: 40px;
+  height: 40px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  background: #C5CAE9;
+  border-radius: 50%;
+  margin: auto;
+  padding: 0px;
+}
+
+/*ProgressBar connectors*/
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 12px;
+  background: #C5CAE9;
+  position: absolute;
+  left: 0;
+  top: 16px;
+  z-index: -1;
+}
+
+#progressbar li:last-child:after {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  position: absolute;
+  left: -50%;
+}
+
+/* #progressbar li:nth-child(2):after, #progressbar li:nth-child(3):after {
+  left: -50%;
+} */
+
+#progressbar li:first-child:after {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  position: absolute;
+  left: 50%;
+}
+
+#progressbar li:last-child:after {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#progressbar li:first-child:after {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/*Color number of the step and the connector before it*/
+#progressbar li.active:before, #progressbar li.active:after {
+  background: #651FFF;
+}
+
+#progressbar li.active:before {
+  font-family: FontAwesome;
+}
