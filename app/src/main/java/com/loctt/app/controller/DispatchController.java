@@ -6,8 +6,8 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
 import com.loctt.app.service.impl.CartService;
+import com.loctt.app.service.impl.OrderDetailsService;
 import com.loctt.app.service.impl.ProductService;
-import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,9 @@ public class DispatchController {
     private CartService cartService;
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    private OrderDetailsService orderDetailsService;
+    
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
@@ -71,6 +73,20 @@ public class DispatchController {
         return "paying";
     }
     
+    @GetMapping("/repoStaff")
+    public String showRepoStaff() {
+        return "repo_staff_screen";
+    }
     
+    @GetMapping("/shipStaff")
+    public String showShipStaff() {
+        return "ship_staff_screen";
+    }
+    
+    @GetMapping("/showBill")
+    public String showBill(@RequestParam(name="orderId", required = false) String orderId, Model model) {
+        model.addAttribute("orderId", orderId);
+        return "bill";
+    }
 
 }
