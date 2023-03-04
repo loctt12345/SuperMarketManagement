@@ -8,6 +8,7 @@ import com.loctt.app.model.CartObject;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.OrderDetailsService;
+import com.loctt.app.service.impl.OrderService;
 import com.loctt.app.service.impl.ProductService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -35,6 +36,8 @@ public class DispatchController {
     private ProductService productService;
     @Autowired
     private OrderDetailsService orderDetailsService;
+    @Autowired
+    private OrderService orderService;
     
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
@@ -90,6 +93,12 @@ public class DispatchController {
     public String showBill(@RequestParam(name="orderId", required = false) String orderId, Model model) {
         model.addAttribute("orderId", orderId);
         return "bill";
+    }
+    
+    @GetMapping("/shipper_summary_order")
+    public String showSummaryOrder(@RequestParam(name="orderId", required = false) String orderId, Model model) {
+        model.addAttribute("order", orderService.getPrimaryOrder(orderId));
+        return "ship_staff_order_summary";
     }
 
 }

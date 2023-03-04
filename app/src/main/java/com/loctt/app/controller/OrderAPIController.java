@@ -27,6 +27,10 @@ public class OrderAPIController {
     public ResponseEntity updateOrderStatus(@RequestBody JSONObject object) {
         String orderId = object.getAsString("txtOrderId");
         int status = Integer.parseInt(object.getAsString("txtStatus"));
+        PrimaryOrder order = orderService.findByOrderID(orderId);
+        if (order.getStatusID() != (status - 1)) { 
+            return ResponseEntity.badRequest().body(null);
+        }
         orderService.updateOrderStatus(orderId, status);
         return ResponseEntity.ok().body(null);
     }
