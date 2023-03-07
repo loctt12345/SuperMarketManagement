@@ -6,10 +6,12 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.ProductDetails;
+import com.loctt.app.model.User;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.OrderDetailsService;
 import com.loctt.app.service.impl.OrderService;
 import com.loctt.app.service.impl.ProductService;
+import com.loctt.app.service.impl.UserService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,8 @@ public class DispatchController {
     private OrderDetailsService orderDetailsService;
     @Autowired
     private OrderService orderService;
-    
+    @Autowired
+    private UserService userService;
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
@@ -47,6 +50,15 @@ public class DispatchController {
 
     @GetMapping("/")
     public String startWeb() {
+        return "index";
+    }
+    @GetMapping("/home")
+    public String home() {
+        return "index";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
         return "index";
     }
     //TestAdmin
@@ -100,5 +112,11 @@ public class DispatchController {
         model.addAttribute("order", orderService.getPrimaryOrder(orderId));
         return "ship_staff_order_summary";
     }
-
+    @GetMapping("/login")
+    public String loginPage(@RequestParam(name="error", required = false) boolean error, Model model){
+        if(error){
+            model.addAttribute("ErrorAuthorizedMessages","Invalid username or password");
+        }
+        return "login_form";
+    }
 }

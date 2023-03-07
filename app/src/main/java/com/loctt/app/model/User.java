@@ -5,6 +5,7 @@
  */
 package com.loctt.app.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,13 +17,13 @@ import javax.persistence.Table;
  * @author ADMIN
  */
 @Entity
-@Table (name = "User")
-public class User implements java.io.Serializable{
+@Table (name = "Customer")
+public class User implements Serializable{
     @Id
     @GeneratedValue
     @Column (name = "UserID")
     private String userID;
-    @Column (name = "username")
+    @Column (name = "username",nullable = false, unique = true)
     private String username;
     @Column (name = "password")
     private String password;
@@ -34,6 +35,9 @@ public class User implements java.io.Serializable{
     private String email;
     @Column (name = "Address")
     private String address;
+
+    public User() {
+    }
 
     public User(String userID, String username, String password, String fullName, String phone, String email, String address) {
         this.userID = userID;
@@ -142,4 +146,10 @@ public class User implements java.io.Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "UserID=" + this.userID;
+    }
+    
 }

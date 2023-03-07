@@ -1,40 +1,59 @@
 package com.loctt.app.config;
 
+import com.loctt.app.service.impl.SecurityUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .antMatchers("/public/**").permitAll()
-                .anyRequest().authenticated()
+public class WebSecurityConfig {
+
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new SecurityUserDetailsService();
+    }
+    @Bean
+    public DaoAuthenticationProvider authProvider(){
+        DaoAuthenticationProvider authenticatorProvider = new DaoAuthenticationProvider();
+        authenticatorProvider.setPasswordEncoder(passwordEncoder());
+        authenticatorProvider.setUserDetailsService(userDetailsService());
+        return authenticatorProvider;
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        
+        http
+                .authorizeRequests()
+                .antMatchers("/","/login","/js/**","/css/**").permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/")
+                .usernameParameter("username")
+                .passwordParameter("password")
                 .failureUrl("/login?error=true")
-                .permitAll()
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout=true")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
-    }
-        @Autowired
-                public void configGlobal(AuthenticationManagerBuilder auth) throws Exception{
-                    auth.inMemoryAuthentication()
-                            .withUser("user").password("password").roles("USER")
-                            .and()
-                            .withUser("user").password("password").roles("ADMIN");
+                .deleteCookies("JSESSIONID");
+        http.authenticationProvider(authProvider());
+        http.csrf()
+                .disable();
+        return http.build();
     }
 }
-

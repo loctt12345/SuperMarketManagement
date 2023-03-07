@@ -85,3 +85,6 @@ and open the template in the editor.
     position: relative;
     display: inline-block;
 }
+#loginLink{
+    text-decoration: none;
+}

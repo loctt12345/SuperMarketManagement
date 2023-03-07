@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-qFz4LQ4MXsLsTqTj7yi3X1S0n7iCzUwTy6Uxq6F1j6mWNf6JssMiGoiM9dMZj2Sy+Pmcd5w2NuzLnbNT5Z5O5A=="
-        crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+              integrity="sha512-qFz4LQ4MXsLsTqTj7yi3X1S0n7iCzUwTy6Uxq6F1j6mWNf6JssMiGoiM9dMZj2Sy+Pmcd5w2NuzLnbNT5Z5O5A=="
+              crossorigin="anonymous" />
 
 
-    <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/app/src/main/resources/static/css/login_form.css">
-    <title>Document</title>
-</head>
+        <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" th:href="@{/css/login_form.css}">
+        <title>Document</title>
+    </head>
 
-<body>
-
-    <form>
+    <body>
         <section class="vh-100">
             <div class="container-fluid h-custom">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-md-9 col-lg-6 col-xl-5">
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                            class="img-fluid" alt="Sample image">
+                             class="img-fluid" alt="Sample image">
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form th:action="@{/login}" method="post">
                             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                                 <p class="lead fw-normal mb-0 me-3">Sign in with</p>
                                 <button type="button" class="btn btn-primary btn-floating mx-1 button-google">
-                                <i class="fab fa-google img-color"
-                                    onclick="location.href='https://accounts.google.com/o/oauth2/auth?client_id=680132235950-1k77oa7kirk4es4t09tenk4mkrensmep.apps.googleusercontent.com&redirect_uri=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&response_type=code&scope=email%20profile';">
-                                </i>
+                                    <i class="fab fa-google img-color"
+                                       onclick="location.href='https://accounts.google.com/o/oauth2/auth?client_id=680132235950-1k77oa7kirk4es4t09tenk4mkrensmep.apps.googleusercontent.com&redirect_uri=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&response_type=code&scope=email%20profile';">
+                                    </i>
                                 </button>
                             </div>
 
@@ -45,32 +43,27 @@
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="email" id="username" class="form-control form-control-lg" />
+                                <input type="text" id="username" name="username" class="form-control form-control-lg" />
                                 <label class="form-label" for="username">Username</label>
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-3">
-                                <input type="password" id="password" class="form-control form-control-lg" />
+                                <input type="password" id="password" name="password" class="form-control form-control-lg" />
                                 <label class="form-label" for="password">Password</label>
                             </div>
-
                             <div class="d-flex justify-content-between align-items-center">
-                                <!-- Checkbox -->
-                                <!-- <div class="form-check mb-0">
-                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                                    <label class="form-check-label" for="form2Example3">
-                                        Remember me
-                                    </label>
-                                </div> -->
+                                <div th:if="${ErrorAuthorizedMessages ne null}">
+                                    <span th:text="${ErrorAuthorizedMessages}" class="text-danger"></span>
+                                </div>
                                 <a href="#!" class="text-body">Forgot password?</a>
                             </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">
-                                <button type="button" class="btn btn-primary btn-lg"
-                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                                <button type="submit" class="btn btn-primary btn-lg"
+                                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                                 <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
-                                        class="link-danger">Register</a>
+                                                                                                  class="link-danger">Register</a>
                                 </p>
                             </div>
 
@@ -83,8 +76,7 @@
                 <footer th:replace="footer :: footer"></footer>
             </div>
         </section>
-    </form>
 
-</body>
+    </body>
 
 </html>
