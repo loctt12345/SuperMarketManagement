@@ -47,12 +47,14 @@ public class WebSecurityConfig {
             .logoutUrl("/logout");
         
         http.authenticationProvider(authProvider());
-        http.authorizeRequests()
-            .antMatchers("/", "/login", "/logout" ,"/js/**","/css/**").permitAll()
-            .anyRequest()
-            .authenticated();
         
-        http.csrf().disable();
+        http
+                .authorizeRequests()
+                .antMatchers("/","/js/**","/css/**").permitAll()
+//                .antMatchers("/admin-page").hasRole("ADMIN")
+//                .antMatchers("/shipper_summary_order").hasRole("DELIVERY_MAN")
+                .anyRequest()
+                .authenticated();
         return http.build();
     }
 }
