@@ -35,25 +35,25 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
+        
         http
-                .authorizeRequests()
-                .antMatchers("/","/login","/js/**","/css/**").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/login").permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/",true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID");
         http.authenticationProvider(authProvider());
-        http.csrf()
-                .disable();
+        http.csrf().disable();
+        http
+                .authorizeRequests()
+                .antMatchers("/","/js/**","/css/**").permitAll()
+                .anyRequest()
+                .authenticated();
         return http.build();
     }
 }

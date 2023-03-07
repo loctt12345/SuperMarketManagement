@@ -31,7 +31,6 @@ public class SecurityUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User customer = userService.findByUsername(username);
-        System.out.println(customer);
         if(customer == null){
             throw new UsernameNotFoundException("User not found: " + customer);
         }
