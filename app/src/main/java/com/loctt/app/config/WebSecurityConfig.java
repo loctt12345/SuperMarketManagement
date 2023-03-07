@@ -52,6 +52,8 @@ public class WebSecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers("/","/js/**","/css/**").permitAll()
+//                .antMatchers("/admin-page").hasRole("ADMIN")
+//                .antMatchers("/shipper_summary_order").hasRole("DELIVERY_MAN")
                 .anyRequest()
                 .authenticated();
         return http.build();
