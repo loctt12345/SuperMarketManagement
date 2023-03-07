@@ -5,11 +5,9 @@
  */
 package com.loctt.app.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -21,7 +19,7 @@ public class UserDetailsPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("USER"));
+        return new ArrayList<GrantedAuthority>();
     }
 
     @Override

@@ -36,24 +36,23 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
         
-        http
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/",true)
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("JSESSIONID");
+        http.formLogin()
+            .loginPage("/login")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .failureUrl("/login?error=true")
+            .defaultSuccessUrl("/loginSuccess", true)
+            .and()
+            .logout()
+            .logoutUrl("/logout");
+        
         http.authenticationProvider(authProvider());
+        http.authorizeRequests()
+            .antMatchers("/", "/login", "/logout" ,"/js/**","/css/**").permitAll()
+            .anyRequest()
+            .authenticated();
+        
         http.csrf().disable();
-        http
-                .authorizeRequests()
-                .antMatchers("/","/js/**","/css/**").permitAll()
-                .anyRequest()
-                .authenticated();
         return http.build();
     }
 }
