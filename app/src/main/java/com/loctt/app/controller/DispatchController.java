@@ -57,7 +57,7 @@ public class DispatchController {
         return "products_management";
     }
     @GetMapping("/product-detail")
-    public String showProduct(Model model, @RequestParam(name = "productID") String productID) {
+    public String showProduct(Model model, @RequestParam(name = "productID", required = false) String productID) {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
@@ -100,5 +100,11 @@ public class DispatchController {
         model.addAttribute("order", orderService.getPrimaryOrder(orderId));
         return "ship_staff_order_summary";
     }
-
+    
+    @GetMapping("/showRecommendation") 
+    public String showRecommendation(
+            @RequestParam(name="txtProductId", required = false) String productId,
+            @RequestParam(name="txtProductName", required = false) String productName) {
+        return "redirect:/";
+    }
 }
