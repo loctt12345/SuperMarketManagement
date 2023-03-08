@@ -16,5 +16,5 @@ public interface IUserService {
     public User findByUsername(String username);
     public User findByEmail(String email);
     public void createUser(User user);
-    public long countUser();
+    public User findMaxUserId();
 }
