@@ -9,8 +9,10 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -20,7 +22,9 @@ import javax.persistence.Table;
 @Table (name = "Customer")
 public class User implements Serializable{
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "user-generator")
+    @GenericGenerator(name = "user-generator", 
+      strategy = "com.loctt.app.model.MemberIDGenerator")
     @Column (name = "UserID")
     private String userID;
     @Column (name = "username",nullable = false, unique = true)

@@ -49,7 +49,8 @@ public class WebSecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers("/login", "/", "/js/**", "/css/**",
-                        "/product-detail","/api/products/**", "/showBill").permitAll()
+                        "/product-detail","/api/products/**", 
+                        "/showBill", "/register", "/addUser").permitAll()
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
                 .antMatchers("/admin-page", "/admin/**", "/crawl").hasRole("ADMIN")

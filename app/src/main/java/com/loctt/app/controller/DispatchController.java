@@ -14,6 +14,7 @@ import com.loctt.app.service.impl.ProductService;
 import com.loctt.app.service.impl.UserService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -25,6 +26,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -178,11 +181,51 @@ public class DispatchController {
         }
         return "login_form";
     }
+
     @GetMapping("/accessDenied")
     @ResponseStatus(code = HttpStatus.FORBIDDEN)
-    public String acccessDenied(){
+    public String acccessDenied() {
         return "access_denied_page";
     }
+
+    @GetMapping("/register")
+    public String register(@RequestParam(name = "username", required = false) String usernameError,
+            @RequestParam(name = "email", required = false) String emailError,
+            Model model) {
+        if (usernameError != null) {
+            model.addAttribute("username_error", "Username is existed!!!");
+        }
+        if (emailError != null) {
+            model.addAttribute("email_error", "Email is existed!!!");
+        }
+        return "register";
+    }
+
+    @PostMapping("/addUser")
+    public String addUser(
+            @RequestParam(name = "username") String username,
+            @RequestParam(name = "fullname") String fullname,
+            @RequestParam(name = "email") String email,
+            @RequestParam(name = "password") String password,
+            @RequestParam(name = "confirmPassword") String confirmPassword,
+            @RequestParam(name = "phone") String phone,
+            @RequestParam(name = "address") String address
+    ) {
+        User user = userService.findByUsername(username);
+        if (user != null) {
+            return "redirect:/register?username";
+        }
+
+        user = userService.findByEmail(email);
+        if (user != null) {
+            return "redirect:/register?email";
+        }
+
+        userService.createUser(new User("das", username, password, fullname,
+                phone, email, address));
+        return "redirect:/login";
+    }
+
 //    @GetMapping("/crawl") 
 //    public String crawl() {
 //        List<ProductDetails> productDetails = this.productService.findByNameContaining("");
@@ -192,5 +235,4 @@ public class DispatchController {
 //        }
 //        return "redirect:/admin-page";
 //    }
-
 }
