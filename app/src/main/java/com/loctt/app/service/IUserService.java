@@ -14,5 +14,5 @@ import com.loctt.app.model.User;
 public interface IUserService {
     public User findUserByID(String userID);
     public User findByUsername(String username);
-    
+    public void createNewUser(User user);
 }
