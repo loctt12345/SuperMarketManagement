@@ -1,11 +1,8 @@
 package com.loctt.app.config;
 
 import com.loctt.app.service.impl.SecurityUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -62,7 +59,7 @@ public class WebSecurityConfig {
                 .anyRequest()
                 .authenticated();
         
-        http.exceptionHandling().accessDeniedPage("/access_denied_page.html");
+        http.exceptionHandling().accessDeniedPage("/accessDenied");
         
         http.csrf().disable();
         return http.build();

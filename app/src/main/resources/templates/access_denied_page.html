@@ -5,12 +5,20 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+
+<head>
+    <title>Access denied</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/accessDenied.css}">
+</head>
+
+<body>
+    <div class="lock"></div>
+    <div class="message">
+      <h1>Access to this page is restricted</h1>
+      <a th:href="@{/authorize}">Return to Home page</a>
+    </div>
+</body>
+
 </html>

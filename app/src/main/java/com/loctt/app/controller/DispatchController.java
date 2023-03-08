@@ -15,6 +15,7 @@ import com.loctt.app.service.impl.UserService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -176,7 +178,11 @@ public class DispatchController {
         }
         return "login_form";
     }
-    
+    @GetMapping("/accessDenied")
+    @ResponseStatus(code = HttpStatus.FORBIDDEN)
+    public String acccessDenied(){
+        return "access_denied_page";
+    }
 //    @GetMapping("/crawl") 
 //    public String crawl() {
 //        List<ProductDetails> productDetails = this.productService.findByNameContaining("");
