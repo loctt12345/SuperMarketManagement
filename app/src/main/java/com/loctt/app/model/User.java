@@ -8,6 +8,8 @@ package com.loctt.app.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -35,19 +37,14 @@ public class User implements Serializable{
     private String email;
     @Column (name = "Address")
     private String address;
+    @Enumerated(EnumType.STRING)
+    @Column (name = "auth_provider")
+    private AuthenticationProvider authenticationProvider;
 
     public User() {
     }
-
-    public User(String userID, String username, String password, String fullName, String phone, String email, String address) {
-        this.userID = userID;
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-    }
+    
+    
 
     /**
      * @return the userID
@@ -147,9 +144,25 @@ public class User implements Serializable{
         this.address = address;
     }
 
+    /**
+     * @return the authenticationProvider
+     */
+    public AuthenticationProvider getAuthenticationProvider() {
+        return authenticationProvider;
+    }
+
+    /**
+     * @param authenticationProvider the authenticationProvider to set
+     */
+    public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
+
     @Override
     public String toString() {
-        return "UserID=" + this.userID;
+        return "User{" + "userID=" + userID + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", phone=" + phone + ", email=" + email + ", address=" + address + ", authenticationProvider=" + authenticationProvider + '}';
     }
+
+    
     
 }
