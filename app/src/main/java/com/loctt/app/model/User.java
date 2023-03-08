@@ -13,46 +13,46 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author ADMIN
  */
 @Entity
-@Table (name = "Customer")
-public class User implements Serializable{
+@Table(name = "Customer")
+public class User implements Serializable {
+
     @Id
-    @GeneratedValue
-    @Column (name = "UserID")
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "UserID")
     private String userID;
-    @Column (name = "username",nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
-    @Column (name = "password")
+    @Column(name = "password")
     private String password;
-    @Column (name = "Full_Name")
+    @Column(name = "Full_Name")
     private String fullName;
-    @Column (name = "Phone")
+    @Column(name = "Phone")
     private String phone;
-    @Column (name = "Email")
+    @Column(name = "Email")
     private String email;
-    @Column (name = "Address")
+    @Column(name = "Address")
     private String address;
     @Enumerated(EnumType.STRING)
-    @Column (name = "auth_provider")
+    @Column(name = "auth_provider")
     private AuthenticationProvider authenticationProvider;
 
     public User() {
     }
 
-    public User(String userID, String username, String fullName, String email, AuthenticationProvider authenticationProvider) {
-        this.userID = userID;
+    public User(String username, String fullName, String email, AuthenticationProvider authenticationProvider) {
         this.username = username;
         this.fullName = fullName;
         this.email = email;
         this.authenticationProvider = authenticationProvider;
     }
-    
-    
 
     /**
      * @return the userID
@@ -171,6 +171,4 @@ public class User implements Serializable{
         return "User{" + "userID=" + userID + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", phone=" + phone + ", email=" + email + ", address=" + address + ", authenticationProvider=" + authenticationProvider + '}';
     }
 
-    
-    
 }

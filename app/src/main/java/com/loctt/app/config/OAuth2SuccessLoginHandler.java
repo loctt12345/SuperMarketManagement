@@ -10,6 +10,7 @@ import com.loctt.app.model.User;
 import com.loctt.app.service.impl.GenerateUUID;
 import com.loctt.app.service.impl.UserService;
 import java.io.IOException;
+import java.util.Random;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,15 +33,11 @@ public class OAuth2SuccessLoginHandler extends SimpleUrlAuthenticationSuccessHan
         String userEmail = oauthUser.getEmail();
         User customer = this.userService.findByUsername(userEmail);
         if(customer == null){
-            //if havn't register yet-> register
-            String userID = GenerateUUID.getUUID();
-            customer.setFullName(oauthUser.getFullName());
-            customer.setUserID(userID);
-            customer.setEmail(userEmail);
-            customer.setUsername(userEmail);
-            customer.setAuthenticationProvider(AuthenticationProvider.GOOGLE);
-            userService.createNewUser(customer);
+            //if haven't register yet-> register
+            User newCustomer = new User(oauthUser.getEmail(), oauthUser.getFullName(), userEmail, AuthenticationProvider.GOOGLE);
+            userService.createNewUser(newCustomer);
         }
+        response.sendRedirect("/");
     }
 
 }
