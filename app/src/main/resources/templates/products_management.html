@@ -18,8 +18,9 @@
 
     <body onload="loadProduct()">
         <div class="container-fluid">
-            <header th:replace="header :: header"></header>
-            <hr>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}">Log out</a>
+            </div>
 
             <!-- navbar -->
             <nav class="navbar navbar-light bg-light">
@@ -205,9 +206,9 @@
             </div>
             <footer th:replace="footer :: footer"></footer>
         </div>
-            <script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>
-            <script th:src="@{/js/admin.js}"></script>
-            <script th:src="@{/js/pagination.js}"></script>
+        <script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>
+        <script th:src="@{/js/admin.js}"></script>
+        <script th:src="@{/js/pagination.js}"></script>
     </body>
 
 </html>

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,43 +19,52 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new SecurityUserDetailsService();
     }
+
     @Bean
-    public DaoAuthenticationProvider authProvider(){
+    public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authenticatorProvider = new DaoAuthenticationProvider();
         authenticatorProvider.setPasswordEncoder(passwordEncoder());
         authenticatorProvider.setUserDetailsService(userDetailsService());
         return authenticatorProvider;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        
-        
+
         http.formLogin()
-            .loginPage("/login")
-            .usernameParameter("username")
-            .passwordParameter("password")
-            .failureUrl("/login?error=true")
-            .defaultSuccessUrl("/loginSuccess", true)
-            .and()
-            .logout()
-            .logoutUrl("/logout");
-        
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/authorize", true);
+
+        http.logout();
+
         http.authenticationProvider(authProvider());
-        
-        http
-                .authorizeRequests()
-                .antMatchers("/","/js/**","/css/**").permitAll()
-//                .antMatchers("/admin-page").hasRole("ADMIN")
-//                .antMatchers("/shipper_summary_order").hasRole("DELIVERY_MAN")
+
+        http.authorizeRequests()
+                .antMatchers("/login", "/", "/js/**", "/css/**",
+                        "/product-detail","/api/products/**", "/showBill").permitAll()
+                .antMatchers("/api/cart/**", "/showCart",
+                        "/showPaying", "/paying/**").hasRole("USER")
+                .antMatchers("/admin-page", "/admin/**", "/crawl").hasRole("ADMIN")
+                .antMatchers("/shipStaff", "/shipper_summary_order",
+                        "api/order/**").hasRole("DELIVERY_MAN")
+                .antMatchers("/repoStaff", "api/order/**").hasRole("STORAGE_MAN")
                 .anyRequest()
                 .authenticated();
+        
+        http.exceptionHandling().accessDeniedPage("/access_denied_page.html");
+        
+        http.csrf().disable();
         return http.build();
     }
 }
