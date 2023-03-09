@@ -24,8 +24,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "user-generator")
+    @GenericGenerator(name = "user-generator", 
+      strategy = "com.loctt.app.model.MemberIDGenerator")
     @Column(name = "UserID")
     private String userID;
     @Column(name = "username", nullable = false, unique = true)

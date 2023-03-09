@@ -25,6 +25,7 @@ public class WebSecurityConfig {
     private CustomOAuth2UserService oAuth2UserService;
     @Autowired
     private OAuth2SuccessLoginHandler oAuth2SuccessLoginHandler;
+
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authenticatorProvider = new DaoAuthenticationProvider();
@@ -32,7 +33,7 @@ public class WebSecurityConfig {
         authenticatorProvider.setUserDetailsService(userDetailsService());
         return authenticatorProvider;
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -62,49 +63,15 @@ public class WebSecurityConfig {
         http
                 .oauth2Login()
                 .loginPage("/login")
-                .defaultSuccessUrl("/",true)
+                .defaultSuccessUrl("/", true)
                 .userInfoEndpoint()
-                    .userService(oAuth2UserService)
-                    .and()
-                    .successHandler(oAuth2SuccessLoginHandler);
+                .userService(oAuth2UserService)
+                .and()
+                .successHandler(oAuth2SuccessLoginHandler)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JSESSIONID");
         return http.build();
     }
-
-//    @Override
-//    public void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/oauth2/**").permitAll()
-//                .antMatchers("/customer/**").authenticated()
-//                .anyRequest().permitAll()
-//                .and()
-//                .oauth2Login()
-//                    .loginPage("/login_form")
-//                    .permitAll()
-//                    .defaultSuccessUrl("/")
-//                .and()
-//                .oauth2Login()
-//                    .loginPage("/login_form")
-//                    .userInfoEndpoint().userService(oAuth2UserService)
-//                    .and()
-//                    .successHandler(oauth2LoginSucessHandler)
-//                .and()
-//                .logout().permitAll()
-//                .and()
-//                .rememberMe().tokenRepository(persistentTokenRepository());
-//
-//    }
-
-//    @Bean
-//    public PersistentTokenRepository persistentTokenRepository() {
-//        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-//        tokenRepository.setDataSource((javax.sql.DataSource) dataSource);
-//        return tokenRepository;
-//    }
-
-//    @Autowired
-//    private CustomOAuth2UserService oAuth2UserService;
-//    
-//    @Autowired
-//    private OAuth2LoginSucessHandler oauth2LoginSucessHandler;
 }

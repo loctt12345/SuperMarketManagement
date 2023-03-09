@@ -5,6 +5,7 @@
  */
 package com.loctt.app.service.impl;
 
+import com.loctt.app.model.AuthenticationProvider;
 import com.loctt.app.model.User;
 import com.loctt.app.model.UserDetailsPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class SecurityUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User customer = userService.findByUsername(username);
-        if(customer == null){
+        if(customer == null || customer.getAuthenticationProvider() == AuthenticationProvider.GOOGLE){
             throw new UsernameNotFoundException("User not found: " + customer);
         }
         return new UserDetailsPrincipal(customer);
