@@ -106,47 +106,50 @@ public class OrderController {
 
     @GetMapping("/orderProgress")
     public String updateOrderStatus(@RequestParam(value = "orderID") String orderID, Model model) {
-        if (orderID != null) {
-            PrimaryOrder order = orderService.findByOrderID(orderID);
-            Map<ProductDetails, Integer> listProduct = orderService.getListProduct(orderID);
-            float total = 0;
-            for (Map.Entry<ProductDetails, Integer> product : listProduct.entrySet()) {
-                total += (float) product.getValue() * product.getKey().getSellprice();
-            }
-            
-            //3. Add this noti to attribute
-            session.setAttribute(noti, "notiAvailable");
-            
-            //1. Add new Order
-            
-            PrimaryOrder orderSaved = new PrimaryOrder();
-            
-            String orderID = GenerateUUID.getUUID();
-            
-            //Set Shipping information
-            orderSaved.setOrderID(orderID);
-            orderSaved.setEmail(email);
-            orderSaved.setPhone(phone);
-            orderSaved.setShippingAddress(address);
-            
-            //Set Customer
-            orderSaved.setUserID("CUS011");
-            orderSaved.setStatusID(1);
-            orderSaved.setTime(new Date());
-            
-            //Set Total For order
-            float total = orderService.getTotalOfOrder(cart);
-            orderSaved.setTotal(total);
-            //System.out.println("This is order: " + orderSaved.toString());
-            orderService.saveOrder(orderSaved);
-            
-            
-            //2. call Add Order Details Service 
-            orderService.saveOrderDetails(cart, orderID); 
-            
-            //3. remove cart after checkout
-            cart.getItems().clear();
-            System.out.println("http://localhost:8080/showBill?orderId="+orderID);
-        return "redirect:/";
+//        if (orderID != null) {
+//            PrimaryOrder order = orderService.findByOrderID(orderID);
+//            Map<ProductDetails, Integer> listProduct = orderService.getListProduct(orderID);
+//            float total = 0;
+//            for (Map.Entry<ProductDetails, Integer> product : listProduct.entrySet()) {
+//                total += (float) product.getValue() * product.getKey().getSellprice();
+//            }
+//            
+//            //3. Add this noti to attribute
+//            session.setAttribute(noti, "notiAvailable");
+//            
+//            //1. Add new Order
+//            
+//            PrimaryOrder orderSaved = new PrimaryOrder();
+//            
+//            String orderID = GenerateUUID.getUUID();
+//            
+//            //Set Shipping information
+//            orderSaved.setOrderID(orderID);
+//            orderSaved.setEmail(email);
+//            orderSaved.setPhone(phone);
+//            orderSaved.setShippingAddress(address);
+//            
+//            //Set Customer
+//            orderSaved.setUserID("CUS011");
+//            orderSaved.setStatusID(1);
+//            orderSaved.setTime(new Date());
+//            
+//            //Set Total For order
+//            float total = orderService.getTotalOfOrder(cart);
+//            orderSaved.setTotal(total);
+//            //System.out.println("This is order: " + orderSaved.toString());
+//            orderService.saveOrder(orderSaved);
+//            
+//            
+//            //2. call Add Order Details Service 
+//            orderService.saveOrderDetails(cart, orderID); 
+//            
+//            //3. remove cart after checkout
+//            cart.getItems().clear();
+//            System.out.println("http://localhost:8080/showBill?orderId="+orderID);
+//        return "redirect:/";
+//    }
+                return "redirect:/";
     }
+
 }
