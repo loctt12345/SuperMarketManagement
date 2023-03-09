@@ -40,7 +40,7 @@ public class CartController {
         HashMap<String, String> response = new HashMap<>();
         int quantityInCart = Integer.parseInt(object.getAsString("quantityInCart"));
         CartObject cart = (CartObject) session.getAttribute("CART");
-        
+
         if (cart != null) {
             cartService.updateItemInCart(productID, quantityInCart, cart);
             session.setAttribute("CART", cart);
@@ -63,7 +63,7 @@ public class CartController {
         }
         return ResponseEntity.ok().body(response);
     }
-
+    
     @GetMapping("/api/cart/show/{pageNum}")
     public ResponseEntity showCart(@PathVariable(value = "pageNum") Integer pageNum, Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
@@ -90,13 +90,29 @@ public class CartController {
         }
         return ResponseEntity.ok().body(result);
     }
-    
+
+    @GetMapping("/api/cart/getTotalPriceInCartToDollar")
+    public ResponseEntity getTotalPriceToDollar(HttpSession session) {
+        float result = 0;
+        CartObject cart = (CartObject) session.getAttribute("CART");
+        if (cart != null && cart.getItems() != null) {
+            for (Map.Entry<String, Integer> entry : cart.getItems().entrySet()) {
+                result
+                        += productService.findByProductID(entry.getKey()).getSellprice()
+                        * entry.getValue();
+            }
+        }
+        return ResponseEntity.ok().body(result/23000);
+
+    }
+
     //Add new Item to Cart
     @GetMapping("api/cart/addToCart")
     public ResponseEntity addToCart(@RequestParam(name = "txtProductID") String txtProductID,
             @RequestParam(name = "txtNumber") String txtNumber, HttpSession session) {
-        if (productService.findByProductID(txtProductID) != null)
+        if (productService.findByProductID(txtProductID) != null) {
             cartService.addToCart(txtProductID, txtNumber, session);
+        }
         return ResponseEntity.ok().body(null);
     }
 }
