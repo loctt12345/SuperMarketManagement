@@ -62,7 +62,7 @@ public class CartService implements ICartService {
     public void removeItemInCart(String productID, CartObject cart) {
         cart.removeItem(productID);
     }
-
+       
     @Override
     public JSONObject showCart(CartObject cart, int fromItemIndex, int maxItemIndex) {
 
