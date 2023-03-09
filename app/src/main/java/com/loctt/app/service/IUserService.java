@@ -13,4 +13,8 @@ import com.loctt.app.model.User;
  */
 public interface IUserService {
     public User findUserByID(String userID);
+    public User findByUsername(String username);
+    public User findByEmail(String email);
+    public void createUser(User user);
+    public User findMaxUserId();
 }

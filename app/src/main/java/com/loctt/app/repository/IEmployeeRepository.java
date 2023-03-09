@@ -5,18 +5,13 @@
  */
 package com.loctt.app.repository;
 
-import com.loctt.app.model.User;
+import com.loctt.app.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ADMIN
  */
-@Repository
-public interface IUserRepository extends JpaRepository<User, String>{
-    User findByUserID(String userID);
-    User findByUsername(String username);
-    User findByEmail(String email);
-    
+public interface IEmployeeRepository extends JpaRepository<Employee, String>{
+    Employee findByUsername(String username);
 }

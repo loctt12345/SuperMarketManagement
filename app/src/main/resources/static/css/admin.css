@@ -49,3 +49,6 @@
 .product-img{
     width: 180px;
 }
+#loginLink{
+    text-decoration: none;
+}
