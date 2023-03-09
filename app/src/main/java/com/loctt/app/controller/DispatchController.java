@@ -92,4 +92,8 @@ public class DispatchController {
         return "bill";
     }
 
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard";
+    }
 }
