@@ -15,7 +15,10 @@ import com.loctt.app.repository.IPrimaryOrderRepository;
 import com.loctt.app.repository.IProductRepository;
 import com.loctt.app.repository.IUserRepository;
 import com.loctt.app.service.IOrderService;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -155,5 +158,30 @@ public class OrderService implements IOrderService{
         }
         return null;
     }
-        
+
+    @Override
+    public List<PrimaryOrder> findByTimedateBetween(Date timeLess, Date timeGreater) {
+        return primaryOrderRepository.findByTimedateBetween(timeLess, timeGreater);
+    }
+
+    @Override
+    public Map<Integer, Float> getTotalProfitByMonth(int month, int year) {
+        LocalDate date = LocalDate.of(year, month, 1);
+        int lastDayOfMonth = date.lengthOfMonth();
+        Map<Integer, Float> totalProfit = new LinkedHashMap<>();
+        for(int i = 0; i < (lastDayOfMonth/7)+1; i++){
+            totalProfit.put(i+1, calcTotal(findByTimedateBetween
+                            (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1)))));    
+        }
+        return totalProfit;
+    }
+
+    @Override
+    public float calcTotal(List<PrimaryOrder> orderList) {
+        float totalMoney = 0;
+        for (PrimaryOrder primaryOrder : orderList) {
+            totalMoney += primaryOrder.getTotal();
+        }
+        return totalMoney;
+    }   
 }
