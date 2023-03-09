@@ -140,7 +140,7 @@ public class PaymentController {
                 cart.getItems().clear();
                 redirectAttributes.addAttribute("orderID", orderID);
                 System.out.println("http://localhost:8080/showBill?orderId=" + orderID);
-                return "redirect:/orderProgress";
+                return "redirect:/paying/orderProgress";
             }
         } catch (PayPalRESTException e) {
             log.error(e.getMessage());
