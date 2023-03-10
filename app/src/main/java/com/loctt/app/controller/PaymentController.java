@@ -7,9 +7,12 @@ package com.loctt.app.controller;
 import com.loctt.app.config.PaypalPaymentIntent;
 import com.loctt.app.config.PaypalPaymentMethod;
 import com.loctt.app.model.CartObject;
+import com.loctt.app.model.CustomOAuth2User;
 import com.loctt.app.model.PrimaryOrder;
+import com.loctt.app.model.UserDetailsPrincipal;
 import com.loctt.app.service.IOrderService;
 import com.loctt.app.service.IProductManagerService;
+import com.loctt.app.service.IUserService;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.GenerateUUID;
 import com.loctt.app.service.impl.PaypalService;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +44,7 @@ public class PaymentController {
     @Autowired
     private IOrderService orderService;
     @Autowired
-    private CartService cartService;
+    private IUserService userService;
     @Autowired
     private IProductManagerService productManager;
 
@@ -84,7 +88,8 @@ public class PaymentController {
     @GetMapping(URL_PAYPAL_SUCCESS)
     public String successPay(@RequestParam("paymentId") String paymentId,
             @RequestParam("PayerID") String payerId, HttpSession session,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            Authentication authentication) {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")) {
@@ -124,7 +129,18 @@ public class PaymentController {
                 orderSaved.setShippingAddress(address);
 
                 //Set Customer
-                orderSaved.setUserID("CUS011");
+                String userId;
+                if (authentication.getPrincipal() instanceof CustomOAuth2User) {
+                    // if user login with Gmail
+                    String gmail = ((CustomOAuth2User)authentication.getPrincipal())
+                            .getEmail();
+                    userId = userService.findByEmail(gmail).getUserID();
+                }
+                else {
+                     userId = ((UserDetailsPrincipal) authentication.getPrincipal())
+                            .getUser().getUserID();
+                }
+                orderSaved.setUserID(userId);
                 orderSaved.setStatusID(2);
                 orderSaved.setTime(new Date());
 

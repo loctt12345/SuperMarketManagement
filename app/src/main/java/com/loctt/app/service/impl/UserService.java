@@ -10,7 +10,7 @@ import com.loctt.app.repository.IUserRepository;
 import com.loctt.app.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +23,6 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder; 
     @Override
     public User findUserByID(String userID) {
         return userRepository.findByUserID(userID);
@@ -49,7 +47,8 @@ public class UserService implements IUserService {
     
     @Override
     public void createUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+        user.setPassword(bcrypt.encode(user.getPassword()));
         userRepository.save(user);
     }
     

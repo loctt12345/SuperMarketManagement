@@ -59,12 +59,12 @@ public class DispatchController {
         model.addAttribute("cartSize", this.cartService.getCartSize(cart));
     }
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String startWeb() {
         return "index";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home() {
         return "index";
     }

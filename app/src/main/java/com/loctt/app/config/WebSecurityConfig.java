@@ -2,6 +2,7 @@ package com.loctt.app.config;
 
 import com.loctt.app.service.impl.CustomOAuth2UserService;
 import com.loctt.app.service.impl.SecurityUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

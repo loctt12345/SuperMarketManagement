@@ -98,12 +98,18 @@
                                          />
                                     <div class="dropdown-menu" id="profile-dropdown">
                                         <div class="dropdown-header">
-                                            <div th:if="${#authentication.getPrincipal().getUser()}">
-                                                <span th:text="${#authentication.getPrincipal().getUser().fullName}"></span>
+                                            <div th:if="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
+                                                <span th:text="${#authentication.getPrincipal().fullName}"></span>
                                             </div>
-                                            <div th:if="${#authentication.getPrincipal().getEmployee()}">
-                                                <span th:text="${#authentication.getPrincipal().getEmployee().fullName}"></span>
+                                            <div th:if="${#authentication.Principal.toString().contains('UserDetailsPrincipal')}">
+                                                <div th:if="${#authentication.getPrincipal().getUser()}">
+                                                    <span th:text="${#authentication.getPrincipal().getUser().fullName}"></span>
+                                                </div>
+                                                <div th:if="${#authentication.getPrincipal().getEmployee()}">
+                                                    <span th:text="${#authentication.getPrincipal().getEmployee().fullName}"></span>
+                                                </div>
                                             </div>
+
                                         </div>
                                         <a class="dropdown-item" href="#">Profile</a>
                                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>

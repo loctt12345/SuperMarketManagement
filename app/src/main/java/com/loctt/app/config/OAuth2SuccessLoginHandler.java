@@ -34,7 +34,8 @@ public class OAuth2SuccessLoginHandler extends SimpleUrlAuthenticationSuccessHan
         User customer = this.userService.findByUsername(userEmail);
         if(customer == null){
             //if haven't register yet-> register
-            User newCustomer = new User(oauthUser.getEmail(), oauthUser.getFullName(), userEmail, AuthenticationProvider.GOOGLE);
+            User newCustomer = new User(oauthUser.getEmail(), 
+                    oauthUser.getFullName(), userEmail, AuthenticationProvider.GOOGLE);
             userService.createNewUser(newCustomer);
         }
         response.sendRedirect("/");
