@@ -40,3 +40,7 @@ form {
 .button-google {
     border-radius: 50%;
 }
+
+#btnLogin{
+    background-color: #8EFFAB;
+}
