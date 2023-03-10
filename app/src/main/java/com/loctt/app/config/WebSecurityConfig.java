@@ -1,5 +1,6 @@
 package com.loctt.app.config;
 
+import com.loctt.app.service.impl.CustomOAuth2UserService;
 import com.loctt.app.service.impl.SecurityUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,11 @@ public class WebSecurityConfig {
     public UserDetailsService userDetailsService() {
         return new SecurityUserDetailsService();
     }
+    @Autowired
+    private CustomOAuth2UserService oAuth2UserService;
+    @Autowired
+    private OAuth2SuccessLoginHandler oAuth2SuccessLoginHandler;
+
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
@@ -35,6 +41,20 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+
+        http
+                .oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/", true)
+                .userInfoEndpoint()
+                .userService(oAuth2UserService)
+                .and()
+                .successHandler(oAuth2SuccessLoginHandler)
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JSESSIONID");
 
         http.formLogin()
                 .loginPage("/login")

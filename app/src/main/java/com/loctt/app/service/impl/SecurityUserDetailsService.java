@@ -5,6 +5,7 @@
  */
 package com.loctt.app.service.impl;
 
+import com.loctt.app.model.AuthenticationProvider;
 import com.loctt.app.model.Employee;
 import com.loctt.app.model.User;
 import com.loctt.app.model.UserDetailsPrincipal;
@@ -36,6 +37,9 @@ public class SecurityUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User customer = userService.findByUsername(username);
+        if(customer != null && customer.getAuthenticationProvider() == AuthenticationProvider.GOOGLE){
+            throw new UsernameNotFoundException("User not found: " + customer);
+        }
         Employee employee = employeeService.findByUsername(username);
         if (customer != null) {
             UserDetailsPrincipal user = new UserDetailsPrincipal(customer);

@@ -32,12 +32,14 @@
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form th:action="@{/login}" method="post">
                             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                                <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                                <button type="button" class="btn btn-primary btn-floating mx-1 button-google">
+                                <p class="lead fw-normal mb-0 me-3">Sign in with: </p>
+<!--                                <button type="button" class="btn btn-primary btn-floating mx-1 button-google">
                                     <i class="fab fa-google img-color"
                                        onclick="location.href = 'https://accounts.google.com/o/oauth2/auth?client_id=680132235950-1k77oa7kirk4es4t09tenk4mkrensmep.apps.googleusercontent.com&redirect_uri=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&response_type=code&scope=email%20profile';">
                                     </i>
-                                </button>
+                                </button>-->
+                                <a th:href="@{/oauth2/authorization/google}">Google</a>
+
                             </div>
 
                             <div class="divider d-flex align-items-center my-4">
