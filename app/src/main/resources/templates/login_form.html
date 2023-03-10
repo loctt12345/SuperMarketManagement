@@ -15,16 +15,19 @@
 
         <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" th:href="@{/css/login_form.css}">
-        <title>Document</title>
+        <title>Login</title>
     </head>
 
     <body>
         <section class="vh-100">
             <div class="container-fluid h-custom">
                 <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-md-9 col-lg-6 col-xl-5">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                             class="img-fluid" alt="Sample image">
+                    <div class="col-md-9 col-lg-6 col-xl-5 row">
+                        <img src="https://www.codereadr.com/wp-content/uploads/2020/12/Rapid-barcode-scanning_reduced.gif"
+                             class="img-fluid col-6" alt="image">
+                        <img src="https://lh3.googleusercontent.com/pw/AMWts8CC4E58R26BGn0IoG5FmCSWyMvxEvEX1-OPP2Gj0-H8ndxIz8w3R1WcwneAW3JlpEy6EIpvX4HLo9okjknSnRKSZajJYfMuf6Jo1wQh0rzlNYe9awkTJXkAuWU66kae0KSvTiK75yAazVaMziJCJzPE=s993-no?authuser=0"
+                             class="img-fluid col-6"
+                             alt="image">
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                         <form th:action="@{/login}" method="post">
@@ -32,7 +35,7 @@
                                 <p class="lead fw-normal mb-0 me-3">Sign in with: </p>
 <!--                                <button type="button" class="btn btn-primary btn-floating mx-1 button-google">
                                     <i class="fab fa-google img-color"
-                                       onclick="location.href='https://accounts.google.com/o/oauth2/auth?client_id=680132235950-1k77oa7kirk4es4t09tenk4mkrensmep.apps.googleusercontent.com&redirect_uri=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&response_type=code&scope=email%20profile';">
+                                       onclick="location.href = 'https://accounts.google.com/o/oauth2/auth?client_id=680132235950-1k77oa7kirk4es4t09tenk4mkrensmep.apps.googleusercontent.com&redirect_uri=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&response_type=code&scope=email%20profile';">
                                     </i>
                                 </button>-->
                                 <a th:href="@{/oauth2/authorization/google}">Google</a>
@@ -64,8 +67,9 @@
                             <div class="text-center text-lg-start mt-4 pt-2">
                                 <button type="submit" class="btn btn-primary btn-lg"
                                         style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
-                                                                                                  class="link-danger">Register</a>
+                                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
+                                    <a href="/register"
+                                       class="link-danger">Register</a>
                                 </p>
                             </div>
 

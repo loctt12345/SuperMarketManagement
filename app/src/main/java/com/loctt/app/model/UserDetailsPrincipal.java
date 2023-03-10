@@ -7,8 +7,9 @@ package com.loctt.app.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import java.util.Collections;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,21 +19,50 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author ADMIN
  */
 public class UserDetailsPrincipal implements UserDetails {
+
     private User user;
+    private Employee employee;
+    private String role;
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>();
+
+
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_"+this.role));
     }
 
     @Override
     public String getPassword() {
-        return this.user.getPassword();
+        if (this.user != null) {
+            return this.user.getPassword();
+        } else {
+            return this.employee.getPassword();
+        }
     }
 
     @Override
     public String getUsername() {
-        return this.user.getUsername();
+        if (this.user != null) {
+            return this.user.getUsername();
+        } else {
+            return this.employee.getUsername();
+        }
     }
 
     @Override
@@ -58,12 +88,17 @@ public class UserDetailsPrincipal implements UserDetails {
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
 
     public UserDetailsPrincipal(User user) {
         this.user = user;
+    }
+
+    public UserDetailsPrincipal(Employee employee) {
+        this.employee = employee;
     }
 
 }

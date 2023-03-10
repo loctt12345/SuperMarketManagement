@@ -8,6 +8,7 @@ import com.loctt.app.model.CartObject;
 import com.loctt.app.model.OrderDetails;
 import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.ProductDetails;
+import com.loctt.app.model.UserDetailsPrincipal;
 import com.loctt.app.service.IOrderService;
 import com.loctt.app.service.IProductManagerService;
 import com.loctt.app.service.impl.GenerateUUID;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +54,8 @@ public class OrderController {
             @RequestParam(name = "userPhone") String phone,
             @RequestParam(name = "userAddress") String address,
             HttpSession session,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            Authentication authentication) {
 
         //Get CART OBJECT
         CartObject cart = (CartObject) session.getAttribute("CART");
@@ -85,7 +88,10 @@ public class OrderController {
         orderSaved.setShippingAddress(address);
 
         //Set Customer
-        orderSaved.setUserID("CUS011");
+        
+        String userId = ((UserDetailsPrincipal) authentication.getPrincipal())
+                .getUser().getUserID();
+        orderSaved.setUserID(userId);
         orderSaved.setStatusID(2);
         orderSaved.setTime(new Date());
 
@@ -101,10 +107,10 @@ public class OrderController {
         cart.getItems().clear();
         redirectAttributes.addAttribute("orderID", orderID);
         System.out.println("http://localhost:8080/showBill?orderId="+orderID);
-        return "redirect:/orderProgress";
+        return "redirect:/paying/orderProgress";
     }
 
-    @GetMapping("/orderProgress")
+    @GetMapping("/paying/orderProgress")
     public String updateOrderStatus(@RequestParam(value = "orderID") String orderID, Model model) {
         if (orderID != null) {
             PrimaryOrder order = orderService.findByOrderID(orderID);

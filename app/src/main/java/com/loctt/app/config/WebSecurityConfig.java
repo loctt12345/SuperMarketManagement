@@ -2,7 +2,6 @@ package com.loctt.app.config;
 
 import com.loctt.app.service.impl.CustomOAuth2UserService;
 import com.loctt.app.service.impl.SecurityUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -26,6 +25,7 @@ public class WebSecurityConfig {
     @Autowired
     private OAuth2SuccessLoginHandler oAuth2SuccessLoginHandler;
 
+
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authenticatorProvider = new DaoAuthenticationProvider();
@@ -42,24 +42,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/", true)
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .deleteCookies("JSESSIONID");
-        http.authenticationProvider(authProvider());
-        http.csrf().disable();
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/js/**", "/css/**").permitAll()
-                .anyRequest()
-                .authenticated();
+
         http
                 .oauth2Login()
                 .loginPage("/login")
@@ -72,6 +55,34 @@ public class WebSecurityConfig {
                 .logout()
                 .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID");
+
+        http.formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .failureUrl("/login?error=true")
+                .defaultSuccessUrl("/authorize", true);
+
+        http.logout();
+
+        http.authenticationProvider(authProvider());
+
+        http.authorizeRequests()
+                .antMatchers("/login", "/", "/js/**", "/css/**",
+                        "/product-detail","/api/products/**", 
+                        "/showBill", "/register", "/addUser").permitAll()
+                .antMatchers("/api/cart/**", "/showCart",
+                        "/showPaying", "/paying/**").hasRole("USER")
+                .antMatchers("/admin-page", "/admin/**", "/crawl").hasRole("ADMIN")
+                .antMatchers("/shipStaff", "/shipper_summary_order",
+                        "api/order/**").hasRole("DELIVERY_MAN")
+                .antMatchers("/repoStaff", "api/order/**").hasRole("STORAGE_MAN")
+                .anyRequest()
+                .authenticated();
+        
+        http.exceptionHandling().accessDeniedPage("/accessDenied");
+        
+        http.csrf().disable();
         return http.build();
     }
 }

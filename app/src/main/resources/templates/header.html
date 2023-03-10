@@ -1,97 +1,130 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
     <head>
         <title>Home page</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
         <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
-        
+
         <link rel="stylesheet" href="css/hder-fter.css" />
     </head>
+
     <body>
         <!--Header-->
         <header class="hder">
-            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom-0"> <button type="button" class="close" data-dismiss="modal"
-                                                                           aria-label="Close"> <span aria-hidden="true">×</span> </button> </div>
-                        <div class="modal-body">
-                            <div class="form-title text-center">
-                                <h4>Login</h4>
-                            </div>
-                            <div class="d-flex flex-column text-center">
-                                <form>
-                                    <div class="form-group"> <input type="email" class="form-control" id="email1"
-                                                                    placeholder="username"> </div>
-                                    <div class="form-group"> <input type="password" class="form-control" id="password1"
-                                                                    placeholder="password..."> </div> <button type="button"
-                                                                              class="btn btn-success btn-block btn-round">Login</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center">
-                            <div class="signup-section">Not a member yet? <a href="#a" class="text-info"> Sign Up</a>.</div>
-                        </div>
-                    </div>
+            <nav class="navbar navbar-expand-lg navbar-light" id="nav">
+                <div sec:authorize="isAnonymous()">
+                    <a class="navbar-brand" href="/">SMM</a>
                 </div>
-            </div>
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <a class="navbar-brand" href="/">SMM</a>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a class="navbar-brand" href="/admin-page">SMM</a>
+                </div>
+                <div sec:authorize="hasRole('ROLE_DELIVERY_MAN')">
+                    <a class="navbar-brand" href="/shipStaff">SMM</a>
+                </div>
+                <div sec:authorize="hasRole('ROLE_STORAGE_MAN')">
+                    <a class="navbar-brand" href="/repoStaff">SMM</a>
+                </div>
 
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="/">SMM</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
-                        </li>
+                        <div sec:authorize="isAnonymous()">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_USER')">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/admin-page">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_DELIVERY_MAN')">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/shipStaff">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                        </div>
+                        <div sec:authorize="hasRole('ROLE_STORAGE_MAN')">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/repoStaff">Home<span class="sr-only">(current)</span></a>
+                            </li>
+                        </div>
+
                         <li class="nav-item">
                             <a class="nav-link" href="#">About us</a>
                         </li>
-
-
-                        <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li> -->
                     </ul>
-                    <a href="#" class="notification">
-                        <i class="fa-solid badge2 fa-bell" value="3"></i>
-                    </a>
-
-                    <a href="/showCart">
-                        <i class="fa badge fa-lg" id="cartIcon" th:value="${cartSize}">&#xf07a;</i>
-                    </a>
-
-<!--                    <button type="button" class="btn btn-info btn-light ml-3 mr-3" data-toggle="modal"
-                            data-target="#loginModal">
-                        Login
-                    </button>-->
-                    <button type="button" class="btn btn-info btn-light ml-3 mr-3" >
-                        <a id="loginLink" th:href="@{/login}">Login</a>
-                    </button>
                 </div>
+
+                <div class="d-flex flex-row order-2 order-lg-3">
+                    <ul class="navbar-nav flex-row">
+                        <div sec:authorize="hasRole('ROLE_USER')">
+                            <li class="nav-item">
+                                <a href="/showCart" id="cart">
+                                    <i class="fa badge fa-lg mt-1 pt-3" id="cartIcon" th:value="${cartSize}">&#xf07a;</i>
+                                </a>
+                            </li>
+                        </div>
+                        <div sec:authorize="isAnonymous()">
+                            <li class="nav-item">
+                                <button type="button" class="btn btn-info btn-light ml-3 mr-3">
+                                    <a id="loginLink" th:href="@{/login}">Login</a>
+                                </button>
+                            </li>
+                        </div>
+                        <div sec:authorize="isAuthenticated()">
+                            <li class="nav-item mr-3 mt-1" id="profile">
+                                <div class="dropdown">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" 
+                                         alt="user" 
+                                         class=" ml-3
+                                         rounded-circle border border-dark dropdown-toggle" 
+                                         style="width:33px;"
+                                         data-toggle="dropdown"
+                                         />
+                                    <div class="dropdown-menu" id="profile-dropdown">
+                                        <div class="dropdown-header">
+                                            <div th:if="${#authentication.getPrincipal().getUser()}">
+                                                <span th:text="${#authentication.getPrincipal().getUser().fullName}"></span>
+                                            </div>
+                                            <div th:if="${#authentication.getPrincipal().getEmployee()}">
+                                                <span th:text="${#authentication.getPrincipal().getEmployee().fullName}"></span>
+                                            </div>
+                                        </div>
+                                        <a class="dropdown-item" href="#">Profile</a>
+                                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </div>
+
+
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                    </ul>
+                </div>
+
 
             </nav>
         </header>
         <!--Header-->
     </body>
+
 </html>

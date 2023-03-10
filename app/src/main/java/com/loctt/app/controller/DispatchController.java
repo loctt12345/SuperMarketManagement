@@ -14,13 +14,23 @@ import com.loctt.app.service.impl.ProductService;
 import com.loctt.app.service.impl.UserService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
@@ -42,6 +52,7 @@ public class DispatchController {
     private OrderService orderService;
     @Autowired
     private UserService userService;
+
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
@@ -52,28 +63,25 @@ public class DispatchController {
     public String startWeb() {
         return "index";
     }
+
     @GetMapping("/home")
     public String home() {
         return "index";
     }
-    @GetMapping("/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "index";
-    }
+
     //TestAdmin
     @GetMapping("/admin-page")
-    public String adminPage( Model model) {
+    public String adminPage(Model model) {
         List<ProductDetails> listProduct = productService.findAll();
         model.addAttribute("PRODUCTS_RESULT", listProduct);
         return "products_management";
     }
+
     @GetMapping("/product-detail")
     public String showProduct(Model model, @RequestParam(name = "productID") String productID) {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
-    
 
     @GetMapping("/showCart")
     public String showCart(
@@ -85,38 +93,146 @@ public class DispatchController {
         model.addAttribute("numPage", (int) Math.ceil((float) cartService.getCartSize(cart) / 6));
         return "cart_page";
     }
-    
+
     @GetMapping("/showPaying")
     public String showPaying() {
         return "paying";
     }
-    
+
     @GetMapping("/repoStaff")
     public String showRepoStaff() {
         return "repo_staff_screen";
     }
-    
+
     @GetMapping("/shipStaff")
     public String showShipStaff() {
         return "ship_staff_screen";
     }
-    
+
     @GetMapping("/showBill")
-    public String showBill(@RequestParam(name="orderId", required = false) String orderId, Model model) {
+    public String showBill(@RequestParam(name = "orderId", required = false) String orderId, Model model) {
         model.addAttribute("orderId", orderId);
         return "bill";
     }
-    
+
     @GetMapping("/shipper_summary_order")
-    public String showSummaryOrder(@RequestParam(name="orderId", required = false) String orderId, Model model) {
+    public String showSummaryOrder(@RequestParam(name = "orderId", required = false) String orderId, Model model) {
         model.addAttribute("order", orderService.getPrimaryOrder(orderId));
         return "ship_staff_order_summary";
     }
+
     @GetMapping("/login")
-    public String loginPage(@RequestParam(name="error", required = false) boolean error, Model model){
-        if(error){
-            model.addAttribute("ErrorAuthorizedMessages","Invalid username or password");
+    public String loginPage(
+            @RequestParam(name = "error", required = false) boolean error,
+            Model model,
+            Authentication authentication) {
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+
+            return "redirect:/";
+        }
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+
+            return "redirect:/admin-page";
+        }
+
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_STORAGE_MAN"))) {
+
+            return "redirect:/repoStaff";
+        }
+
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_DELIVERY_MAN"))) {
+
+            return "redirect:/shipStaff";
+        }
+
+        if (error) {
+            model.addAttribute("ErrorAuthorizedMessages", "Invalid username or password");
         }
         return "login_form";
     }
+
+    @GetMapping("/authorize")
+    public String authorize(Authentication authentication) {
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+
+            return "redirect:/";
+        }
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+
+            return "redirect:/admin-page";
+        }
+
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_STORAGE_MAN"))) {
+
+            return "redirect:/repoStaff";
+        }
+
+        if (authentication != null
+                && authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_DELIVERY_MAN"))) {
+
+            return "redirect:/shipStaff";
+        }
+        return "login_form";
+    }
+
+    @GetMapping("/accessDenied")
+    @ResponseStatus(code = HttpStatus.FORBIDDEN)
+    public String acccessDenied() {
+        return "access_denied_page";
+    }
+
+    @GetMapping("/register")
+    public String register(@RequestParam(name = "username", required = false) String usernameError,
+            @RequestParam(name = "email", required = false) String emailError,
+            Model model) {
+        if (usernameError != null) {
+            model.addAttribute("username_error", "Username is existed!!!");
+        }
+        if (emailError != null) {
+            model.addAttribute("email_error", "Email is existed!!!");
+        }
+        return "register";
+    }
+
+    @PostMapping("/addUser")
+    public String addUser(
+            @RequestParam(name = "username") String username,
+            @RequestParam(name = "fullname") String fullname,
+            @RequestParam(name = "email") String email,
+            @RequestParam(name = "password") String password,
+            @RequestParam(name = "confirmPassword") String confirmPassword,
+            @RequestParam(name = "phone") String phone,
+            @RequestParam(name = "address") String address
+    ) {
+        User user = userService.findByUsername(username);
+        if (user != null) {
+            return "redirect:/register?username";
+        }
+
+        user = userService.findByEmail(email);
+        if (user != null) {
+            return "redirect:/register?email";
+        }
+
+        userService.createUser(new User("das", username, password, fullname,
+                phone, email, address));
+        return "redirect:/login";
+    }
+
+//    @GetMapping("/crawl") 
+//    public String crawl() {
+//        List<ProductDetails> productDetails = this.productService.findByNameContaining("");
+//        for (ProductDetails x : productDetails) {
+//            System.out.println("INSERT INTO [Product_Manager] "
+//                    + "VALUES('" + x.getProductID() + "',10000," + "0" + ")");
+//        }
+//        return "redirect:/admin-page";
+//    }
 }

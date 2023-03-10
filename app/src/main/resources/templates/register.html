@@ -1,114 +1,117 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-qFz4LQ4MXsLsTqTj7yi3X1S0n7iCzUwTy6Uxq6F1j6mWNf6JssMiGoiM9dMZj2Sy+Pmcd5w2NuzLnbNT5Z5O5A=="
-        crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+              integrity="sha512-qFz4LQ4MXsLsTqTj7yi3X1S0n7iCzUwTy6Uxq6F1j6mWNf6JssMiGoiM9dMZj2Sy+Pmcd5w2NuzLnbNT5Z5O5A=="
+              crossorigin="anonymous" />
+        <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/app/src/main/resources/static/css/register_form.css">
+        <script src="./js/register.js"></script>
+        <title>Document</title>
+    </head>
 
+    <body>
 
-    <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/app/src/main/resources/static/css/register_form.css">
-    <title>Document</title>
-</head>
-
-<body>
-
-    <form>
         <section class="vh-100">
             <div class="container-fluid h-custom">
                 <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-md-9 col-lg-6 col-xl-5">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                            class="img-fluid" alt="Sample image">
+                    <div class="col-md-9 col-lg-6 col-xl-5 row">
+                        <img src="https://www.codereadr.com/wp-content/uploads/2020/12/Rapid-barcode-scanning_reduced.gif"
+                             class="img-fluid col-6" alt="image">
+                        <img src="https://lh3.googleusercontent.com/pw/AMWts8CC4E58R26BGn0IoG5FmCSWyMvxEvEX1-OPP2Gj0-H8ndxIz8w3R1WcwneAW3JlpEy6EIpvX4HLo9okjknSnRKSZajJYfMuf6Jo1wQh0rzlNYe9awkTJXkAuWU66kae0KSvTiK75yAazVaMziJCJzPE=s993-no?authuser=0"
+                             class="img-fluid col-6"
+                             alt="image">
                     </div>
                     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                        <form th:action="@{/register}" method="post">
-                            <div
-                                class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                                <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                                <button type="button" class="btn btn-primary btn-floating mx-1 button-google">
-                                    <i class="fab fa-google img-color"
-                                        onclick="location.href='https://accounts.google.com/o/oauth2/auth?client_id=680132235950-1k77oa7kirk4es4t09tenk4mkrensmep.apps.googleusercontent.com&redirect_uri=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&response_type=code&scope=email%20profile';">
-                                    </i>
-                                </button>
-                            </div>
-
-                            <div class="divider d-flex align-items-center my-4">
-                                <p class="text-center fw-bold mx-3 mb-0">Or</p>
-                            </div>
-
-                            <!-- Name input -->
-                            <div class="form-outline mb-4">
-                                <input type="text" id="registerName" class="form-control" />
-                                <label class="form-label" for="registerName">Your Full Name</label>
+                        <form th:action="@{/addUser}" method="post" enctype="application/json">
+                            <div class="row justify-content-center mb-3 mt-2"> 
+                                <h1> Sign up</h1>
                             </div>
 
                             <!-- Username input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="username" class="form-control" />
-                                <label class="form-label" for="registerUsername">Username</label>
+                                <input type="text" id="username"
+                                       class="form-control"
+                                       placeholder="Username" 
+                                       name="username"/>
+                                <span th:text="${username_error}"
+                                      class="text text-danger"></span>
+                            </div>
+                            
+                            <!-- Name input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" id="registerName" 
+                                       class="form-control"
+                                       placeholder="Full name"
+                                       name="fullname"/>
                             </div>
 
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <input type="email" id="email" class="form-control" />
-                                <label class="form-label" for="registerEmail">Email</label>
+                                <input type="email" id="email" 
+                                       class="form-control" 
+                                       placeholder="Email"
+                                       name="email"/>
+                                <span th:text="${email_error}"
+                                      class="text text-danger"></span>
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-4">
-                                <input type="password" id="password" class="form-control" />
-                                <label class="form-label" for="registerPassword">Password</label>
-                            </div>
-
-                            <!-- Phone input -->
-                            <div class="form-outline mb-4">
-                                <input type="tel" id="phone" name="phone" pattern="[0-9]{10}"
-                                    class="form-control">
-                                <label for="phone">Phone</label>
+                                <input type="password" id="password" 
+                                       class="form-control"
+                                       placeholder="Password"
+                                       onChange="check()"
+                                       name="password"/>
                             </div>
 
                             <!-- Repeat Password input -->
                             <div class="form-outline mb-4">
-                                <input type="password" id="repeatPassword" class="form-control" />
-                                <label class="form-label" for="registerRepeatPassword">Repeat password</label>
+                                <input type="password" id="confirm_password" 
+                                       class="form-control"
+                                       placeholder="Re-enter password"
+                                       onChange="check()"
+                                       name="confirmPassword"/>
                             </div>
 
+                            <!-- Phone input -->
+                            <div class="form-outline mb-4">
+                                <input type="tel" id="phone"
+                                       pattern="[0-9]{10}"
+                                       class="form-control"
+                                       placeholder="Phone number"
+                                       name="phone">
+                            </div>
+                            
                             <!-- Address input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="address" class="form-control" />
-                                <label class="form-label" for="registerUsername">Your Address</label>
-                            </div>
-
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-2">
-                                <label class="form-check-label" for="registerCheck">
-                                    If you click the register button, you accept our term of service
-                                </label>
+                                <input type="text" id="address" 
+                                       class="form-control"
+                                       placeholder="Address"
+                                       name="address"/>
                             </div>
 
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-2">Register</button>
-                            <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account?<a href="#!"
-                                class="link-danger">Log in now</a>
-                        </p>
+                            <button type="submit" class="btn btn-primary btn-block mb-2">Sign up</button>
+                            <p class="small fw-bold mt-2 pt-1 mb-0">
+                                Already have an account? &nbsp
+                                <a href="/login"class="link-danger">Log in now</a>
+                            </p>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
-    </form>
-    <div>
-        <!-- Copyright -->
-        <footer th:replace="footer :: footer"></footer>
-    </div>
-</body>
+        <div>
+            <!-- Copyright -->
+            <footer th:replace="footer :: footer"></footer>
+        </div>
+    </body>
 
 </html>

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
@@ -28,6 +29,7 @@ public class User implements Serializable {
     @GenericGenerator(name = "user-generator", 
       strategy = "com.loctt.app.model.MemberIDGenerator")
     @Column(name = "UserID")
+
     private String userID;
     @Column(name = "username", nullable = false, unique = true)
     private String username;

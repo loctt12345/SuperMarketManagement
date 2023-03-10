@@ -14,13 +14,14 @@
         <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" th:href="@{/css/admin.css}">
         <link rel="stylesheet" th:href="@{/css/hder-fter.css}">
+        <link rel="stylesheet" th:href="@{/css/scanner.css}">
     </head>
 
     <body onload="loadProduct()">
         <div class="container-fluid">
-            <header th:replace="header :: header"></header>
-            <hr>
-
+            <div sec:authorize="isAuthenticated()">
+                    <a id="loginLink" class="btn btn-danger ml-3 mr-3 mt-3" th:href="@{/logout}">Log out</a>
+            </div>
             <!-- navbar -->
             <nav class="navbar navbar-light bg-light">
                 <a class="navbar-brand"></a>
@@ -205,9 +206,9 @@
             </div>
             <footer th:replace="footer :: footer"></footer>
         </div>
-            <script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>
-            <script th:src="@{/js/admin.js}"></script>
-            <script th:src="@{/js/pagination.js}"></script>
+        <script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>
+        <script th:src="@{/js/admin.js}"></script>
+        <script th:src="@{/js/pagination.js}"></script>
     </body>
 
 </html>
