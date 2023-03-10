@@ -16,6 +16,8 @@ import com.loctt.app.repository.IProductRepository;
 import com.loctt.app.repository.IUserRepository;
 import com.loctt.app.service.IOrderService;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -24,6 +26,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static org.thymeleaf.util.DateUtils.month;
 
 /**
  *
@@ -161,7 +164,7 @@ public class OrderService implements IOrderService{
 
     @Override
     public List<PrimaryOrder> findByTimedateBetween(Date timeLess, Date timeGreater) {
-        return primaryOrderRepository.findByTimedateBetween(timeLess, timeGreater);
+        return primaryOrderRepository.findByTimeLessThanAndTimeGreaterThan(timeLess, timeGreater);
     }
 
     @Override
@@ -172,6 +175,24 @@ public class OrderService implements IOrderService{
         for(int i = 0; i < (lastDayOfMonth/7)+1; i++){
             totalProfit.put(i+1, calcTotal(findByTimedateBetween
                             (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1)))));    
+        }
+        return totalProfit;
+    }
+    
+    @Override
+    public List<PrimaryOrder> findByTimedateBetween(LocalDate startDate, LocalDate endDate){
+        return primaryOrderRepository.findByTimeLessThanAndTimeGreaterThan(startDate, endDate);
+    } 
+    
+    @Override
+    public Map<Month, Float> getTotalProfitByYear(int year) {
+        Map<Month, Float> totalProfit = new LinkedHashMap<>();
+        for (Month month: Month.values()) {
+            LocalDate startOfMonth = LocalDate.of(year, month, 1);
+            LocalDate endOfMonth = startOfMonth.with(TemporalAdjusters.lastDayOfMonth());
+            List<PrimaryOrder> orders = findByTimedateBetween(startOfMonth, endOfMonth);
+            float monthlyProfit = calcTotal(orders);
+            totalProfit.put(month, monthlyProfit);
         }
         return totalProfit;
     }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DashboardApiController {
 
     @PostMapping("api/dashboard/getMonthRevenue")
-    public ResponseEntity updateOrderStatus(@RequestBody JSONObject object) {
+    public ResponseEntity getMonthRevenue (@RequestBody JSONObject object) {
         int month = Integer.parseInt(object.getAsString("txtMonth"));
 
         float[] listRevenue = new float[10];

@@ -9,6 +9,8 @@ import com.loctt.app.model.OrderDetails;
 import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.OrderStatus;
 import com.loctt.app.model.ProductDetails;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,5 +38,8 @@ public interface IOrderService {
     public PrimaryOrder getPrimaryOrder(String orderId);
     public List<PrimaryOrder> findByTimedateBetween(Date timeLess, Date timeGreater);
     public Map<Integer, Float> getTotalProfitByMonth(int month, int year);
+    public List<PrimaryOrder> findByTimedateBetween(LocalDate startDate, LocalDate endDate);
+    public Map<Month, Float> getTotalProfitByYear(int year);
     public float calcTotal(List<PrimaryOrder> orderList);
 }
+ 
