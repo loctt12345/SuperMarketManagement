@@ -5,37 +5,53 @@
  */
 package com.loctt.app.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author ADMIN
  */
 @Entity
-@Table (name = "User")
-public class User implements java.io.Serializable{
-    @Id
-    @GeneratedValue
-    @Column (name = "UserID")
-    private String userID;
-    @Column (name = "username")
-    private String username;
-    @Column (name = "password")
-    private String password;
-    @Column (name = "Full_Name")
-    private String fullName;
-    @Column (name = "Phone")
-    private String phone;
-    @Column (name = "Email")
-    private String email;
-    @Column (name = "Address")
-    private String address;
+@Table(name = "Customer")
+public class User implements Serializable {
 
-    public User(String userID, String username, String password, String fullName, String phone, String email, String address) {
+    @Id
+    @GeneratedValue(generator = "user-generator")
+    @GenericGenerator(name = "user-generator", 
+      strategy = "com.loctt.app.model.MemberIDGenerator")
+    @Column(name = "UserID")
+
+    private String userID;
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "Full_Name")
+    private String fullName;
+    @Column(name = "Phone")
+    private String phone;
+    @Column(name = "Email")
+    private String email;
+    @Column(name = "Address")
+    private String address;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth_provider")
+    private AuthenticationProvider authenticationProvider;
+
+    public User() {
+    }
+
+    public User(String userID, String username, String password,
+            String fullName, String phone, String email, String address) {
         this.userID = userID;
         this.username = username;
         this.password = password;
@@ -43,6 +59,15 @@ public class User implements java.io.Serializable{
         this.phone = phone;
         this.email = email;
         this.address = address;
+    }
+    
+    
+    
+    public User(String username, String fullName, String email, AuthenticationProvider authenticationProvider) {
+        this.username = username;
+        this.fullName = fullName;
+        this.email = email;
+        this.authenticationProvider = authenticationProvider;
     }
 
     /**
@@ -142,4 +167,24 @@ public class User implements java.io.Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
+
+    /**
+     * @return the authenticationProvider
+     */
+    public AuthenticationProvider getAuthenticationProvider() {
+        return authenticationProvider;
+    }
+
+    /**
+     * @param authenticationProvider the authenticationProvider to set
+     */
+    public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userID=" + userID + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", phone=" + phone + ", email=" + email + ", address=" + address + ", authenticationProvider=" + authenticationProvider + '}';
+    }
+
 }

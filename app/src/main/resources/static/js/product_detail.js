@@ -68,7 +68,14 @@ function showForm() {
 function addToCart() {
     var txtProductID = document.getElementById('product_id').value;
     var txtNumber = document.getElementById('quantity-input').value;
-    fetch('/api/cart/addToCart?txtProductID=' + txtProductID + '&txtNumber=' + txtNumber).then((response) => {
-        window.location.href = "/";
+
+    fetch('/api/cart/addToCart?txtProductID='+txtProductID+'&txtNumber='+txtNumber).then((response) => {
+        if (response.url.includes("login") || !response.ok) {
+            window.location.href = "/login";
+        }   
+        else {
+            window.location.href = "/";
+        }
+
     });
 }

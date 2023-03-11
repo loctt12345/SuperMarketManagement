@@ -43,6 +43,22 @@ and open the template in the editor.
     }
 }
 
+#profile-dropdown {
+    position: absolute;
+    z-index: 1000;
+
+}
+
+*{
+    position: relative;
+}
+
+
+
+@media (max-width: 576px) {
+ 
+    
+}
 
 
 .modal-header .close {
@@ -72,4 +88,7 @@ and open the template in the editor.
 .notification {
     position: relative;
     display: inline-block;
+}
+#loginLink{
+    text-decoration: none;
 }
