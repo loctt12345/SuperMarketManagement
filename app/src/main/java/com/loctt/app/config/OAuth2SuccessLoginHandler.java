@@ -28,7 +28,9 @@ public class OAuth2SuccessLoginHandler extends SimpleUrlAuthenticationSuccessHan
     @Autowired
     private UserService userService;
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, 
+            HttpServletResponse response, Authentication authentication)
+            throws IOException, ServletException {
         CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
         String userEmail = oauthUser.getEmail();
         User customer = this.userService.findByUsername(userEmail);
