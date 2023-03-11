@@ -15,6 +15,7 @@ import com.loctt.app.repository.IPrimaryOrderRepository;
 import com.loctt.app.repository.IProductRepository;
 import com.loctt.app.repository.IUserRepository;
 import com.loctt.app.service.IOrderService;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.TemporalAdjusters;
@@ -33,26 +34,25 @@ import static org.thymeleaf.util.DateUtils.month;
  * @author Administrator
  */
 @Service
-public class OrderService implements IOrderService{
-    
+public class OrderService implements IOrderService {
+
     @Autowired
     IOrderStatusRepository orderStatusRepository;
-    
+
     @Autowired
     IPrimaryOrderRepository primaryOrderRepository;
-    
+
     @Autowired
     IOrderDetailsRepository orderDetailsRepository;
-    
-    
+
     @Autowired
     IProductRepository productRepository;
-    
+
     @Autowired
     IUserRepository userRepository;
 //    @Autowired
 //    IProductService productService;
-    
+
     @Override
     public OrderStatus findorderStatusID(int id) {
         return this.orderStatusRepository.findByorderStatusID(id);
@@ -60,7 +60,7 @@ public class OrderService implements IOrderService{
 
     @Override
     public void saveOrder(PrimaryOrder orderSaved) {
-        
+
         //System.out.println(orderSaved.toString());
         primaryOrderRepository.save(orderSaved);
     }
@@ -69,26 +69,25 @@ public class OrderService implements IOrderService{
     public void saveOrderDetails(CartObject cart, String orderID) {
         //Get Items in Cart
         Map<String, Integer> items = cart.getItems();
-        
+
         if (items != null) {
             //reset total
             for (Map.Entry<String, Integer> entry : items.entrySet()) {
                 //Generate ID for items
                 String id = GenerateUUID.getUUID();
-                
+
                 //Get sellPrice of Product
                 float sellPrice = productRepository
-                                  .findByProductID(entry.getKey())
-                                  .getSellprice();
-                
+                        .findByProductID(entry.getKey())
+                        .getSellprice();
+
                 //Amount of this Product
                 float amount = sellPrice * entry.getValue();
-                
-                
+
                 //Generate the OrderDetails to save Database
                 OrderDetails orderItems = new OrderDetails(id, orderID, entry.getKey(), entry.getValue(), amount);
                 orderDetailsRepository.save(orderItems);
-                
+
             }
         }
     }
@@ -97,20 +96,20 @@ public class OrderService implements IOrderService{
     public float getTotalOfOrder(CartObject cart) {
         float total = -1;
         Map<String, Integer> items = cart.getItems();
-        
+
         if (items != null) {
             total = 0;
             //reset total
             for (Map.Entry<String, Integer> entry : items.entrySet()) {
-                
+
                 //Get the price of this Product 
                 float price = productRepository
-                              .findByProductID(entry.getKey())
-                              .getSellprice() * entry.getValue();
-                
+                        .findByProductID(entry.getKey())
+                        .getSellprice() * entry.getValue();
+
                 //sum total
                 total += price;
-                
+
             }
         }
         return total;
@@ -131,40 +130,39 @@ public class OrderService implements IOrderService{
         List<OrderDetails> listOrderDetails = this.getOrderDetails(orderID);
         Map<ProductDetails, Integer> listProduct = new HashMap<>();
         for (OrderDetails orderDetail : listOrderDetails) {
-            listProduct.put(productRepository.findByProductIDAndStatusNot(orderDetail.getProductID(), false),orderDetail.getSoldNumber());
+            listProduct.put(productRepository.findByProductIDAndStatusNot(orderDetail.getProductID(), false), orderDetail.getSoldNumber());
         }
         return listProduct;
     }
-    
+
     public void updateOrderStatus(String orderId, int status) {
-        try{
+        try {
             PrimaryOrder order = primaryOrderRepository.findById(orderId).get();
             order.setStatusID(status);
             primaryOrderRepository.save(order);
-            
-        
-        } catch(NoSuchElementException ex) {
+
+        } catch (NoSuchElementException ex) {
             System.out.println("No " + orderId + " exist!!!!");
-        
+
         }
     }
-    
+
     @Override
     public PrimaryOrder getPrimaryOrder(String orderId) {
-        try{
+        try {
             return primaryOrderRepository.findById(orderId).get();
-            
-        
-        } catch(NoSuchElementException ex) {
+
+        } catch (NoSuchElementException ex) {
             System.out.println("No " + orderId + " exist!!!!");
-        
+
         }
         return null;
     }
 
     @Override
     public List<PrimaryOrder> findByTimedateBetween(Date timeLess, Date timeGreater) {
-        return primaryOrderRepository.findByTimeLessThanAndTimeGreaterThan(timeLess, timeGreater);
+        return primaryOrderRepository
+                .findAllByTimeBetween(timeLess, timeGreater);
     }
 
     @Override
@@ -173,22 +171,29 @@ public class OrderService implements IOrderService{
         int lastDayOfMonth = date.lengthOfMonth();
         float[] profitWeekly = new float[10];
 //        Map<Integer, Float> totalProfit = new LinkedHashMap<>();
-        for(int i = 0; i < (lastDayOfMonth/7)+1; i++){
+        try {
+            for (int i = 0; i < (lastDayOfMonth / 7) + 1; i++) {
 //            totalProfit.put(i+1, calcTotal(findByTimedateBetween
 //                            (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1)))));    
-            profitWeekly[i] = calcTotal(findByTimedateBetween
-                            (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1))));
+                profitWeekly[i] = calcTotal(findByTimedateBetween(
+                        new SimpleDateFormat("yyyy-MM-dd")
+                                .parse(year + "-" + month + "-" + (7 * i + 1)),
+                         new SimpleDateFormat("yyyy-MM-dd")
+                                .parse(year + "-" + month + "-" + 7 * (i + 1))));
+            }
+        } catch (Exception e) {
+            System.out.println("error");
         }
 //        Object[] values = totalProfit.values().toArray();
-        
+
         return profitWeekly;
     }
-    
+
     @Override
-    public List<PrimaryOrder> findByTimedateBetween(LocalDate startDate, LocalDate endDate){
+    public List<PrimaryOrder> findByTimedateBetween(LocalDate startDate, LocalDate endDate) {
         return primaryOrderRepository.findByTimeLessThanAndTimeGreaterThan(startDate, endDate);
     }
-    
+
     @Override
     public float[] getTotalProfitByYear(int year) {
 //        Map<Month, Float> totalProfit = new LinkedHashMap<>();
@@ -211,5 +216,5 @@ public class OrderService implements IOrderService{
             totalMoney += primaryOrder.getTotal();
         }
         return totalMoney;
-    }   
+    }
 }
