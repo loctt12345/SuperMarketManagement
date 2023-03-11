@@ -6,6 +6,8 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.ProductDetails;
+import com.loctt.app.model.ProductRecommendation;
+import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.OrderDetailsService;
 import com.loctt.app.service.impl.OrderService;
@@ -38,6 +40,8 @@ public class DispatchController {
     private OrderDetailsService orderDetailsService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private IProductRecommendationService productRecommendationService;
     
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
@@ -104,7 +108,10 @@ public class DispatchController {
     @GetMapping("/showRecommendation") 
     public String showRecommendation(
             @RequestParam(name="txtProductId", required = false) String productId,
-            @RequestParam(name="txtProductName", required = false) String productName) {
+            @RequestParam(name="txtComment", required = false) String comment) {
+        ProductRecommendation productRe 
+                = new ProductRecommendation("das", comment, productId, true);
+        productRecommendationService.createNewRecommendation(productRe);
         return "redirect:/";
     }
 }

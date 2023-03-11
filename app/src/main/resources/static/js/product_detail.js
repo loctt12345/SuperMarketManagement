@@ -54,9 +54,10 @@ function showForm() {
               action="/showRecommendation"
               class="row justify-content-center mt-3 form-group-inline"> 
             <input type="hidden" value="${productId}" name="txtProductId" />
-            <label for="name"> Product name: </label>
             <input class="form-control col-5 ml-2 mr-2" 
-                type="text" id="name" name="txtProductName"/>
+                type="text" id="name" name="txtComment"
+                placeholder="Leave us your comment..."
+            />
             <input class="btn btn-danger" type="submit" value="Submit" />
         </form>
     `;
