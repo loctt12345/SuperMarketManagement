@@ -6,8 +6,10 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.ProductDetails;
-import com.loctt.app.model.User;
+import com.loctt.app.model.ProductRecommendation;
+import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
+import com.loctt.app.service.impl.GenerateUUID;
 import com.loctt.app.service.impl.OrderDetailsService;
 import com.loctt.app.service.impl.OrderService;
 import com.loctt.app.service.impl.ProductService;
@@ -51,6 +53,9 @@ public class DispatchController {
     @Autowired
     private OrderService orderService;
     @Autowired
+    private IProductRecommendationService productRecommendationService;
+    
+    @Autowired
     private UserService userService;
 
     @ModelAttribute
@@ -78,7 +83,7 @@ public class DispatchController {
     }
 
     @GetMapping("/product-detail")
-    public String showProduct(Model model, @RequestParam(name = "productID") String productID) {
+    public String showProduct(Model model, @RequestParam(name = "productID", required = false) String productID) {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
@@ -119,6 +124,17 @@ public class DispatchController {
     public String showSummaryOrder(@RequestParam(name = "orderId", required = false) String orderId, Model model) {
         model.addAttribute("order", orderService.getPrimaryOrder(orderId));
         return "ship_staff_order_summary";
+    }
+    
+    @GetMapping("/showRecommendation") 
+    public String showRecommendation(
+            @RequestParam(name="txtProductId", required = false) String productId,
+            @RequestParam(name="txtComment", required = false) String comment) {
+        ProductRecommendation productRe 
+                = new ProductRecommendation(GenerateUUID.getUUID(), 
+                        comment, productId, true);
+        productRecommendationService.createNewRecommendation(productRe);
+        return "redirect:/";
     }
 
     @GetMapping("/login")
