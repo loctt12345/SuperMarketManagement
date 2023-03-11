@@ -37,9 +37,9 @@ public interface IOrderService {
     public void updateOrderStatus(String orderID, int status);
     public PrimaryOrder getPrimaryOrder(String orderId);
     public List<PrimaryOrder> findByTimedateBetween(Date timeLess, Date timeGreater);
-    public Map<Integer, Float> getTotalProfitByMonth(int month, int year);
+    public float[] getTotalProfitByMonth(int month, int year);
     public List<PrimaryOrder> findByTimedateBetween(LocalDate startDate, LocalDate endDate);
-    public Map<Month, Float> getTotalProfitByYear(int year);
+    public float[] getTotalProfitByYear(int year);
     public float calcTotal(List<PrimaryOrder> orderList);
 }
  

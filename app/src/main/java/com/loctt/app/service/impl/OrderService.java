@@ -168,33 +168,40 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public Map<Integer, Float> getTotalProfitByMonth(int month, int year) {
+    public float[] getTotalProfitByMonth(int month, int year) {
         LocalDate date = LocalDate.of(year, month, 1);
         int lastDayOfMonth = date.lengthOfMonth();
-        Map<Integer, Float> totalProfit = new LinkedHashMap<>();
+        float[] profitWeekly = new float[10];
+//        Map<Integer, Float> totalProfit = new LinkedHashMap<>();
         for(int i = 0; i < (lastDayOfMonth/7)+1; i++){
-            totalProfit.put(i+1, calcTotal(findByTimedateBetween
-                            (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1)))));    
+//            totalProfit.put(i+1, calcTotal(findByTimedateBetween
+//                            (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1)))));    
+            profitWeekly[i] = calcTotal(findByTimedateBetween
+                            (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1))));
         }
-        return totalProfit;
+//        Object[] values = totalProfit.values().toArray();
+        
+        return profitWeekly;
     }
     
     @Override
     public List<PrimaryOrder> findByTimedateBetween(LocalDate startDate, LocalDate endDate){
         return primaryOrderRepository.findByTimeLessThanAndTimeGreaterThan(startDate, endDate);
-    } 
+    }
     
     @Override
-    public Map<Month, Float> getTotalProfitByYear(int year) {
-        Map<Month, Float> totalProfit = new LinkedHashMap<>();
-        for (Month month: Month.values()) {
-            LocalDate startOfMonth = LocalDate.of(year, month, 1);
+    public float[] getTotalProfitByYear(int year) {
+//        Map<Month, Float> totalProfit = new LinkedHashMap<>();
+        float[] profitMonthly = new float[15];
+        for (int i = 1; i <= 12; i++) {
+            LocalDate startOfMonth = LocalDate.of(year, i, 1);
             LocalDate endOfMonth = startOfMonth.with(TemporalAdjusters.lastDayOfMonth());
             List<PrimaryOrder> orders = findByTimedateBetween(startOfMonth, endOfMonth);
-            float monthlyProfit = calcTotal(orders);
-            totalProfit.put(month, monthlyProfit);
+//            float monthlyProfit = calcTotal(orders);
+            profitMonthly[i] = calcTotal(orders);
+//            totalProfit.put(month, monthlyProfit);
         }
-        return totalProfit;
+        return profitMonthly;
     }
 
     @Override
