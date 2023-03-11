@@ -9,6 +9,7 @@ import com.loctt.app.model.ProductDetails;
 import com.loctt.app.model.ProductRecommendation;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
+import com.loctt.app.service.impl.GenerateUUID;
 import com.loctt.app.service.impl.OrderDetailsService;
 import com.loctt.app.service.impl.OrderService;
 import com.loctt.app.service.impl.ProductService;
@@ -110,7 +111,8 @@ public class DispatchController {
             @RequestParam(name="txtProductId", required = false) String productId,
             @RequestParam(name="txtComment", required = false) String comment) {
         ProductRecommendation productRe 
-                = new ProductRecommendation("das", comment, productId, true);
+                = new ProductRecommendation(GenerateUUID.getUUID(), 
+                        comment, productId, true);
         productRecommendationService.createNewRecommendation(productRe);
         return "redirect:/";
     }

@@ -15,7 +15,7 @@ import javax.persistence.Table;
  * @author loc12345
  */
 @Entity
-@Table(name = "PRODUCT_RECOMMENDATION")
+@Table(name = "Product_Recommendation")
 public class ProductRecommendation {
     @Id
     @Column(name = "CommentID")
