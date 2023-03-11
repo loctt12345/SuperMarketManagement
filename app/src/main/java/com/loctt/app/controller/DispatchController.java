@@ -7,6 +7,7 @@ package com.loctt.app.controller;
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.model.ProductRecommendation;
+import com.loctt.app.model.User;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.GenerateUUID;
