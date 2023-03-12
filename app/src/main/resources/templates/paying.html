@@ -17,7 +17,6 @@ and open the template in the editor.-->
   <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/hder-fter.css" />
   <script src="./js/import.js"></script>
-
   <script src="./js/paying.js"></script>
 </head>
 
@@ -31,10 +30,12 @@ and open the template in the editor.-->
   </div>
 
   <div class="row mt-3 justify-content-center">
-    <form action="/paying/order" class="col-8" method="post">
+    <!--<form action="/paying/order" class="col-8" method="post">-->
+    <form method="post" class="col-8" th:action="@{/pay}">        
       <div class="form-group">
         <label for="email">Email address:</label>
-        <input type="email" class="form-control" placeholder="Enter email" id="email" name="userEmail">
+        <input type="email" class="form-control" 
+               placeholder="Enter email" id="email" name="userEmail">
       </div>
 
       <div class="form-group">
@@ -52,7 +53,7 @@ and open the template in the editor.-->
           <label class="form-check-label">
             <input type="radio" onclick="openWalletInfo()" class="form-check-input" value="wallet"
                    checked name="payingmethod">
-            Digital wallet
+            PayPal  
           </label>
         </div>
         <div class="form-check">
@@ -67,15 +68,17 @@ and open the template in the editor.-->
         <p>
           Chi tiet thanh toan qua vi dien tu!!!
         </p>
-      </div>
+      </div>       
       <div class="row justify-content-center">
         <h3 >
             Total price: <span id="totalPrice"></span>
+            <br>
+            <input type="hidden" id="total" name="price" value="" />
         </h3>
       </div>
-
+                
       <div class="btnSubmit row mt-3 justify-content-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
       </div>
 
       <div class="row mt-3 justify-content-center">

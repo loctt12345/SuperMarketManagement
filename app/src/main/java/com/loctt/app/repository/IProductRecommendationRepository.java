@@ -5,18 +5,16 @@
  */
 package com.loctt.app.repository;
 
-import com.loctt.app.model.User;
+import com.loctt.app.model.ProductRecommendation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author ADMIN
+ * @author loc12345
  */
 @Repository
-public interface IUserRepository extends JpaRepository<User, String>{
-    User findByUserID(String userID);
-    User findByUsername(String username);
-    User findByEmail(String email);
+public interface IProductRecommendationRepository 
+        extends JpaRepository<ProductRecommendation, String>{
     
 }
