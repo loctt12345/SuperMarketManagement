@@ -33,5 +33,14 @@ public class DashboardApiController {
   
         return ResponseEntity.ok().body(listRevenue);
     }
+    
+    @PostMapping("api/dashboard/getYearRevenue")
+    public ResponseEntity getYearRevenue(@RequestBody JSONObject object) {
+        int year = Integer.parseInt(object.getAsString("txtYear"));
+        float[] listRevenue = orderService
+                .getTotalProfitByYear(year);
+  
+        return ResponseEntity.ok().body(listRevenue);
+    }
 
 }

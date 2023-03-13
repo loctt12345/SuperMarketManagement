@@ -50,7 +50,7 @@ function drawCharts(barCreated) {
         }
     };
 
-    var barChart = new google.visualization.ColumnChart(document.getElementById('bar-chart'));
+    var barChartByMonth = new google.visualization.ColumnChart(document.getElementById('bar-chart-by-month'));
     //Get the first Revenue Month
     getRevenueOfMonth(1);
 
@@ -71,7 +71,7 @@ function drawCharts(barCreated) {
                     ['Week 3', data[2]],
                     ['Week 4', data[3]],
                 ]);
-                barChart.draw(barCreated, barOptions);
+                barChartByMonth.draw(barCreated, barOptions);
 
             });
 
@@ -79,6 +79,42 @@ function drawCharts(barCreated) {
     }
 
 
+    var barChartByYear = new google.visualization.ColumnChart(document.getElementById('bar-chart-by-year'));
+
+    getRevenueOfYear(2022);
+    
+    function getRevenueOfYear(year) {
+        fetch("api/dashboard/getYearRevenue", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"txtYear": year})
+            
+        }).then(function (response) {
+            response.json().then(data => {
+                var barCreated = google.visualization.arrayToDataTable([
+                    ['Month', 'Revenue'],
+                    ['Jan', data[0]],
+                    ['Feb', data[1]],
+                    ['Mar', data[2]],
+                    ['April', data[3]],
+                    ['May', data[4]],
+                    ['June', data[5]],
+                    ['July', data[6]],
+                    ['Aug', data[7]],
+                    ['Sep', data[8]],
+                    ['Oct', data[9]],
+                    ['Nov', data[10]],
+                    ['Dec', data[11]]
+                ]);
+                barChartByYear.draw(barCreated, barOptions);
+
+            });
+
+        });
+    }
+    
     // draw bar chart twice so it animates
 
     //Get được onchange -> Đầu tiên sẽ cần cài cho nó 1 cái mặc định

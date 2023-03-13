@@ -15,19 +15,16 @@ import com.loctt.app.repository.IPrimaryOrderRepository;
 import com.loctt.app.repository.IProductRepository;
 import com.loctt.app.repository.IUserRepository;
 import com.loctt.app.service.IOrderService;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import static org.thymeleaf.util.DateUtils.month;
 
 /**
  *
@@ -170,41 +167,33 @@ public class OrderService implements IOrderService {
         LocalDate date = LocalDate.of(year, month, 1);
         int lastDayOfMonth = date.lengthOfMonth();
         float[] profitWeekly = new float[10];
-//        Map<Integer, Float> totalProfit = new LinkedHashMap<>();
         try {
-            for (int i = 0; i < (lastDayOfMonth / 7) + 1; i++) {
-//            totalProfit.put(i+1, calcTotal(findByTimedateBetween
-//                            (new Date(year, month, 7*i+1), new Date(year, month, 7*(i+1)))));    
+            for (int i = 0; i < (lastDayOfMonth / 7) + 1; i++) { 
                 profitWeekly[i] = calcTotal(findByTimedateBetween(
                         new SimpleDateFormat("yyyy-MM-dd")
                                 .parse(year + "-" + month + "-" + (7 * i + 1)),
-                         new SimpleDateFormat("yyyy-MM-dd")
+                        new SimpleDateFormat("yyyy-MM-dd")
                                 .parse(year + "-" + month + "-" + 7 * (i + 1))));
             }
         } catch (Exception e) {
             System.out.println("error");
         }
-//        Object[] values = totalProfit.values().toArray();
-
         return profitWeekly;
     }
 
     @Override
-    public List<PrimaryOrder> findByTimedateBetween(LocalDate startDate, LocalDate endDate) {
-        return primaryOrderRepository.findByTimeLessThanAndTimeGreaterThan(startDate, endDate);
-    }
-
-    @Override
     public float[] getTotalProfitByYear(int year) {
-//        Map<Month, Float> totalProfit = new LinkedHashMap<>();
         float[] profitMonthly = new float[15];
-        for (int i = 1; i <= 12; i++) {
-            LocalDate startOfMonth = LocalDate.of(year, i, 1);
-            LocalDate endOfMonth = startOfMonth.with(TemporalAdjusters.lastDayOfMonth());
-            List<PrimaryOrder> orders = findByTimedateBetween(startOfMonth, endOfMonth);
-//            float monthlyProfit = calcTotal(orders);
-            profitMonthly[i] = calcTotal(orders);
-//            totalProfit.put(month, monthlyProfit);
+        try {
+            for (int i = 1; i <= 12; i++) {
+                profitMonthly[i-1] = calcTotal(findByTimedateBetween(
+                        new SimpleDateFormat("yyyy-MM-dd")
+                                .parse(year + "-" + i + "-" + 1),
+                         new SimpleDateFormat("yyyy-MM-dd")
+                                .parse(year + "-" + i + "-" + 20)));
+            }
+        } catch (ParseException e) {
+            System.out.println("error");
         }
         return profitMonthly;
     }
