@@ -40,5 +40,6 @@ public interface IOrderService {
     public float[] getTotalProfitByMonth(int month, int year);
     public float[] getTotalProfitByYear(int year);
     public float calcTotal(List<PrimaryOrder> orderList);
+    public List<PrimaryOrder> getlistPrimaryOrder(String userId);
 }
  

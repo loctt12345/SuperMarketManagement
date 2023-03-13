@@ -19,4 +19,7 @@ import org.springframework.stereotype.Repository;
 public interface IPrimaryOrderRepository extends JpaRepository<PrimaryOrder, String>{
     PrimaryOrder findByOrderID(String orderID);
     List<PrimaryOrder> findAllByTimeBetween(Date start, Date end);
+    List<PrimaryOrder> findByUserID(String userId);
+    
+    
 }

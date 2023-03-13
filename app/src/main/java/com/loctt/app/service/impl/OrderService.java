@@ -18,6 +18,7 @@ import com.loctt.app.service.IOrderService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -207,5 +208,11 @@ public class OrderService implements IOrderService {
             totalMoney += primaryOrder.getTotal();
         }
         return totalMoney;
+    }
+    @Override
+    public List<PrimaryOrder> getlistPrimaryOrder(String userId){
+        List<PrimaryOrder> listOrder = primaryOrderRepository.findByUserID(userId);
+        
+        return listOrder;
     }
 }
