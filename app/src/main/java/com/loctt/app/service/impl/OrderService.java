@@ -169,11 +169,13 @@ public class OrderService implements IOrderService {
         float[] profitWeekly = new float[10];
         try {
             for (int i = 0; i < (lastDayOfMonth / 7) + 1; i++) { 
+                int firstDay = (7 * i + 1);
+                int lastDay = 7 * (i + 1);
                 profitWeekly[i] = calcTotal(findByTimedateBetween(
                         new SimpleDateFormat("yyyy-MM-dd")
-                                .parse(year + "-" + month + "-" + (7 * i + 1)),
+                                .parse(year + "-" + month + "-" + firstDay),
                         new SimpleDateFormat("yyyy-MM-dd")
-                                .parse(year + "-" + month + "-" + 7 * (i + 1))));
+                                .parse(year + "-" + month + "-" + lastDay)));
             }
         } catch (Exception e) {
             System.out.println("error");

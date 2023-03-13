@@ -52,16 +52,16 @@ function drawCharts(barCreated) {
 
     var barChartByMonth = new google.visualization.ColumnChart(document.getElementById('bar-chart-by-month'));
     //Get the first Revenue Month
-    getRevenueOfMonth(1);
+    getRevenueOfMonth(1, 2022);
 
-    function getRevenueOfMonth(month) {
+    function getRevenueOfMonth(month, yearOfMonth) {
         fetch("api/dashboard/getMonthRevenue", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"txtMonth": month})
-            
+            body: JSON.stringify({"txtMonth": month, "txtYearOfMonth": yearOfMonth})
+
         }).then(function (response) {
             response.json().then(data => {
                 var barCreated = google.visualization.arrayToDataTable([
@@ -78,11 +78,10 @@ function drawCharts(barCreated) {
         });
     }
 
-
     var barChartByYear = new google.visualization.ColumnChart(document.getElementById('bar-chart-by-year'));
 
     getRevenueOfYear(2022);
-    
+
     function getRevenueOfYear(year) {
         fetch("api/dashboard/getYearRevenue", {
             method: "POST",
@@ -90,7 +89,7 @@ function drawCharts(barCreated) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({"txtYear": year})
-            
+
         }).then(function (response) {
             response.json().then(data => {
                 var barCreated = google.visualization.arrayToDataTable([
@@ -114,17 +113,32 @@ function drawCharts(barCreated) {
 
         });
     }
-    
+
     // draw bar chart twice so it animates
 
+
+
     //Get được onchange -> Đầu tiên sẽ cần cài cho nó 1 cái mặc định
-    document.getElementById("ddlViewBy").onchange = function () {
-        var e = document.getElementById("ddlViewBy");
+    document.getElementById("ddlViewByMonthOfYear").onchange = function () {
+        var e = document.getElementById("ddlViewByMonthOfYear");
+        var f = document.getElementById("ddlViewByYearOfMonth");
         var value = e.options[e.selectedIndex].value;
-        getRevenueOfMonth(value);
+        var values = f.options[f.selectedIndex].value; 
+        getRevenueOfMonth(value, values);
+    }
+    document.getElementById("ddlViewByYearOfMonth").onchange = function () {
+        var e = document.getElementById("ddlViewByMonthOfYear");
+        var f = document.getElementById("ddlViewByYearOfMonth");
+        var value = e.options[e.selectedIndex].value;
+        var values = f.options[f.selectedIndex].value;
+        getRevenueOfMonth(value, value);
 
     }
 
-
+    document.getElementById("ddlViewByYear").onchange = function () {
+        var e = document.getElementById("ddlViewByYear");
+        var value = e.options[e.selectedIndex].value;
+        getRevenueOfYear(value);
+    }
 
 }

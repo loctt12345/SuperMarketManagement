@@ -9,6 +9,7 @@ import com.loctt.app.service.IOrderService;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +29,9 @@ public class DashboardApiController {
     @PostMapping("api/dashboard/getMonthRevenue")
     public ResponseEntity getMonthRevenue(@RequestBody JSONObject object) {
         int month = Integer.parseInt(object.getAsString("txtMonth"));
+        int yearOfMonth = Integer.parseInt(object.getAsString("txtYearOfMonth"));
         float[] listRevenue = orderService
-                .getTotalProfitByMonth(month, 2022);
-  
+                .getTotalProfitByMonth(month, yearOfMonth);
         return ResponseEntity.ok().body(listRevenue);
     }
     

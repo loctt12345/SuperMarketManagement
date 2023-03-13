@@ -26,22 +26,6 @@
     flex-basis: 15%;
 }
 
-
-.danh-sach-nhan-vien{
-    margin-left: 30px;
-}
-
-.quan-ly-qrcode{
-    position:absolute;
-    top: 250px;
-    margin-left: 30px;
-}
-
-.bao-cao{
-    position:absolute;
-    margin-left: 30px;
-    bottom: 5%;
-}
 .action{
     display: flex;
     justify-content: space-around;
