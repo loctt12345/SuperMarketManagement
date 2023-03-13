@@ -40,13 +40,6 @@ public class OrderAPIController {
         return  orderService.getPrimaryOrder(orderId);
     }
     
-    @GetMapping("api/primaryorder/get") 
-    public ResponseEntity getlistPrimaryOrder(@RequestParam (name = "txtUserId") String userId) {
-         //   String userId = object.getAsString("txtUserId");
-        
-            
-        return ResponseEntity.ok().body(orderService.getlistPrimaryOrder(userId));
-    
-    }
+
     
 }

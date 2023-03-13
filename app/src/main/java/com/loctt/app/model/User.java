@@ -16,7 +16,7 @@ import javax.persistence.Table;
  * @author ADMIN
  */
 @Entity
-@Table (name = "User")
+@Table (name = "Customer")
 public class User implements java.io.Serializable{
     @Id
     @GeneratedValue
@@ -45,6 +45,9 @@ public class User implements java.io.Serializable{
         this.address = address;
     }
 
+    public User() {
+    }
+    
     /**
      * @return the userID
      */

@@ -16,12 +16,19 @@ import org.springframework.stereotype.Service;
  * @author ADMIN
  */
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
+
     @Autowired
     private IUserRepository userRepository;
+
     @Override
     public User findUserByID(String userID) {
         return userRepository.findByUserID(userID);
     }
-    
+
+    @Override
+    public void updateProfile(User user) {
+        userRepository.save(user);
+    }
+
 }

@@ -13,4 +13,6 @@ import com.loctt.app.model.User;
  */
 public interface IUserService {
     public User findUserByID(String userID);
+    void updateProfile(User user);
+
 }
