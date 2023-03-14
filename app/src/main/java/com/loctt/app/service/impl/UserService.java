@@ -23,12 +23,17 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
+
     @Override
     public User findUserByID(String userID) {
         return userRepository.findByUserID(userID);
     }
 
     @Override
+    public void updateProfile(User user) {
+        userRepository.save(user);
+    }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

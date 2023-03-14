@@ -13,6 +13,8 @@ import com.loctt.app.model.User;
  */
 public interface IUserService {
     public User findUserByID(String userID);
+    void updateProfile(User user);
+
     public User findByUsername(String username);
     public void createNewUser(User user);
     public User findByEmail(String email);
