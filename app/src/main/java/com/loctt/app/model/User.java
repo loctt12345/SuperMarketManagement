@@ -70,8 +70,6 @@ public class User implements java.io.Serializable{
         this.authenticationProvider = authenticationProvider;
     }
 
-    public User() {
-    }
     
     /**
      * @return the userID
