@@ -50,7 +50,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
             UserDetailsPrincipal user = new UserDetailsPrincipal(employee);
             String role = employee.getRole().getRoleName();
             user.setRole(role);
-            System.out.println(user.getAuthorities().toString());
+            //System.out.println(user.getAuthorities().toString());
             return user;
         } else {
             throw new UsernameNotFoundException("User not found: " + customer);

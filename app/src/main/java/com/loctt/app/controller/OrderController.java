@@ -5,12 +5,14 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
+import com.loctt.app.model.CustomOAuth2User;
 import com.loctt.app.model.OrderDetails;
 import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.model.UserDetailsPrincipal;
 import com.loctt.app.service.IOrderService;
 import com.loctt.app.service.IProductManagerService;
+import com.loctt.app.service.IUserService;
 import com.loctt.app.service.impl.GenerateUUID;
 import com.loctt.app.service.impl.ProductService;
 import java.util.Date;
@@ -38,6 +40,10 @@ public class OrderController {
 
     @Autowired
     IProductManagerService productManager;
+
+    @Autowired
+    private IUserService userService;
+
     @Autowired
     private ProductService productService;
 //    @GetMapping("/test")
@@ -88,7 +94,6 @@ public class OrderController {
         orderSaved.setShippingAddress(address);
 
         //Set Customer
-        
         String userId = ((UserDetailsPrincipal) authentication.getPrincipal())
                 .getUser().getUserID();
         orderSaved.setUserID(userId);
@@ -106,7 +111,7 @@ public class OrderController {
         //3. remove cart after checkout
         cart.getItems().clear();
         redirectAttributes.addAttribute("orderID", orderID);
-        System.out.println("http://localhost:8080/showBill?orderId="+orderID);
+        System.out.println("http://localhost:8080/showBill?orderId=" + orderID);
         return "redirect:/paying/orderProgress";
     }
 
@@ -125,13 +130,22 @@ public class OrderController {
         }
         return "payingSucess";
     }
-    
+
     @GetMapping("/orderHistory")
-    public String getlistPrimaryOrder(@RequestParam (name = "txtUserId") String userId, Model model) {
-         //   String userId = object.getAsString("txtUserId");
-        
-            model.addAttribute("list_order", orderService.getlistPrimaryOrder(userId));
-            return "order_history";
-    
+    public String getlistPrimaryOrder(Authentication authentication, Model model) {
+        //   String userId = object.getAsString("txtUserId");
+        String userId;
+        if (authentication.getPrincipal() instanceof CustomOAuth2User) {
+            // if user login with Gmail
+            String gmail = ((CustomOAuth2User) authentication.getPrincipal())
+                    .getEmail();
+            userId = userService.findByEmail(gmail).getUserID();
+        } else {
+            userId = ((UserDetailsPrincipal) authentication.getPrincipal())
+                    .getUser().getUserID();
+        }
+        model.addAttribute("list_order", orderService.getlistPrimaryOrder(userId));
+        return "order_history";
+
     }
 }
