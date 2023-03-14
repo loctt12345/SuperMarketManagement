@@ -18,4 +18,9 @@ public interface IUserService {
     public User findByEmail(String email);
     public void createUser(User user);
     public User findMaxUserId();
+    public void updateResetPassword(String token, String username);
+    public User findByResetPasswordToken(String token);
+    public void updatePassword(User customer, String newPassword);
+    public User findByVerificationCode(String verificationCode);
+    public void updateUser(User user);
 }

@@ -46,7 +46,47 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "auth_provider")
     private AuthenticationProvider authenticationProvider;
+    @Column (name = "reset_password_token")
+    private String resetPasswordToken;
+    @Column (name = "verification_code")
+    private String verificationCode;
+    @Column (name = "Status")
+    private boolean status;
 
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public User(String userID, String username, String password, String fullName, String phone, String email, String address, String verificationCode, boolean status) {
+        this.userID = userID;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.verificationCode = verificationCode;
+        this.status = status;
+    }
+    public String getVerificationCode() {
+        return verificationCode;
+    }
+
+    public void setVerificationCode(String verificationCode) {
+        this.verificationCode = verificationCode;
+    }
+    
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
     public User() {
     }
 

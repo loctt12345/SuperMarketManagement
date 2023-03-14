@@ -41,11 +41,17 @@ public class SecurityUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found: " + customer);
         }
         Employee employee = employeeService.findByUsername(username);
-        if (customer != null) {
+        //Check valid user
+        if (customer != null && customer.getStatus()) {
             UserDetailsPrincipal user = new UserDetailsPrincipal(customer);
             user.setRole("USER");
             return user;
         }
+        //Check if user not verified
+        if(customer != null && !customer.getStatus()){
+            throw new UsernameNotFoundException("User not verified!!!");
+        }
+        //Check valid employee
         if (employee != null) {
             UserDetailsPrincipal user = new UserDetailsPrincipal(employee);
             String role = employee.getRole().getRoleName();
@@ -53,7 +59,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
             System.out.println(user.getAuthorities().toString());
             return user;
         } else {
-            throw new UsernameNotFoundException("User not found: " + customer);
+            throw new UsernameNotFoundException("User not found!!!");
         }
     }
 

@@ -11,7 +11,6 @@ import com.loctt.app.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,7 +24,7 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
     @Override
     public User findUserByID(String userID) {
-        return userRepository.findByUserID(userID);
+        return userRepository.findByUserIDAndStatus(userID, true);
     }
 
     @Override
@@ -35,7 +34,7 @@ public class UserService implements IUserService {
 
     @Override
     public void createNewUser(User user) {
-        if (userRepository.findByUserID(user.getUserID()) == null) {
+        if (userRepository.findByUserIDAndStatus(user.getUserID(), true) == null) {
             userRepository.save(user);
         }
     }
@@ -56,5 +55,40 @@ public class UserService implements IUserService {
     public User findMaxUserId() {
         return userRepository.findAll(Sort.by("UserId")).get(0);
     }
-    
+
+    @Override
+    public void updateResetPassword(String token, String username) throws IllegalArgumentException{
+        User customer = userRepository.findByUsername(username);
+        if(customer != null && customer.getStatus()){
+            customer.setResetPasswordToken(token);
+            userRepository.save(customer);
+        }
+        else{
+            throw new IllegalArgumentException("Could not find any customer with username: " + username);
+        }
+    }
+
+    @Override
+    public User findByResetPasswordToken(String token) {
+        return userRepository.findByResetPasswordTokenAndStatus(token, true);
+    }
+
+    @Override
+    public void updatePassword(User customer, String newPassword) {
+        BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = pwdEncoder.encode(newPassword);
+        customer.setPassword(encodedPassword);
+        customer.setResetPasswordToken(null);
+        userRepository.save(customer);
+    }
+
+    @Override
+    public User findByVerificationCode(String verificationCode) {
+        return userRepository.findByVerificationCode(verificationCode);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
 }
