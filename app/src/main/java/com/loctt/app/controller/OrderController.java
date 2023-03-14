@@ -125,4 +125,13 @@ public class OrderController {
         }
         return "payingSucess";
     }
+    
+    @GetMapping("/orderHistory")
+    public String getlistPrimaryOrder(@RequestParam (name = "txtUserId") String userId, Model model) {
+         //   String userId = object.getAsString("txtUserId");
+        
+            model.addAttribute("list_order", orderService.getlistPrimaryOrder(userId));
+            return "order_history";
+    
+    }
 }

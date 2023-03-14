@@ -51,6 +51,7 @@ public class DispatchController {
     private ProductService productService;
     @Autowired
     private OrderDetailsService orderDetailsService;
+
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -121,6 +122,10 @@ public class DispatchController {
         return "bill";
     }
 
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard";
+    }
     @GetMapping("/shipper_summary_order")
     public String showSummaryOrder(@RequestParam(name = "orderId", required = false) String orderId, Model model) {
         model.addAttribute("order", orderService.getPrimaryOrder(orderId));
