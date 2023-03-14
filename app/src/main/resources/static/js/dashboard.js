@@ -123,7 +123,7 @@ function drawCharts(barCreated) {
         var e = document.getElementById("ddlViewByMonthOfYear");
         var f = document.getElementById("ddlViewByYearOfMonth");
         var value = e.options[e.selectedIndex].value;
-        var values = f.options[f.selectedIndex].value; 
+        var values = f.options[f.selectedIndex].value;
         getRevenueOfMonth(value, values);
     }
     document.getElementById("ddlViewByYearOfMonth").onchange = function () {

@@ -35,7 +35,7 @@ public class DispatchController {
     private ProductService productService;
     @Autowired
     private OrderDetailsService orderDetailsService;
-    
+
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
@@ -46,19 +46,20 @@ public class DispatchController {
     public String startWeb() {
         return "index";
     }
+
     //TestAdmin
     @GetMapping("/admin-page")
-    public String adminPage( Model model) {
+    public String adminPage(Model model) {
         List<ProductDetails> listProduct = productService.findAll();
         model.addAttribute("PRODUCTS_RESULT", listProduct);
         return "products_management";
     }
+
     @GetMapping("/product-detail")
     public String showProduct(Model model, @RequestParam(name = "productID") String productID) {
         model.addAttribute("product_id", productID);
         return "product_detail";
     }
-    
 
     @GetMapping("/showCart")
     public String showCart(
@@ -70,24 +71,24 @@ public class DispatchController {
         model.addAttribute("numPage", (int) Math.ceil((float) cartService.getCartSize(cart) / 6));
         return "cart_page";
     }
-    
+
     @GetMapping("/showPaying")
     public String showPaying() {
         return "paying";
     }
-    
+
     @GetMapping("/repoStaff")
     public String showRepoStaff() {
         return "repo_staff_screen";
     }
-    
+
     @GetMapping("/shipStaff")
     public String showShipStaff() {
         return "ship_staff_screen";
     }
-    
+
     @GetMapping("/showBill")
-    public String showBill(@RequestParam(name="orderId", required = false) String orderId, Model model) {
+    public String showBill(@RequestParam(name = "orderId", required = false) String orderId, Model model) {
         model.addAttribute("orderId", orderId);
         return "bill";
     }

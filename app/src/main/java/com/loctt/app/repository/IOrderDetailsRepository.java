@@ -16,5 +16,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IOrderDetailsRepository extends JpaRepository<OrderDetails, String>{
     List<OrderDetails> findByOrderID(String orderID);
-    
 }
