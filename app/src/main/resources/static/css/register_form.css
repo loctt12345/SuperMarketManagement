@@ -1,0 +1,33 @@
+
+
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+
+form {
+    border : 1px solid #eee !important;
+    padding : 20px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.img-color{
+    color: white;
+    cursor: grab;
+}
+
+.button-google {
+    border-radius: 50%;
+} 

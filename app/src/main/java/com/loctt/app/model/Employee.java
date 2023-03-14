@@ -10,6 +10,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -23,8 +25,6 @@ public class Employee implements Serializable {
     @GeneratedValue
     @Column (name = "EmployeeID")
     private String employeeID;
-    @Column (name = "RoleID")
-    private String roleID;
     @Column (name = "username")
     private String username;
     @Column (name = "password")
@@ -39,6 +39,9 @@ public class Employee implements Serializable {
     private String address;
     @Column (name = "Salary")
     private float salary;
+    @ManyToOne
+    @JoinColumn(name="RoleID", nullable=false)
+    private Role role;
 
     /**
      * @return the employeeID
@@ -52,20 +55,6 @@ public class Employee implements Serializable {
      */
     public void setEmployeeID(String employeeID) {
         this.employeeID = employeeID;
-    }
-
-    /**
-     * @return the roleID
-     */
-    public String getRoleID() {
-        return roleID;
-    }
-
-    /**
-     * @param roleID the roleID to set
-     */
-    public void setRoleID(String roleID) {
-        this.roleID = roleID;
     }
 
     /**
@@ -164,6 +153,14 @@ public class Employee implements Serializable {
      */
     public void setSalary(float salary) {
         this.salary = salary;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
     
 }

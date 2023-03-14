@@ -9,6 +9,9 @@ import com.loctt.app.model.User;
 import com.loctt.app.repository.IUserRepository;
 import com.loctt.app.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,4 +34,32 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
 
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public void createNewUser(User user) {
+        if (userRepository.findByUserID(user.getUserID()) == null) {
+            userRepository.save(user);
+        }
+    }
+    
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+    
+    @Override
+    public void createUser(User user) {
+        BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+        user.setPassword(bcrypt.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+    
+    @Override
+    public User findMaxUserId() {
+        return userRepository.findAll(Sort.by("UserId")).get(0);
+    }
+    
 }

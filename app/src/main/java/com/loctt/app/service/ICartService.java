@@ -20,7 +20,7 @@ public interface ICartService {
     public void updateItemInCart(String productID, int quantityInCart, CartObject cart);
 
     public void removeItemInCart(String productID, CartObject cart);
-
+    
     public JSONObject showCart(CartObject cart, int fromItemIndex, int maxItemIndex);
     
     public int getCartSize(CartObject cart);

@@ -30,7 +30,7 @@ function action() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({"txtOrderId" : x, "txtStatus" : "2"})
+        body: JSON.stringify({"txtOrderId" : x, "txtStatus" : "3"})
     }).then((response) => {
         $('#success').modal('show');
     });
