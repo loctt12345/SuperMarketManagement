@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 /**
  *
  * @author Administrator
@@ -44,7 +45,18 @@ public class PrimaryOrder {
     
     @Column(name = "Email")
     private String email;
+    
+    @Transient
+    private String status;
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    
     public PrimaryOrder() {
     }
 

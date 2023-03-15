@@ -1,99 +1,93 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<!--To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.-->
+    <!--To change this license header, choose License Headers in Project Properties.
+    To change this template file, choose Tools | Templates
+    and open the template in the editor.-->
 
-<head>
-  <title>Paying</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-  <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="./css/hder-fter.css" />
-  <script src="./js/import.js"></script>
-  <script src="./js/paying.js"></script>
-</head>
+    <head>
+        <title>Paying</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+        <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./css/hder-fter.css" />
+        <script src="./js/import.js"></script>
+        <script src="./js/paying.js"></script>
+    </head>
 
-<body onload="setTotalPrice()">
-<div class="container">
-  <header th:replace="header :: header"></header>
-  <div class="row mt-3 tittle justify-content-center">
-    <h1 class="text">
-      Paying page
-    </h1>
-  </div>
+    <body onload="setTotalPrice()">
+        <div class="container">
+            <header th:replace="header :: header"></header>
+            <div class="row mt-3 tittle justify-content-center">
+                <h1 class="text">
+                    Payment
+                </h1>
+            </div>
 
-  <div class="row mt-3 justify-content-center">
-    <!--<form action="/paying/order" class="col-8" method="post">-->
-    <form method="post" class="col-8" th:action="@{/pay}">        
-      <div class="form-group">
-        <label for="email">Email address:</label>
-        <input type="email" class="form-control" 
-               placeholder="Enter email" id="email" name="userEmail">
-      </div>
+            <div class="row mt-3 justify-content-center">
+                <form method="post" class="col-md-5 col-12" th:action="@{/pay}">        
+                    <div class="form-group">
+                        <input type="email" class="form-control" 
+                               required
+                               placeholder="Enter email" id="email" 
+                               name="userEmail">
+                    </div>
 
-      <div class="form-group">
-        <label for="address">Address:</label>
-        <input type="text" class="form-control" placeholder="Enter address" id="address" name="userAddress">
-      </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" 
+                               required
+                               placeholder="Enter address" id="address" name="userAddress">
+                    </div>
 
-      <div class="form-group">
-        <label for="phone">Phone number:</label>
-        <input type="text" class="form-control" placeholder="Enter phone number" id="phone" name="userPhone">
-      </div>
-    
-      <div class="row justify-content-center mb-3">
-        <div class="form-check mr-4">
-          <label class="form-check-label">
-            <input type="radio" onclick="openWalletInfo()" class="form-check-input" value="wallet"
-                   checked name="payingmethod">
-            PayPal  
-          </label>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control" 
+                               placeholder="Enter phone number" 
+                               id="phone" name="userPhone"
+                               pattern="[0-9]{10}"
+                               required>
+                    </div>
+
+                    <div class="row justify-content-center mb-3">
+                        <div class="form-check mr-4">
+                            <label class="form-check-label">
+                                <input type="radio" onclick="openWalletInfo()" class="form-check-input" value="wallet"
+                                       checked name="payingmethod">
+                                    PayPal  
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <h3 >
+                            Total price: <span id="totalPrice"></span>
+                            <br/>
+                            <input type="hidden" id="total" name="price" value="" />
+                        </h3>
+                    </div>
+
+                    <div class="btnSubmit row mt-3 justify-content-center">
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                    </div>
+
+                    <div class="row mt-3 justify-content-center">
+                        <a href="./showCart">
+                            Add more products to cart
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+
+            <footer th:replace="footer :: footer"></footer>
+
         </div>
-        <div class="form-check">
-          <label class="form-check-label">
-            <input type="radio" onclick="closeWalletInfo()" class="form-check-input" value="atm"
-                   name="payingmethod">
-            ATM card
-          </label>
-        </div>
-      </div>
-      <div id="wallet_info" class="alert alert-success">
-        <p>
-          Chi tiet thanh toan qua vi dien tu!!!
-        </p>
-      </div>       
-      <div class="row justify-content-center">
-        <h3 >
-            Total price: <span id="totalPrice"></span>
-            <br>
-            <input type="hidden" id="total" name="price" value="" />
-        </h3>
-      </div>
-                
-      <div class="btnSubmit row mt-3 justify-content-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
-
-      <div class="row mt-3 justify-content-center">
-        <a href="./showCart">
-          Add more products to cart
-        </a>
-      </div>
-    </form>
-
-  </div>
-
-  <footer th:replace="footer :: footer"></footer>
-
-</div>
- <script src="./js/preventBackButton.js"></script>
-</body>
+        <script src="./js/preventBackButton.js"></script>
+    </body>
 
 </html>

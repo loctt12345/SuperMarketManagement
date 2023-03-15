@@ -5,18 +5,25 @@
  */
 
 
-function subQuantity() {
-    let input = document.getElementById("quantity-input");
-    if (input.value === "0") {
-        input.disabled = true;
-    } else
-        input.value = (parseInt(input.value) - 1).toString();
-}
+$(document).ready(function () {
 
-function addQuantity() {
-    let input = document.getElementById("quantity-input");
-    input.value = (parseInt(input.value) + 1).toString();
-}
+    $(".qtyminus").on("click", function () {
+        var now = $(".qty").val();
+        if ($.isNumeric(now)) {
+            if (parseInt(now) - 1 > 0)
+            {
+                now--;
+            }
+            $(".qty").val(now);
+        }
+    });
+    $(".qtyplus").on("click", function () {
+        var now = $(".qty").val();
+        if ($.isNumeric(now)) {
+            $(".qty").val(parseInt(now) + 1);
+        }
+    });
+});
 
 function loadProduct() {
     let productID = document.getElementById("product_id").value;
@@ -69,13 +76,13 @@ function addToCart() {
     var txtProductID = document.getElementById('product_id').value;
     var txtNumber = document.getElementById('quantity-input').value;
 
-    fetch('/api/cart/addToCart?txtProductID='+txtProductID+'&txtNumber='+txtNumber).then((response) => {
+    fetch('/api/cart/addToCart?txtProductID=' + txtProductID + '&txtNumber=' + txtNumber).then((response) => {
         if (response.url.includes("login") || !response.ok) {
             window.location.href = "/login";
-        }   
-        else {
+        } else {
             window.location.href = "/";
         }
 
     });
 }
+
