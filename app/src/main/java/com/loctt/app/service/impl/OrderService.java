@@ -211,7 +211,7 @@ public class OrderService implements IOrderService {
     }
     @Override
     public List<PrimaryOrder> getlistPrimaryOrder(String userId){
-        List<PrimaryOrder> listOrder = primaryOrderRepository.findByUserID(userId);
+        List<PrimaryOrder> listOrder = primaryOrderRepository.findByUserIDOrderByTimeDesc(userId);
         
         return listOrder;
     }

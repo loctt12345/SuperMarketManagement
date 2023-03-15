@@ -112,7 +112,15 @@
 
                                         </div>
                                         <a class="dropdown-item" href="#">Profile</a>
-                                        <a class="dropdown-item" href="/orderHistory">Order history</a>
+                                        <div th:if="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
+                                            <a class="dropdown-item" href="/orderHistory">Order history</a>
+                                        </div>
+                                        <div th:if="${#authentication.Principal.toString().contains('UserDetailsPrincipal')}">
+                                            <div th:if="${#authentication.getPrincipal().getUser()}">
+                                                <a class="dropdown-item" href="/orderHistory">Order history</a>
+                                            </div>
+                                        </div>
+                                        
                                         <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                                     </div>
                                 </div>

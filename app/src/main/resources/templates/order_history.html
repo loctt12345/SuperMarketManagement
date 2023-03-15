@@ -23,17 +23,19 @@ and open the template in the editor.
     <body>
         <div class="container">
             <header th:replace="header :: header"></header>
-            <div class="content p-5">
+            <div class="content mt-3">
                 <div class="row justify-content-center mb-3">
                     <h2>Order history</h2>
                 </div>
                 <div class="table-responsive-md">
                     <table class="table table-borderless">
                         <thead>
-                            <tr class="bg-light">
-                                <th class="col-md-1">STT</th>
-                                <th class="col-md-2">Time</th>
-                                <th class="col-md-5">Total</th>
+                            <tr class="bg-primary">
+                                <th>STT</th>
+                                <th>Order date</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
 
@@ -42,7 +44,13 @@ and open the template in the editor.
                                 th:each="order, iterState : ${list_order}">
                                 <td th:text="${iterState.index + 1}"></td>
                                 <td th:text="${order.time}"></td>
-                                <td th:text="${order.total}"></td>
+                                <td class="money" th:text="${order.total}"></td>
+                                <td th:text="${order.status}"></td>
+                                <td>
+                                    <a th:href="@{/paying/orderProgress(orderID=${order.orderID})}">
+                                        View details...
+                                    </a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,5 +58,12 @@ and open the template in the editor.
             </div>
             <footer th:replace="footer :: footer"></footer>
         </div>
+        <script>
+            let money = document.getElementsByClassName('money');
+            for (let i = 0; i < money.length; ++i) {
+                const x = parseFloat(money[i].innerHTML);
+                money[i].innerHTML = x.toLocaleString('it-IT', {style: 'currency', currency: 'VND'});
+            }
+        </script>
     </body>
 </html>

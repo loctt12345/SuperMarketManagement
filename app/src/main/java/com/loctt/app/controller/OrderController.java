@@ -116,17 +116,33 @@ public class OrderController {
     }
 
     @GetMapping("/paying/orderProgress")
-    public String updateOrderStatus(@RequestParam(value = "orderID") String orderID, Model model) {
+    public String updateOrderStatus(@RequestParam(value = "orderID") String orderID,
+            Model model, Authentication authentication) {
         if (orderID != null) {
-            PrimaryOrder order = orderService.findByOrderID(orderID);
-            Map<ProductDetails, Integer> listProduct = orderService.getListProduct(orderID);
-            float total = 0;
-            for (Map.Entry<ProductDetails, Integer> product : listProduct.entrySet()) {
-                total += (float) product.getValue() * product.getKey().getSellprice();
+            String userId;
+            if (authentication.getPrincipal() instanceof CustomOAuth2User) {
+                // if user login with Gmail
+                String gmail = ((CustomOAuth2User) authentication.getPrincipal())
+                        .getEmail();
+                userId = userService.findByEmail(gmail).getUserID();
+            } else {
+                userId = ((UserDetailsPrincipal) authentication.getPrincipal())
+                        .getUser().getUserID();
             }
-            model.addAttribute("PRODUCTS_IN_ORDER", listProduct);
-            model.addAttribute("TotalOfOrder", total);
-            model.addAttribute("order", order);
+            PrimaryOrder order = orderService.findByOrderID(orderID);
+            if (order != null && order.getUserID().equals(userId)) {
+                Map<ProductDetails, Integer> listProduct = orderService.getListProduct(orderID);
+                float total = 0;
+                for (Map.Entry<ProductDetails, Integer> product : listProduct.entrySet()) {
+                    total += (float) product.getValue() * product.getKey().getSellprice();
+                }
+                model.addAttribute("PRODUCTS_IN_ORDER", listProduct);
+                model.addAttribute("TotalOfOrder", total);
+                model.addAttribute("order", order);
+            }
+            else {
+                return "redirect:/accessDenied";
+            }
         }
         return "payingSucess";
     }
@@ -144,7 +160,13 @@ public class OrderController {
             userId = ((UserDetailsPrincipal) authentication.getPrincipal())
                     .getUser().getUserID();
         }
-        model.addAttribute("list_order", orderService.getlistPrimaryOrder(userId));
+        List<PrimaryOrder> list = orderService.getlistPrimaryOrder(userId);
+        for (PrimaryOrder order : list) {
+            String status = orderService
+                    .findorderStatusID(order.getStatusID()).getName();
+            order.setStatus(status);
+        }
+        model.addAttribute("list_order", list);
         return "order_history";
 
     }
