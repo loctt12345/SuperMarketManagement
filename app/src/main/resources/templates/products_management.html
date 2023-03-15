@@ -13,7 +13,7 @@
     <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/admin.css" />
     <link rel="stylesheet" href="/css/admin_navbar.css" />
-    <script src="https://code.jquery.com/jquery-latest.js"></script>
+<!--    <script src="https://code.jquery.com/jquery-latest.js"></script>-->
 
 </head>
 
@@ -201,13 +201,14 @@
                     </nav>
                 </div>
                 <div class="col-md-10 text-center text-danger" th:unless="${PRODUCTS_RESULT ne null}">
-                    <h2>No result found!</h2>
+                    <h2 th:unless="${ErrorAction ne null}">No result found!</h2>
+                    <h2 th:if="${ErrorAction ne null}" th:text="${ErrorAction}"></h2>
                 </div>
             </div>
         </main>
     </div>
     <script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>
-    <script th:src="@{/js/admin.js}"></script>
+    <script type="text/javascript" th:src="@{/js/admin.js}"></script>
     <script th:src="@{/js/pagination.js}"></script>
     <script src="/js/admin_navbar.js"></script>
 

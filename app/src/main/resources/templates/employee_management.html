@@ -49,11 +49,11 @@
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form th:action="@{/admin/add-new-employee}" method="POST"> <!-- add -->
+                                    <form th:action="@{/admin/add-new-employee}" method="POST">
                                         <div class="form-group">
-                                            <label for="employeeID">Mã số: </label>
-                                            <input class="form-control" type="text" name="employeeID"
-                                                placeholder="Nhập Mã số Nhân viên" />
+                                            <label for="username">Username: </label>
+                                            <input class="form-control" type="text" name="username"
+                                                placeholder="Nhập Username" />
                                         </div>
                                         <div class="form-group">
                                             <label for="role">Vị trí: </label>
@@ -76,7 +76,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email: </label>
-                                            <input class="form-control" type="text" name="email"
+                                            <input class="form-control" type="email" name="email"
                                                 placeholder="Nhập Email" />
                                         </div>
                                         <div class="form-group">
@@ -185,28 +185,27 @@
                                                     data-target="#updateModal" name="" style="all: unset; cursor: pointer;" />
                                             </li>
                                             <li class="dropdown-item">
-                                                <form th:action="@{/admin/reset-employee-password}" method="post">
-                                                    <input type="submit" value="Cấp lại mật khẩu" style="all: unset; cursor: pointer;" ></input>
-                                                    <input type="hidden" name="employeeID"
-                                                        th:value="${employee.employeeID}" />
-                                                </form>
+                                                <a style="all: unset; cursor: pointer; "
+                                                    th:href="@{/admin/reset-employee-password(id=${employee.employeeID},lastSearchValue=${lastSearchValue},lastSearchBy=${lastSearchBy})}">
+                                                    Cấp lại mật khẩu
+                                                </a>
                                             </li>
                                             <li class="dropdown-item"><a style="all: unset; cursor: pointer; "
                                                     th:href="@{/admin/delete-employee(id=${employee.employeeID},lastSearchValue=${lastSearchValue},lastSearchBy=${lastSearchBy})}">
-                                                    Delete
+                                                    Xoá
                                                 </a>
                                             </li>
                                         </ul>
                                     </div>
-
-
+                                    <h6 class="text-success" th:if="${ResetPassEmp ne null && ResetPassEmp eq employee.employeeID}">Reset Successfully</h6>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-md-10 text-center text-danger" th:unless="${EMPLOYEES_RESULT ne null}">
-                    <h2>No result matched!</h2>
+                    <h2 th:unless="${ErrorAction ne null}">No result found!</h2>
+                    <h2 th:if="${ErrorAction ne null}" th:text="${ErrorAction}"></h2>
                 </div>
             </div>
         </main>

@@ -19,4 +19,5 @@ public interface IEmployeeRepository extends JpaRepository<Employee, String>{
     Employee findByEmployeeIDAndRoleRoleNameNotAndStatus(String employeeID, String roleName, boolean status);
     List<Employee> findByFullNameContainingAndRoleRoleNameNotAndStatus(String fullName, String roleName, boolean status);
     List<Employee> findByStatusAndRoleRoleNameNot(boolean status, String roleName);
+    Employee findByEmployeeID(String employeeID);
  }

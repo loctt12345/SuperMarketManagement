@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -22,7 +23,9 @@ import javax.persistence.Table;
 @Table (name = "Employee")
 public class Employee implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "employee-generator")
+    @GenericGenerator(name = "employee-generator", 
+      strategy = "com.loctt.app.model.EmployeeIDGenerator")
     @Column (name = "EmployeeID")
     private String employeeID;
     @Column (name = "username")
@@ -52,6 +55,22 @@ public class Employee implements Serializable {
     @ManyToOne
     @JoinColumn(name="RoleID", nullable=false)
     private Role role;
+
+    public Employee() {
+    }
+
+    public Employee(String employeeID, String username, String password, String fullName, String phone, String email, String address, float salary, boolean status, Role role) {
+        this.employeeID = employeeID;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.salary = salary;
+        this.status = status;
+        this.role = role;
+    }
 
     /**
      * @return the employeeID

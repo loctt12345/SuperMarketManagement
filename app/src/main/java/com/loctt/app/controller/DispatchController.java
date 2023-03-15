@@ -88,8 +88,12 @@ public class DispatchController {
         return "products_management";
     }
     @GetMapping("/admin-employee-page")
-    public String adminStaffPage(Model model){
+    public String adminStaffPage(Model model, HttpSession session){
         List<Employee> listEmployee = employeeService.findAllForSearch();
+        if(session.getAttribute("ResetPassEmp") != null){
+            model.addAttribute("ResetPassEmp", session.getAttribute("ResetPassEmp"));
+            session.removeAttribute("ResetPassEmp");
+        }
         model.addAttribute("EMPLOYEES_RESULT", listEmployee);
         return "employee_management";
     }
