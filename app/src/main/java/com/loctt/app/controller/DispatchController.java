@@ -11,6 +11,7 @@ import com.loctt.app.model.User;
 import com.loctt.app.model.UserDetailsPrincipal;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
+import com.loctt.app.service.impl.EmployeeService;
 import com.loctt.app.service.impl.GenerateUUID;
 import com.loctt.app.service.impl.OrderDetailsService;
 import com.loctt.app.service.impl.OrderService;
@@ -72,13 +73,16 @@ public class DispatchController {
 
     @Autowired
     private UserService userService;
-    
+    @Autowired
+    private EmployeeService employeeService;
+
     @Bean
-    public SendMailService sendMailService(){
+    public SendMailService sendMailService() {
         return new SendMailService();
     }
     @Autowired
     private JavaMailSender mailSender;
+
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
         CartObject cart = (CartObject) session.getAttribute("CART");
@@ -191,10 +195,11 @@ public class DispatchController {
             model.addAttribute("ErrorAuthorizedMessages", "Invalid username or password");
         }
         if (errorVerify) {
-             model.addAttribute("ErrorAuthorizedMessages", "Cannot verify email");
+            model.addAttribute("ErrorAuthorizedMessages", "Cannot verify email");
         }
         return "login_form";
     }
+
     @GetMapping("/authorize")
     public String authorize(Authentication authentication) {
         if (authentication != null
@@ -266,34 +271,41 @@ public class DispatchController {
         if (user != null) {
             return "redirect:/register?email";
         }
-        String verificationCode= RandomString.make(6);
+        String verificationCode = RandomString.make(6);
         try {
-            sendMailService().sendEmailVerification(email, verificationCode,mailSender);
+            sendMailService().sendEmailVerification(email, verificationCode, mailSender);
         } catch (UnsupportedEncodingException | MessagingException ex) {
             return "redirect:/register?emailVerify";
-        } 
+        }
         userService.createUser(new User("das", username, password, fullname,
-                phone, email, address,verificationCode, false));
+                phone, email, address, verificationCode, false));
         session.setAttribute("VerificationRightFlow", true);
         return "redirect:/verifyMail";
     }
+
     @GetMapping("/verifyMail")
-    public String verifyPage(@RequestParam(name= "ErrorVerification", required = false) boolean errorVerify, Model model, HttpSession session){
+    public String verifyPage(@RequestParam(name = "ErrorVerification", required = false) boolean errorVerify, Model model, HttpSession session) {
         //vallidate whether user request /verifyMail in right way or not
-        if(session.getAttribute("VerificationRightFlow") == null){
+        if (session.getAttribute("VerificationRightFlow") == null) {
             return "redirect:/login";
         }
         //clear unused attribute
         session.removeAttribute("VerificationRightFlow");
-        if(errorVerify){
-            model.addAttribute("ErrorVerification","Invalid Verification Code");
+        if (errorVerify) {
+            model.addAttribute("ErrorVerification", "Invalid Verification Code");
         }
         return "verify_code_page";
     }
+
     @PostMapping("/registerMail")
-    public String registerMail(@RequestParam(name = "verification_code") String verificationCode, RedirectAttributes redirectAttributes, HttpSession session){
+    public String registerMail(@RequestParam(name = "verification_code") String verificationCode, RedirectAttributes redirectAttributes, HttpSession session) {
+        if(verificationCode.isBlank()){
+            redirectAttributes.addAttribute("ErrorVerification", true);
+            session.setAttribute("VerificationRightFlow", true);
+            return "redirect:/verifyMail";
+        }
         User customer = userService.findByVerificationCode(verificationCode);
-        if(customer == null){
+        if (customer == null) {
             redirectAttributes.addAttribute("ErrorVerification", true);
             session.setAttribute("VerificationRightFlow", true);
             return "redirect:/verifyMail";
@@ -302,12 +314,19 @@ public class DispatchController {
         customer.setVerificationCode(null);
         userService.updateUser(customer);
         return "redirect:/login";
-        
+
     }
-    
 
     @PostMapping("/forgot_password/sendMail")
     public String sendMailForResetPwd(@RequestParam(name = "username") String username, Model model, HttpServletRequest request) {
+        if (username.isBlank()) {
+            model.addAttribute("ErrorUsername", "Please enter valid username");
+            return "forgot_password_form";
+        }
+        if (employeeService.findByUsername(username) != null) {
+            model.addAttribute("ErrorUsername", "Your account don't have permission to reset password");
+            return "forgot_password_form";
+        }
         String token = RandomString.make(45);
         try {
             userService.updateResetPassword(token, username);
@@ -331,16 +350,18 @@ public class DispatchController {
         return "forgot_password_form";
     }
 
-    
-
     @GetMapping("/forgot_password/enterNewPwd")
     public String resetPasswordPage(@RequestParam(name = "token") String token, Model model) {
-        User customer = userService.findByResetPasswordToken(token);
-        if (customer == null) {
+        if (token.isBlank()) {
             model.addAttribute("ErrorToken", "Invalid Token");
+            return "reset_password_form";
         }
-        model.addAttribute("token", token);
-        return "reset_password_form";
+            User customer = userService.findByResetPasswordToken(token);
+            if (customer == null) {
+                model.addAttribute("ErrorToken", "Invalid Token");
+            }
+            model.addAttribute("token", token);
+            return "reset_password_form";
     }
 
     @PostMapping("/forgot_password/reset")
