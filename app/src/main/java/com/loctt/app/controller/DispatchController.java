@@ -305,7 +305,7 @@ public class DispatchController {
 
     @PostMapping("/registerMail")
     public String registerMail(@RequestParam(name = "verification_code") String verificationCode, RedirectAttributes redirectAttributes, HttpSession session) {
-        if(verificationCode.isBlank()){
+        if(verificationCode.isEmpty()){
             redirectAttributes.addAttribute("ErrorVerification", true);
             session.setAttribute("VerificationRightFlow", true);
             return "redirect:/verifyMail";
@@ -325,7 +325,7 @@ public class DispatchController {
 
     @PostMapping("/forgot_password/sendMail")
     public String sendMailForResetPwd(@RequestParam(name = "username") String username, Model model, HttpServletRequest request) {
-        if (username.isBlank()) {
+        if (username.isEmpty()) {
             model.addAttribute("ErrorUsername", "Please enter valid username");
             return "forgot_password_form";
         }
@@ -358,7 +358,7 @@ public class DispatchController {
 
     @GetMapping("/forgot_password/enterNewPwd")
     public String resetPasswordPage(@RequestParam(name = "token") String token, Model model) {
-        if (token.isBlank()) {
+        if (token.isEmpty()) {
             model.addAttribute("ErrorToken", "Invalid Token");
             return "reset_password_form";
         }
