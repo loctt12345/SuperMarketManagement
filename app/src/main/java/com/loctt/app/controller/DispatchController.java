@@ -5,11 +5,13 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.CartObject;
+import com.loctt.app.model.Employee;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.model.ProductRecommendation;
 import com.loctt.app.model.User;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
+import com.loctt.app.service.impl.EmployeeService;
 import com.loctt.app.service.impl.GenerateUUID;
 import com.loctt.app.service.impl.OrderDetailsService;
 import com.loctt.app.service.impl.OrderService;
@@ -50,6 +52,8 @@ public class DispatchController {
     @Autowired
     private ProductService productService;
     @Autowired
+    private EmployeeService employeeService;
+    @Autowired
     private OrderDetailsService orderDetailsService;
 
     @Autowired
@@ -83,7 +87,12 @@ public class DispatchController {
         model.addAttribute("PRODUCTS_RESULT", listProduct);
         return "products_management";
     }
-
+    @GetMapping("/admin-employee-page")
+    public String adminStaffPage(Model model){
+        List<Employee> listEmployee = employeeService.findAllForSearch();
+        model.addAttribute("EMPLOYEES_RESULT", listEmployee);
+        return "employee_management";
+    }
     @GetMapping("/product-detail")
     public String showProduct(Model model, @RequestParam(name = "productID", required = false) String productID) {
         model.addAttribute("product_id", productID);

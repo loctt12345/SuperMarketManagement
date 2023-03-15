@@ -5,7 +5,9 @@
  */
 package com.loctt.app.controller;
 
+import com.loctt.app.model.Employee;
 import com.loctt.app.model.ProductDetails;
+import com.loctt.app.service.impl.EmployeeService;
 import com.loctt.app.service.impl.ProductService;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,8 @@ public class AdminController {
     //Map ProductDetails
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    private EmployeeService employeeService;
     @GetMapping("/findProduct")
     public String findProducts(@RequestParam(required = false) Map<String, String> allParams, Model model) {
         List<ProductDetails> productDetails = new ArrayList<>();
@@ -137,5 +140,29 @@ public class AdminController {
             redirectAttributes.addAttribute("searchBy", lastSearchBy);
             return "redirect:/admin/findProduct";
         }
+    }
+     @GetMapping("/findEmployee")
+    public String findEmployees(@RequestParam(required = false) Map<String, String> allParams, Model model) {
+        List<Employee> employeeList = new ArrayList<>();
+        String searchBy = allParams.get("searchBy");
+        String searchValue = allParams.get("searchValue");
+        //search All Products by Category
+        if (searchBy.equalsIgnoreCase("id")){
+            Employee emp = this.employeeService.findByEmployeeIDForSearch(searchValue);
+            if(emp != null){
+                employeeList.add(emp);
+            }
+        }
+        //search All Products by Name
+        if (searchBy.equalsIgnoreCase("name") && this.employeeService.findByNameContainingForSearch(searchValue) != null) {
+            employeeList = this.employeeService.findByNameContainingForSearch(searchValue);
+        }
+        if (employeeList.size() > 0) {
+            model.addAttribute("EMPLOYEES_RESULT", employeeList);
+            model.addAttribute("numPage", employeeList.size()/6 + 1);
+        }
+        model.addAttribute("searchValue", searchValue);
+        model.addAttribute("searchBy", searchBy);
+        return "employee_management";
     }
 }

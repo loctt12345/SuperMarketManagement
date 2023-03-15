@@ -39,6 +39,16 @@ public class Employee implements Serializable {
     private String address;
     @Column (name = "Salary")
     private float salary;
+    @Column (name = "Status")
+    private boolean status;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
     @ManyToOne
     @JoinColumn(name="RoleID", nullable=false)
     private Role role;

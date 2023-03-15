@@ -6,6 +6,7 @@
 package com.loctt.app.service;
 
 import com.loctt.app.model.Employee;
+import java.util.List;
 
 /**
  *
@@ -13,4 +14,7 @@ import com.loctt.app.model.Employee;
  */
 public interface IEmployeeService {
     public Employee findByUsername(String username);
+    public Employee findByEmployeeIDForSearch(String employeeID);
+    public List<Employee> findByNameContainingForSearch(String fullName);
+    public List<Employee> findAllForSearch();
 }
