@@ -78,7 +78,7 @@ public class AdminController {
             return "products_management";
         }
         for (String param : allParams.keySet()) {
-            if (allParams.get(param).isBlank() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
+            if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
                 model.addAttribute("ErrorAction", "Please enter valid values in fields");
                 return "products_management";
             }
@@ -101,12 +101,12 @@ public class AdminController {
     public String updateProduct(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
         String productID = allParams.get("productID");
         String productName = allParams.get("productName");
-        if (productName.isBlank()) {
+        if (productName.trim().isEmpty()) {
             productName = productService.findByProductID(productID).getName();
         }
         String sellPriceAsString = allParams.get("sellPrice");
         float sellPrice = 0;
-        if (sellPriceAsString.isBlank()) {
+        if (sellPriceAsString.trim().isEmpty()) {
             sellPrice = productService.findByProductID(productID).getSellprice();
         } else {
             try {
@@ -200,7 +200,7 @@ public class AdminController {
             return "employee_management";
         }
         for (String param : allParams.keySet()) {
-            if (allParams.get(param).isBlank() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
+            if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
                 System.out.println(param);
                 model.addAttribute("ErrorAction", "Please enter valid values in fields");
                 return "employee_management";
@@ -224,7 +224,7 @@ public class AdminController {
         String employeeSalaryAsString = allParams.get("employeeSalary");
         String employeeID = allParams.get("employeeID");
         float employeeSalary = 0;
-        if (employeeSalaryAsString.isBlank()) {
+        if (employeeSalaryAsString.trim().isEmpty()) {
             employeeSalary = employeeService.findByEmployeeID(employeeID).getSalary();
         } else {
             try {
@@ -236,7 +236,7 @@ public class AdminController {
         employeeService.updateEmployeeByAdmin(employeeID, employeeRole, employeeSalary);
         String lastSearchValue = allParams.get("lastSearchValue");
         String lastSearchBy = allParams.get("lastSearchBy");
-        if (lastSearchBy.isBlank() || lastSearchValue.isBlank()) {
+        if (lastSearchBy.trim().isEmpty() || lastSearchValue.trim().isEmpty()) {
             return "redirect:/admin-employee-page";
         } else {
             redirectAttributes.addAttribute("searchValue", lastSearchValue);

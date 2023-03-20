@@ -13,7 +13,7 @@
     <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/admin.css" />
     <link rel="stylesheet" href="/css/admin_navbar.css" />
-<!--    <script src="https://code.jquery.com/jquery-latest.js"></script>-->
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
 
 </head>
 
@@ -24,12 +24,12 @@
 
         <main class="page-content">
             <div class="container-fluid">
-                <nav class="navbar navbar-light mb-3" style="background-color: ">
+                <nav class="navbar navbar-light mb-3">
                     <a class="navbar-brand"></a>
                     <form class="form-inline" th:action="@{/admin/findProduct}">
                         <input class="search-button form-control mr-sm-2" type="text" placeholder="Search"
-                            aria-label="Search" th:value="${searchValue}" name="searchValue">
-                        <input type="submit" class="btn btn-success mr-4" value="Search"></input>
+                            aria-label="Search" th:value="${searchValue}" name="searchValue"/>
+                        <input type="submit" class="btn btn-success mr-4" value="Search"/>
                         <select name="searchBy" class="btn bg-light border">
                             <option th:if="${searchBy == 'id'}" th:value="id" selected="selected">ProductID</option>
                             <option th:unless="${searchBy == 'id'}" th:value="id">ProductID</option>
@@ -41,14 +41,14 @@
                         </select>
                     </form>
 
-                    <button class="btn btn-success" data-toggle="modal" data-target="#scannerToAddProduct">Add new
+                    <button class="btn btn-success" data-toggle="modal" data-target="#scannerToAddProduct" id="addNewProductBtn">Add new
                         item</button>
                     <div class="modal fade" id="scannerToAddProduct">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Add new item</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <button type="button" id="scannerCloseBtn" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <div id="camera" class="row justify-content-center">
@@ -63,7 +63,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h4 class="modal-title">Add new item</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <button type="button" id="closeAddModalBtn" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <form th:action="@{/admin/add-new-product}" method="POST">
@@ -126,7 +126,7 @@
                             <tr class="product-row" th:each="product : ${PRODUCTS_RESULT}">
                                 <td th:text="${product.productID}"></td>
                                 <td><img class="rounded img-fluid product-img" th:src="@{${product.imageLink}}"
-                                        alt="product image"></td>
+                                        alt="product image"/></td>
                                 <td th:text="${product.name}"></td>
                                 <td th:text="${product.category}"></td>
                                 <td th:text="${product.sellprice}"></td>

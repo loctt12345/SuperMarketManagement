@@ -75,7 +75,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public void updateEmployeeByAdmin(String employeeID, String employeeRole, float employeeSalary) {
         Employee employee = employeeRepository.findByEmployeeID(employeeID);
-        if (!employeeRole.isBlank()) {
+        if (!employeeRole.trim().isEmpty()) {
             Role role = new Role();
             if (employeeRole.equalsIgnoreCase("admin")) {
                 role.setRoleID("1");
