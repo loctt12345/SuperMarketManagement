@@ -5,26 +5,23 @@
  */
 package com.loctt.app.model;
 
-import com.loctt.app.service.impl.UserService;
 import java.io.Serializable;
 import javax.persistence.Query;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
- * @author loc12345
+ * @author ADMIN
  */
-public class MemberIDGenerator implements IdentifierGenerator {
+public class EmployeeIDGenerator implements IdentifierGenerator {
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj)
     {
-        Query q = session.createQuery("SELECT m.userID FROM Customer m ORDER BY m.userID DESC"); 
+        Query q = session.createQuery("SELECT m.employeeID FROM Employee m ORDER BY m.employeeID DESC"); 
         q.setMaxResults(1);
         String number = String.format("%03d",  Integer.parseInt(
                 q.getSingleResult().toString().substring(3)) + 1);
-        return "CUS" + number;
+        return "EMP" + number;
     }
 }

@@ -21,8 +21,8 @@ import org.hibernate.annotations.GenericGenerator;
  * @author ADMIN
  */
 @Entity
-@Table (name = "Customer")
-public class User implements java.io.Serializable{
+@Table(name = "Customer")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(generator = "user-generator")
@@ -110,7 +110,6 @@ public class User implements java.io.Serializable{
         this.authenticationProvider = authenticationProvider;
     }
 
-    
     /**
      * @return the userID
      */

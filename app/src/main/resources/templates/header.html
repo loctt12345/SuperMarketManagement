@@ -111,6 +111,7 @@
                                             </div>
 
                                         </div>
+                                        
                                         <a class="dropdown-item" href="#">Profile</a>
                                         <div th:if="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
                                             <a class="dropdown-item" href="/orderHistory">Order history</a>
