@@ -77,8 +77,6 @@ public class DispatchController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private EmployeeService employeeService;
 
     @Bean
     public SendMailService sendMailService() {
