@@ -5,9 +5,11 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.ProductDetails;
+import com.loctt.app.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.loctt.app.service.IProductService;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,9 @@ public class ProductController {
     //Map ProductDetails
     @Autowired
     private IProductService productService;
+
+    @Autowired
+    private IOrderService orderService;
 
     //Find Product Details By ID
     @GetMapping("/api/products")
@@ -43,4 +48,22 @@ public class ProductController {
 //            return ResponseEntity.ok().body(null);
 //        }
 //    }
+
+    @GetMapping("/api/topproducts")
+    public ResponseEntity<List<Object>> getTopTenProducts(@RequestParam(name = "month") int month,
+            @RequestParam(name = "year") int year) {
+        List<Object> topProducts = orderService.getTotalSumProductsByMonth(month, year);
+//        System.out.println("List topProducts xem lay dc ko hen: " + topProducts.size());
+//        for (int i = 0; i < topProducts.size(); i++) {
+//            try {
+//                System.out.println(topProducts.get(i).getClass().getField("ProductID"));
+//
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+        return ResponseEntity.ok().body(topProducts);
+        //return ResponseEntity.ok().body("");
+    }
+
 }
