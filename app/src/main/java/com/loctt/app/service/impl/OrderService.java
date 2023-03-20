@@ -215,4 +215,8 @@ public class OrderService implements IOrderService {
         
         return listOrder;
     }
+    @Override
+    public List<Object> getTotalSumProductsByMonth(int month, int year) {
+        return  primaryOrderRepository.getTotalSumProductsByMonth(month, year);
+    }
 }
