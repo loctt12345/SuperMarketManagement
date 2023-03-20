@@ -13,7 +13,6 @@ and open the template in the editor.
 
 }
 
-
 .badge:after {
     content: attr(value);
     font-size: 12px;

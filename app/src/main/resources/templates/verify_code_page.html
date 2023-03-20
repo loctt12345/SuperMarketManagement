@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-qFz4LQ4MXsLsTqTj7yi3X1S0n7iCzUwTy6Uxq6F1j6mWNf6JssMiGoiM9dMZj2Sy+Pmcd5w2NuzLnbNT5Z5O5A=="
+        crossorigin="anonymous" />
+
+
+    <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{/css/login_form.css}">
+    <link rel="stylesheet" href="css/hder-fter.css" />
+    <title>Email Verification</title>
+</head>
+
+<body>
+    <div class="text-center">
+        <div class="card text-center mx-auto mt-5" style="width: 300px;">
+            <div class="card-header h5 text-dark" style="background-color: #8EFFAB;">Verify Email</div>
+            <div class="card-body px-3">
+                <p class="card-text py-2">
+                    Enter the code that you received in your email
+                </p>
+                <form th:action="@{/registerMail}" method="post" class="p-0 border-0">
+                    <div class="form-outline">
+                        <input type="text" name="verification_code" class="form-control my-3" placeholder="Enter your code" />
+                    </div>
+                    <div class="d-flex justify-content-between
+                                 align-items-center mb-2">
+                        <div th:if="${ErrorVerification ne null}">
+                            <span th:text="${ErrorVerification}" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn w-100 h6 text-dark" style="background-color: #8EFFAB;">Confirm Email</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="footer :: footer"></footer>
+</body>
+
+</html>

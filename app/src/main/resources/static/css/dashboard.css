@@ -1,0 +1,37 @@
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+body {
+  font-family: "Open Sans", Arial;
+  background: #EDEDED;
+}
+main {
+  padding: 10px 20px 30px;
+  background: #FFF;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+p {
+  margin-top: 2rem;
+  font-size: 13px;
+}
+#bar-chart {
+  width: 500px;
+  height: 300px;
+  position: relative;
+}
+#line-chart {
+  width: 500px;
+  height: 300px;
+  position: relative;
+}
+#bar-chart::before, #line-chart::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 240px;
+  height: 30px;
+  left: 155px;
+  top: 254px;
+  background: #FAFAFA;
+  box-shadow: 1px 1px 0 0 #DDD;
+}

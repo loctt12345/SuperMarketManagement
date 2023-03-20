@@ -1,0 +1,93 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 15, 2023, 3:18:09 PM
+    Author     : loc12345
+*/
+
+/* FAB BTN */
+.fabCollapse {
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 999;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #6002EE;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 13px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  /* 6dp */
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.fabContent {
+  display: none;
+}
+
+.fabOpen {
+  background-color: #ffffff;
+  width: 300px;
+  height: 300px;
+  border-radius: 8px;
+  /* 7dp */
+  box-shadow: 0px 4px 5px -2px rgba(0, 0, 0, 0.2),
+    0px 7px 10px 1px rgba(0, 0, 0, 0.14), 0px 2px 16px 1px rgba(0, 0, 0, 0.12);
+  overflow-y: scroll;
+}
+
+.fabOpen svg {
+  display: none;
+}
+
+/* IMAGES */
+.img-responsive {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+/* KEYFRAMES */
+@media (min-width: 992px) {
+  .animate {
+    animation-duration: 0.2s;
+    -webkit-animation-duration: 0.2s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+  }
+}
+
+/* On screens that are 992px or less*/
+@media screen and (max-width: 992px) {
+  .modal {
+    width: 70%;
+  }
+
+  .fabOpen {
+    height: 60%;
+  }
+}
+
+/* On screens that are 600px or less*/
+@media screen and (max-width: 600px) {
+  .modal {
+    width: 90%;
+  }
+
+  .fabOpen {
+    right: 0;
+    height: 100%;
+    width: 100%;
+    bottom: 0;
+  }
+}

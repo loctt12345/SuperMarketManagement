@@ -73,7 +73,7 @@ public class CartController {
         if (cart != null && cart.getItems() != null) {
             return ResponseEntity.ok().body(cartService.showCart(cart, fromItemIndex, maxItemIndex));
         } else {
-            return ResponseEntity.ok().body(null);
+            return ResponseEntity.ok().body(new JSONObject());
         }
     }
 

@@ -28,4 +28,5 @@ public interface IProductRepository extends JpaRepository<ProductDetails, String
     ProductDetails save(ProductDetails product);
 
     List<ProductDetails> findByStatusNot(boolean status);
+    
 }
