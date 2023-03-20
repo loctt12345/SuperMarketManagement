@@ -21,7 +21,7 @@ public class MemberIDGenerator implements IdentifierGenerator {
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object obj)
     {
-        Query q = session.createQuery("SELECT m.userID FROM Customer m ORDER BY m.userID DESC"); 
+        Query q = session.createQuery("SELECT m.userID FROM User m ORDER BY m.userID DESC"); 
         q.setMaxResults(1);
         String number = String.format("%03d",  Integer.parseInt(
                 q.getSingleResult().toString().substring(3)) + 1);
