@@ -5,26 +5,37 @@
  */
 
 
-function onScanSuccess(qrCodeMessage) {
-    $('#scannerToAddProduct').modal('hide');
-    $('#myModal').modal('show');
-    document.getElementById('productID').value = qrCodeMessage;
-    html5QrcodeScanner.clear();
-    html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader",
-        {
-            formatsToSupport: [Html5QrcodeSupportedFormats.EAN_13],
-            fps: 10, qrbox: { width: 250, height: 200 }
-        });
-}
 
-var html5QrcodeScanner = new Html5QrcodeScanner(
+function onScanSuccess(qrCodeMessage) {
+    //    $('#scannerToAddProduct').modal('hide');
+    let myModal = new bootstrap.Modal(document.getElementById('myModal'));
+    // $('#myModal').modal('show');
+    myModal.show();
+    document.getElementById('scannerCloseBtn').click();
+    document.getElementById('productID').value = qrCodeMessage;
+    newScanner();
+}
+document.getElementById('addNewProductBtn').addEventListener('click',newScanner());
+// let closeAddModalBtn = document.getElementById('closeAddModalBtn');
+// closeAddModalBtn.addEventListener('click', function () {
+//     scannerToAddProduct.show();
+//     myModal.hide();
+// });
+// document.addEventListener('click', function (e) {
+//     if (!document.getElementById('scannerToAddProduct').contains(e.target)) {
+//         scannerToAddProduct.show();
+//         myModal.hide();
+//     }
+// })
+function newScanner() {
+    var html5QrcodeScanner = new Html5QrcodeScanner(
     "reader",
     {
         formatsToSupport: [Html5QrcodeSupportedFormats.EAN_13],
         fps: 10, qrbox: { width: 250, height: 200 }
     });
 html5QrcodeScanner.render(onScanSuccess);
+}
 
 let currentPage = 1;
 
@@ -43,7 +54,7 @@ function loadProduct() {
     // var numPage = Math.floor(items.length/6) + 1;
 }
 let items = document.getElementsByClassName('product-row');
-let numPage = Math.floor(items.length/6) + 1;
+let numPage = Math.floor(items.length / 6) + 1;
 
 // function changePage(event) {
 //     let pageLinkId = event.target.id;

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhân Viên</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/admin_navbar.css" />
+</head>
+
+<body>
+    <div class="page-wrapper chiller-theme toggled">
+
+        <header th:replace="admin_header :: header"></header>
+
+        <main class="page-content">
+            <div class="container-fluid">
+
+                <nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand"></a>
+                    <form class="form-inline" th:action="@{/admin/findEmployee}">
+                        <input class="search-button form-control mr-sm-2" type="text" placeholder="Tìm kiếm"
+                            aria-label="Tìm" th:value="${lastSearchValue}" name="searchValue">
+                        <input type="submit" class="btn btn-success my-2 my-sm-0" value="Tìm"></input>
+                        <select name="searchBy" class="btn ml-2">
+                            <option th:if="${lastSearchBy == 'id'}" th:value="id" selected="selected">Mã số</option>
+                            <option th:unless="${lastSearchBy == 'id'}" th:value="id">Mã số</option>
+                            <option th:if="${lastSearchBy == 'name'}" th:value="name" selected="selected">Tên</option>
+                            <option th:unless="${lastSearchBy == 'name'}" th:value="name">Tên</option>
+                        </select>
+
+                    </form>
+
+                    <button class="btn btn-success" data-toggle="modal" data-target="#addNewEmployee">Thêm nhân
+                        viên</button>
+
+                    <div class="modal fade" id="addNewEmployee">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Thêm nhân viên</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form th:action="@{/admin/add-new-employee}" method="POST">
+                                        <div class="form-group">
+                                            <label for="username">Username: </label>
+                                            <input class="form-control" type="text" name="username"
+                                                placeholder="Nhập Username" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="role">Vị trí: </label>
+                                            <select class="form-control" type="text" name="role">
+                                                <option selected disabled>Chọn vị trí</option>
+                                                <option th:value="admin">Quản lý</option>
+                                                <option th:value="shipper">Nhân viên giao hàng</option>
+                                                <option th:value="storage">Nhân viên kho</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Tên: </label>
+                                            <input class="form-control" type="text" name="name"
+                                                placeholder="Nhập Tên Nhân viên" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phonenNumber">SDT: </label>
+                                            <input class="form-control" type="number" name="phoneNumber"
+                                                placeholder="Nhập số điện thoại" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email: </label>
+                                            <input class="form-control" type="email" name="email"
+                                                placeholder="Nhập Email" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address">Địa chỉ: </label>
+                                            <input class="form-control" type="text" name="address"
+                                                placeholder="Nhập Địa chỉ" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="salary">Mức lương: </label>
+                                            <input class="form-control" type="number" name="salary"
+                                                placeholder="Mức lương">
+                                        </div>
+                                        <input type="hidden" name="lastSearchValue" th:value="${lastSearchValue}" />
+                                        <input type="hidden" name="lastSearchBy" th:value="${lastSearchBy}" />
+                                        <button class="btn btn-success" type="submit" name="">
+                                            Thêm
+                                        </button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Huỷ</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+
+                <br />
+                <div class="table-responsive-md" th:if="${EMPLOYEES_RESULT ne null}">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">Mã số nhân viên</th>
+                                <th class="col-md-1">Vị trí</th>
+                                <th class="col-md-1">Tên</th>
+                                <th class="col-md-1">SDT</th>
+                                <th class="col-md-1">Email</th>
+                                <th class="col-md-2">Địa chỉ</th>
+                                <th class="col-md-1">Mức lương</th>
+                                <th class="col-md-2"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr th:each="employee : ${EMPLOYEES_RESULT}"> <!-- add -->
+                                <td th:text="${employee.employeeID}"></td>
+                                <td th:text="${employee.role.roleName}"></td>
+                                <td th:text="${employee.fullName}"></td>
+                                <td th:text="${employee.phone}"></td>
+                                <td th:text="${employee.email}"></td>
+                                <td th:text="${employee.address}"></td>
+                                <td th:text="${employee.salary}"></td>
+                                <td>
+                                    <div class="modal fade" id="updateModal">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Cập nhật thông tin nhân viên</h4>
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form th:action="@{/admin/update-employee}" method="POST">
+                                                        <!-- add -->
+                                                        <div class="form-group">
+                                                            <label for="role">Vị trí: </label>
+                                                            <select class="form-control" type="text" name="role">
+                                                                <option selected disabled>Chọn vị trí</option>
+                                                                <option th:value="admin">Quản lý</option>
+                                                                <option th:value="shipper">Nhân viên
+                                                                    giao hàng
+                                                                </option>
+                                                                <option th:value="storage">Nhân viên kho
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="employeeSalary">Mức lương: </label>
+                                                            <input class="form-control" type="number"
+                                                                name="employeeSalary" th:value="${employee.salary}"
+                                                                placeholder="Nhập mức lương mới" />
+                                                        </div>
+                                                        <button class="btn btn-success" type="submit">
+                                                            Cập nhật
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-dismiss="modal">Cancel</button>
+                                                        <input type="hidden" name="lastSearchValue"
+                                                            th:value="${lastSearchValue}" />
+                                                        <input type="hidden" name="employeeID"
+                                                            th:value="${employee.employeeID}" />
+                                                        <input type="hidden" name="lastSearchBy"
+                                                            th:value="${lastSearchBy}" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3 my-3 dropdown">
+                                        <button type="button" class="btn btn-primary dropdown-toggle" id="dropDownButton"
+                                            data-toggle="dropdown" aria-expanded="false">
+                                            Action
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropDownButton">
+                                            <li class="dropdown-item">
+                                                <input type="submit" value="Cập nhật" data-toggle="modal"
+                                                    data-target="#updateModal" name="" style="all: unset; cursor: pointer;" />
+                                            </li>
+                                            <li class="dropdown-item">
+                                                <a style="all: unset; cursor: pointer; "
+                                                    th:href="@{/admin/reset-employee-password(id=${employee.employeeID},lastSearchValue=${lastSearchValue},lastSearchBy=${lastSearchBy})}">
+                                                    Cấp lại mật khẩu
+                                                </a>
+                                            </li>
+                                            <li class="dropdown-item"><a style="all: unset; cursor: pointer; "
+                                                    th:href="@{/admin/delete-employee(id=${employee.employeeID},lastSearchValue=${lastSearchValue},lastSearchBy=${lastSearchBy})}">
+                                                    Xoá
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <h6 class="text-success" th:if="${ResetPassEmp ne null && ResetPassEmp eq employee.employeeID}">Reset Successfully</h6>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-10 text-center text-danger" th:unless="${EMPLOYEES_RESULT ne null}">
+                    <h2 th:unless="${ErrorAction ne null}">No result found!</h2>
+                    <h2 th:if="${ErrorAction ne null}" th:text="${ErrorAction}"></h2>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/js/admin_navbar.js"></script>
+</body>
+
+</html>
