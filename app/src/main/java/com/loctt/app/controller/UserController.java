@@ -60,7 +60,6 @@ public class UserController {
         User user= ((UserDetailsPrincipal) authentication.getPrincipal())
                             .getUser();
         if (encoder.matches(oldPassword, user.getPassword())) {
-            System.out.println(newPassword);
             userService.updatePassword(user, newPassword);
         }
         else {

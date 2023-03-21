@@ -8,6 +8,7 @@ package com.loctt.app.controller;
 import com.loctt.app.model.Employee;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.IOrderService;
+import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.EmployeeService;
 import com.loctt.app.service.impl.OrderService;
 import com.loctt.app.service.impl.ProductService;
@@ -46,6 +47,8 @@ public class AdminController {
     private EmployeeService employeeService;
     @Autowired
     private IOrderService orderService;
+    @Autowired
+    private IProductRecommendationService productRecommendationService;
 
     @GetMapping("/findProduct")
     public String findProducts(@RequestParam(required = false) Map<String, String> allParams, Model model) {
@@ -317,4 +320,10 @@ public class AdminController {
         return "top_products";
     }
 
+    @GetMapping("/product_recommendation")
+    public String showProductRecommendation(Model model) {
+        model.addAttribute("LIST", productRecommendationService.getAll());
+        return "product_recommendation";
+    }
+    
 }
