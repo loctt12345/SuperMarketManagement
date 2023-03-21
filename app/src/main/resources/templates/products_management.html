@@ -129,7 +129,7 @@
                                         alt="product image"/></td>
                                 <td th:text="${product.name}"></td>
                                 <td th:text="${product.category}"></td>
-                                <td th:text="${product.sellprice}"></td>
+                                <td th:text="${#numbers.formatDecimal(product.sellprice,3,'POINT',0,'COMMA')}"></td>
                                 <td>
 
                                     

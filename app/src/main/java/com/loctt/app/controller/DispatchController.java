@@ -182,6 +182,7 @@ public class DispatchController {
     public String loginPage(
             @RequestParam(name = "error", required = false) boolean error,
             @RequestParam(name = "errorVerify", required = false) boolean errorVerify,
+            @RequestParam(name = "errorEmail", required = false) boolean errorGoogleEmail,
             Model model,
             Authentication authentication) {
         if (authentication != null
@@ -213,9 +214,11 @@ public class DispatchController {
         if (errorVerify) {
             model.addAttribute("ErrorAuthorizedMessages", "Cannot verify email");
         }
+        if(errorGoogleEmail){
+            model.addAttribute("ErrorAuthorizedMessages","Email is existed");
+        }
         return "login_form";
     }
-
     @GetMapping("/authorize")
     public String authorize(Authentication authentication) {
         if (authentication != null
