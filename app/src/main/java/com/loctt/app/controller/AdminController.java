@@ -7,13 +7,22 @@ package com.loctt.app.controller;
 
 import com.loctt.app.model.Employee;
 import com.loctt.app.model.ProductDetails;
+import com.loctt.app.service.IOrderService;
 import com.loctt.app.service.impl.EmployeeService;
+import com.loctt.app.service.impl.OrderService;
 import com.loctt.app.service.impl.ProductService;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+import javafx.util.Pair;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +44,8 @@ public class AdminController {
     private ProductService productService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private IOrderService orderService;
 
     @GetMapping("/findProduct")
     public String findProducts(@RequestParam(required = false) Map<String, String> allParams, Model model) {
@@ -253,9 +264,9 @@ public class AdminController {
         }
         String lastSearchValue = allParams.get("lastSearchValue");
         String lastSearchBy = allParams.get("lastSearchBy");
-         if (    lastSearchBy == null || lastSearchValue == null ||
-                lastSearchBy.isEmpty() ||
-                lastSearchValue.isEmpty()) {
+        if (lastSearchBy == null || lastSearchValue == null
+                || lastSearchBy.isEmpty()
+                || lastSearchValue.isEmpty()) {
             return "redirect:/admin-employee-page";
         } else {
             redirectAttributes.addAttribute("searchValue", lastSearchValue);
@@ -273,9 +284,9 @@ public class AdminController {
         }
         String lastSearchValue = allParams.get("lastSearchValue");
         String lastSearchBy = allParams.get("lastSearchBy");
-         if (   lastSearchBy == null || lastSearchValue == null ||
-                lastSearchBy.isEmpty() ||
-                lastSearchValue.isEmpty()) {
+        if (lastSearchBy == null || lastSearchValue == null
+                || lastSearchBy.isEmpty()
+                || lastSearchValue.isEmpty()) {
             return "redirect:/admin-employee-page";
         } else {
             redirectAttributes.addAttribute("searchValue", lastSearchValue);
@@ -283,4 +294,27 @@ public class AdminController {
             return "redirect:/admin/findEmployee";
         }
     }
+
+    @GetMapping("/topproducts")
+    public String getTopTenProducts(
+            @RequestParam(name = "month", required = false, defaultValue = "1") int month,
+            @RequestParam(name = "year", required = false, defaultValue = "2023") int year,
+            Model model)
+            throws Exception {
+        List<Object[]> topProducts = orderService.getTotalSumProductsByMonth(month, year);
+        List<Pair<ProductDetails, Integer>> map = new ArrayList<Pair<ProductDetails, Integer>>();
+        for (int i = 0; i < topProducts.size(); i++) {
+            String productID = topProducts.get(i)[0].toString();
+            ProductDetails product = productService.findByProductID(productID);
+            if (product != null) {
+                Pair<ProductDetails, Integer> pair = new Pair<>(product, (int) topProducts.get(i)[1]);
+                map.add(pair);
+            }
+        }
+        model.addAttribute("MAP", map);
+        model.addAttribute("MONTH", month);
+        model.addAttribute("YEAR", year);
+        return "top_products";
+    }
+
 }

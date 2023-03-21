@@ -35,6 +35,6 @@ public interface IPrimaryOrderRepository extends JpaRepository<PrimaryOrder, Str
             + "where MONTH(p.Time) = ?1 and YEAR(p.Time) = ?2 "
             + "Group by d.ProductID "
             + "Order by SUM(d.Sold_Number) DESC", nativeQuery = true)
-    List<Object> getTotalSumProductsByMonth(int month, int year);
+    List<Object[]> getTotalSumProductsByMonth(int month, int year);
 
 }
