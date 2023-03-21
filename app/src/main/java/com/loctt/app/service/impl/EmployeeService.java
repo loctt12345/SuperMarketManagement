@@ -111,5 +111,12 @@ public class EmployeeService implements IEmployeeService {
         employee.setPassword(encodedPassword);
         employeeRepository.save(employee);
     }
-
+    
+    @Override
+    public void updatePassword(Employee emp, String newPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String newPassEncode = encoder.encode(newPassword);
+        emp.setPassword(newPassEncode);
+        employeeRepository.save(emp);
+    }
 }

@@ -34,9 +34,7 @@ and open the template in the editor.
                                     <th class="col-md-2">Comment</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-
                                 <tr class="product-row" th:each="row : ${LIST}">
                                     <td th:text="${row.productID}"></td>
                                     <td th:text="${row.comment}"></td>

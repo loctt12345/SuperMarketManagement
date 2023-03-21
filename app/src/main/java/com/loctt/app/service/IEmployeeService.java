@@ -28,5 +28,6 @@ public interface IEmployeeService {
     
     public void updateEmployeeByAdmin(String employeeID, String employeeRole, float employeeSalary );
     public void deleteById(String employeeID);
+    public void updatePassword(Employee emp, String newPassword);
     public void resetPassword(String employeeID);
 }

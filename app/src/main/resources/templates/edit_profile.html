@@ -29,9 +29,11 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/user/profile">Thông tin cá nhân</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/user/show_change_password">Đổi mật khẩu</a>
-                    </li>
+                    <div th:unless="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/show_change_password">Đổi mật khẩu</a>
+                        </li>
+                    </div>
                 </ul>
                 <div class="profile align-items-center col-12 mt-3">
                     <h1>Hồ sơ cá nhân</h1>
