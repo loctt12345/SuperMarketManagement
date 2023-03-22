@@ -52,7 +52,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not verified!!!");
         }
         //Check valid employee
-        if (employee != null) {
+        if (employee != null && employee.isStatus()) {
             UserDetailsPrincipal user = new UserDetailsPrincipal(employee);
             String role = employee.getRole().getRoleName();
             user.setRole(role);

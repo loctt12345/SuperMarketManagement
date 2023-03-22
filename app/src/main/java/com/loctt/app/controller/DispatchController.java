@@ -4,7 +4,10 @@
  */
 package com.loctt.app.controller;
 
+import com.loctt.app.model.AuthenticationProvider;
 import com.loctt.app.model.CartObject;
+import com.loctt.app.model.CustomOAuth2User;
+import com.loctt.app.model.Employee;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.model.ProductRecommendation;
 import com.loctt.app.model.User;
@@ -65,6 +68,8 @@ public class DispatchController {
     @Autowired
     private ProductService productService;
     @Autowired
+    private EmployeeService employeeService;
+    @Autowired
     private OrderDetailsService orderDetailsService;
 
     @Autowired
@@ -74,8 +79,6 @@ public class DispatchController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private EmployeeService employeeService;
 
     @Bean
     public SendMailService sendMailService() {
@@ -107,7 +110,16 @@ public class DispatchController {
         model.addAttribute("PRODUCTS_RESULT", listProduct);
         return "products_management";
     }
-
+    @GetMapping("/admin-employee-page")
+    public String adminStaffPage(Model model, HttpSession session){
+        List<Employee> listEmployee = employeeService.findAllForSearch();
+        if(session.getAttribute("ResetPassEmp") != null){
+            model.addAttribute("ResetPassEmp", session.getAttribute("ResetPassEmp"));
+            session.removeAttribute("ResetPassEmp");
+        }
+        model.addAttribute("EMPLOYEES_RESULT", listEmployee);
+        return "employee_management";
+    }
     @GetMapping("/product-detail")
     public String showProduct(Model model, @RequestParam(name = "productID", required = false) String productID) {
         model.addAttribute("product_id", productID);
@@ -171,6 +183,7 @@ public class DispatchController {
     public String loginPage(
             @RequestParam(name = "error", required = false) boolean error,
             @RequestParam(name = "errorVerify", required = false) boolean errorVerify,
+            @RequestParam(name = "errorEmail", required = false) boolean errorGoogleEmail,
             Model model,
             Authentication authentication) {
         if (authentication != null
@@ -202,9 +215,11 @@ public class DispatchController {
         if (errorVerify) {
             model.addAttribute("ErrorAuthorizedMessages", "Cannot verify email");
         }
+        if(errorGoogleEmail){
+            model.addAttribute("ErrorAuthorizedMessages","Email is existed");
+        }
         return "login_form";
     }
-
     @GetMapping("/authorize")
     public String authorize(Authentication authentication) {
         if (authentication != null
@@ -329,7 +344,8 @@ public class DispatchController {
             model.addAttribute("ErrorUsername", "Please enter valid username");
             return "forgot_password_form";
         }
-        if (employeeService.findByUsername(username) != null) {
+        if (employeeService.findByUsername(username) != null
+                || userService.findByUsername(username).getAuthenticationProvider() == AuthenticationProvider.GOOGLE) {
             model.addAttribute("ErrorUsername", "Your account don't have permission to reset password");
             return "forgot_password_form";
         }
@@ -382,6 +398,7 @@ public class DispatchController {
         userService.updatePassword(customer, newPassword);
         return "redirect:/login";
     }
+    
 //    @GetMapping("/crawl") 
 //    public String crawl() {
 //        List<ProductDetails> productDetails = this.productService.findByNameContaining("");

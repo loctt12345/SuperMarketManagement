@@ -25,23 +25,37 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class OAuth2SuccessLoginHandler extends SimpleUrlAuthenticationSuccessHandler {
+
     @Autowired
     private UserService userService;
+
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, 
+    public void onAuthenticationSuccess(HttpServletRequest request,
             HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
         String userEmail = oauthUser.getEmail();
         User customer = this.userService.findByUsername(userEmail);
-        if(customer == null){
+        User userForCheckEmail = this.userService.findByEmail(userEmail);
+        if (userForCheckEmail != null && 
+                userForCheckEmail.getAuthenticationProvider() == null) {
+            response.sendRedirect("/logout?errorEmail=true");
+        }
+        
+        if (customer == null && userForCheckEmail == null) {
+            //check valid email
             //if haven't register yet-> register
-            User newCustomer = new User(oauthUser.getEmail(), 
-                    oauthUser.getFullName(), userEmail, AuthenticationProvider.GOOGLE);
+            User newCustomer = new User(oauthUser.getEmail(),
+                    oauthUser.getName(), userEmail, AuthenticationProvider.GOOGLE);
             newCustomer.setStatus(true);
             userService.createNewUser(newCustomer);
+            response.sendRedirect("/");
+            return;
         }
-        response.sendRedirect("/");
+        
+        if (userForCheckEmail.getAuthenticationProvider() == AuthenticationProvider.GOOGLE) {
+            response.sendRedirect("/");
+        }
     }
 
 }

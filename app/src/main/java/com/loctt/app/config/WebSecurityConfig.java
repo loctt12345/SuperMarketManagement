@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -26,9 +25,10 @@ public class WebSecurityConfig {
     private CustomOAuth2UserService oAuth2UserService;
     @Autowired
     private OAuth2SuccessLoginHandler oAuth2SuccessLoginHandler;
+
     @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler(){
-        return new CustomAuthenticationFailureHandler();
+    public OAuth2SuccessLogoutHandler oAuth2SuccessLogoutHandler() {
+        return new OAuth2SuccessLogoutHandler();
     }
 
     @Bean
@@ -43,15 +43,14 @@ public class WebSecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
 
         http
                 .oauth2Login()
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/")
                 .userInfoEndpoint()
                 .userService(oAuth2UserService)
                 .and()
@@ -59,14 +58,14 @@ public class WebSecurityConfig {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
+                .logoutSuccessHandler(oAuth2SuccessLogoutHandler())
                 .deleteCookies("JSESSIONID");
 
         http.formLogin()
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-//                .failureUrl("/login?error=true")
-                .failureHandler(authenticationFailureHandler()).permitAll()
+                .failureUrl("/login?error=true")
                 .defaultSuccessUrl("/authorize", true);
 
         http.logout();
@@ -75,20 +74,20 @@ public class WebSecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers("/login", "/", "/js/**", "/css/**",
-                        "/product-detail","/api/products/**", 
-                        "/showBill", "/register", "/addUser","/registerMail","/verifyMail").permitAll()
-                .antMatchers("/forgot_password/**").anonymous()
+                        "/product-detail", "/api/products/**",
+                        "/showBill").permitAll()
+                .antMatchers("/register", "/addUser", "/forgot_password/**").anonymous()
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
-                .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard").hasRole("ADMIN")
+                .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard", "/admin-employee-page").hasRole("ADMIN")
                 .antMatchers("/shipStaff", "/shipper_summary_order",
                         "api/order/**").hasRole("DELIVERY_MAN")
                 .antMatchers("/repoStaff", "api/order/**").hasRole("STORAGE_MAN")
                 .anyRequest()
                 .authenticated();
-        
+
         http.exceptionHandling().accessDeniedPage("/accessDenied");
-        
+
         http.csrf().disable();
         return http.build();
     }

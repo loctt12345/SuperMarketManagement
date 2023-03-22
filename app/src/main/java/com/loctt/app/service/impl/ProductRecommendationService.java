@@ -10,6 +10,7 @@ import com.loctt.app.service.IProductRecommendationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.loctt.app.repository.IProductRecommendationRepository;
+import java.util.List;
 
 /**
  *
@@ -22,5 +23,9 @@ public class ProductRecommendationService implements IProductRecommendationServi
     
     public void createNewRecommendation(ProductRecommendation productRecommendation) {
         productRecommendationRepository.save(productRecommendation);
+    }
+    
+    public List<ProductRecommendation> getAll() {
+        return productRecommendationRepository.findAll();
     }
 }

@@ -5,9 +5,13 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.ProductDetails;
+import com.loctt.app.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.loctt.app.service.IProductService;
+import java.lang.reflect.Field;
+import java.util.Date;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +26,9 @@ public class ProductController {
     //Map ProductDetails
     @Autowired
     private IProductService productService;
+
+    @Autowired
+    private IOrderService orderService;
 
     //Find Product Details By ID
     @GetMapping("/api/products")
@@ -43,4 +50,6 @@ public class ProductController {
 //            return ResponseEntity.ok().body(null);
 //        }
 //    }
+
+    
 }

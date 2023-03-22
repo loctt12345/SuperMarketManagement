@@ -52,7 +52,9 @@ function drawCharts(barCreated) {
 
     var barChartByMonth = new google.visualization.ColumnChart(document.getElementById('bar-chart-by-month'));
     //Get the first Revenue Month
-    getRevenueOfMonth(1, 2022);
+    getRevenueOfMonth(new Date().getMonth() + 1, new Date().getFullYear());
+    document.getElementById('ddlViewByMonthOfYear').value = new Date().getMonth() + 1;
+    document.getElementById('ddlViewByYearOfMonth').value = new Date().getFullYear();
 
     function getRevenueOfMonth(month, yearOfMonth) {
         fetch("api/dashboard/getMonthRevenue", {
@@ -80,7 +82,8 @@ function drawCharts(barCreated) {
 
     var barChartByYear = new google.visualization.ColumnChart(document.getElementById('bar-chart-by-year'));
 
-    getRevenueOfYear(2022);
+    getRevenueOfYear(new Date().getFullYear());
+    document.getElementById('ddlViewByYear').value = new Date().getFullYear();
 
     function getRevenueOfYear(year) {
         fetch("api/dashboard/getYearRevenue", {

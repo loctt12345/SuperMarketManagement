@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IProductRecommendationService {
     public void createNewRecommendation(ProductRecommendation productRecommendation);
-    //public List<ProductRecommendation> getAll();    
+    public List<ProductRecommendation> getAll();    
     //public void clear(String commentId);
     //public void clearAll();
 }

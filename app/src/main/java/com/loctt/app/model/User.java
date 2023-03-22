@@ -21,13 +21,13 @@ import org.hibernate.annotations.GenericGenerator;
  * @author ADMIN
  */
 @Entity
-@Table (name = "Customer")
-public class User implements java.io.Serializable{
+@Table(name = "Customer")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(generator = "user-generator")
-    @GenericGenerator(name = "user-generator", 
-      strategy = "com.loctt.app.model.MemberIDGenerator")
+    @GenericGenerator(name = "user-generator",
+            strategy = "com.loctt.app.model.MemberIDGenerator")
     @Column(name = "UserID")
 
     private String userID;
@@ -39,18 +39,18 @@ public class User implements java.io.Serializable{
     private String fullName;
     @Column(name = "Phone")
     private String phone;
-    @Column(name = "Email")
+    @Column(name = "Email", unique = true)
     private String email;
     @Column(name = "Address")
     private String address;
     @Enumerated(EnumType.STRING)
     @Column(name = "auth_provider")
     private AuthenticationProvider authenticationProvider;
-    @Column (name = "reset_password_token")
+    @Column(name = "reset_password_token")
     private String resetPasswordToken;
-    @Column (name = "verification_code")
+    @Column(name = "verification_code")
     private String verificationCode;
-    @Column (name = "Status")
+    @Column(name = "Status")
     private boolean status;
 
     public boolean getStatus() {
@@ -72,6 +72,7 @@ public class User implements java.io.Serializable{
         this.verificationCode = verificationCode;
         this.status = status;
     }
+
     public String getVerificationCode() {
         return verificationCode;
     }
@@ -79,7 +80,7 @@ public class User implements java.io.Serializable{
     public void setVerificationCode(String verificationCode) {
         this.verificationCode = verificationCode;
     }
-    
+
     public String getResetPasswordToken() {
         return resetPasswordToken;
     }
@@ -87,6 +88,7 @@ public class User implements java.io.Serializable{
     public void setResetPasswordToken(String resetPasswordToken) {
         this.resetPasswordToken = resetPasswordToken;
     }
+
     public User() {
     }
 
@@ -100,9 +102,7 @@ public class User implements java.io.Serializable{
         this.email = email;
         this.address = address;
     }
-    
-    
-    
+
     public User(String username, String fullName, String email, AuthenticationProvider authenticationProvider) {
         this.username = username;
         this.fullName = fullName;
@@ -110,7 +110,6 @@ public class User implements java.io.Serializable{
         this.authenticationProvider = authenticationProvider;
     }
 
-    
     /**
      * @return the userID
      */
