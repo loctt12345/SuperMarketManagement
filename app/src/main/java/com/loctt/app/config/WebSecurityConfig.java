@@ -25,7 +25,10 @@ public class WebSecurityConfig {
     private CustomOAuth2UserService oAuth2UserService;
     @Autowired
     private OAuth2SuccessLoginHandler oAuth2SuccessLoginHandler;
-
+    @Bean
+    public OAuth2SuccessLogoutHandler oAuth2SuccessLogoutHandler(){
+        return new OAuth2SuccessLogoutHandler();
+    }
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
@@ -43,11 +46,10 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-
         http
                 .oauth2Login()
                 .loginPage("/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/")
                 .userInfoEndpoint()
                 .userService(oAuth2UserService)
                 .and()
@@ -55,6 +57,7 @@ public class WebSecurityConfig {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
+                .logoutSuccessHandler(oAuth2SuccessLogoutHandler())
                 .deleteCookies("JSESSIONID");
 
         http.formLogin()
@@ -70,19 +73,19 @@ public class WebSecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers("/login", "/", "/js/**", "/css/**",
-                        "/product-detail","/api/products/**", 
+                        "/product-detail", "/api/products/**",
                         "/showBill", "/register", "/addUser", "/forgot_password").permitAll()
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
-                .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard","/admin-employee-page").hasRole("ADMIN")
+                .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard", "/admin-employee-page").hasRole("ADMIN")
                 .antMatchers("/shipStaff", "/shipper_summary_order",
                         "api/order/**").hasRole("DELIVERY_MAN")
                 .antMatchers("/repoStaff", "api/order/**").hasRole("STORAGE_MAN")
                 .anyRequest()
                 .authenticated();
-        
+
         http.exceptionHandling().accessDeniedPage("/accessDenied");
-        
+
         http.csrf().disable();
         return http.build();
     }

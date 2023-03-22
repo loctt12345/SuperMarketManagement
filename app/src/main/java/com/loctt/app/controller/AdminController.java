@@ -235,8 +235,13 @@ public class AdminController {
     @PostMapping("/update-employee")
     public String updateEmployee(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
         String employeeRole = allParams.get("role");
-        String employeeSalaryAsString = allParams.get("employeeSalary");
+        String employeeSalaryAsString = allParams.get("salary");
         String employeeID = allParams.get("employeeID");
+        String employeeName = allParams.get("name");
+        String employeePhone = allParams.get("phoneNumber");
+        String employeeMail = allParams.get("email");
+        String employeeAddress = allParams.get("address");
+        String username = allParams.get("username");
         float employeeSalary = 0;
         if (employeeSalaryAsString.trim().isEmpty()) {
             employeeSalary = employeeService.findByEmployeeID(employeeID).getSalary();
