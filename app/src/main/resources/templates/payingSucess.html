@@ -24,7 +24,7 @@
                     <div class="card">
                         <div class="row d-flex justify-content-between px-3 top">
                             <div class="d-flex">
-                                <h4>ORDER <span id="orderidText" th:text="${order.orderID}"></span></h4>
+                                <h4>Đơn hàng <span id="orderidText" th:text="${order.orderID}"></span></h4>
                             </div>
                             <div class="d-flex flex-column text-sm-right">
                                 <p class="mb-0"><span th:text="${#dates.format(order.time, 'dd/MMM/yyyy')}"></span></p>
@@ -55,7 +55,7 @@
                 <div class="row mt-5 ml-3">
                     <div class="col-md-12">
                         <div class="order-list">
-                            <h3 class="font-weight-bold ml-1">Order List</h3>
+                            <h3 class="font-weight-bold ml-1">Danh sách đặt hàng</h3>
                         </div>
                         <div class="order-demo">
                             <div th:each="product, stats : ${PRODUCTS_IN_ORDER}">
@@ -63,16 +63,16 @@
                                     <img th:src="${product.key.imageLink}" alt="Product Image">
                                     <div class="order-info">
                                         <h4 class="font-weight-bold pb-2" th:text="${product.key.name}"></h4>
-                                        <p th:text="'Quantity: ' + ${product.value}"></p>
+                                        <p th:text="'Số lượng: ' + ${product.value}"></p>
                                         <p
-                                            th:text="'Price: ' + ${#numbers.formatDecimal(product.key.sellprice,3,'POINT',0,'COMMA')} + ₫">
+                                            th:text="'Giá: ' + ${#numbers.formatDecimal(product.key.sellprice,3,'POINT',0,'COMMA')} + ₫">
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="order-total">
                                 <div class="paying-method">
-                                    <p th:text="'Total: ' +${#numbers.formatDecimal(TotalOfOrder,3,'POINT',0,'COMMA')} + ₫">
+                                    <p th:text="'Tổng: ' +${#numbers.formatDecimal(TotalOfOrder,3,'POINT',0,'COMMA')} + ₫">
                                     </p>
                                     <!-- <p>Method: #</p> -->
                                 </div>

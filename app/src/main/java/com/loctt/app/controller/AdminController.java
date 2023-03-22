@@ -88,12 +88,12 @@ public class AdminController {
         String productImageLink = allParams.get("image");
         String sellPriceAsString = allParams.get("sellPrice");
         if (productService.findByProductID(productID) != null) {
-            model.addAttribute("ErrorAction", "Product already have in storage");
+            model.addAttribute("ErrorAction", "Sản phẩm đã có trong kho");
             return "products_management";
         }
         for (String param : allParams.keySet()) {
             if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
-                model.addAttribute("ErrorAction", "Please enter valid values in fields");
+                model.addAttribute("ErrorAction", "Vui lòng nhập các giá trị hợp lệ vào các trường");
                 return "products_management";
             }
         }
@@ -210,13 +210,13 @@ public class AdminController {
         String employeeSalaryAsString = allParams.get("salary");
         String username = allParams.get("username");
         if (employeeService.findByUsername(username) != null) {
-            model.addAttribute("ErrorAction", "Username is existed");
+            model.addAttribute("ErrorAction", "Tên người dùng đã tồn tại");
             return "employee_management";
         }
         for (String param : allParams.keySet()) {
             if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
                 System.out.println(param);
-                model.addAttribute("ErrorAction", "Please enter valid values in fields");
+                model.addAttribute("ErrorAction", "Vui lòng nhập các giá trị hợp lệ vào các trường");
                 return "employee_management";
             }
         }

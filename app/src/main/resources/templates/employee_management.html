@@ -197,7 +197,7 @@
                                         <div class="ml-3 my-3 dropdown">
                                             <button type="button" class="btn btn-primary dropdown-toggle" id="dropDownButton"
                                                     data-toggle="dropdown" aria-expanded="false">
-                                                Action
+                                                Hành động
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu" aria-labelledby="dropDownButton">
@@ -218,14 +218,14 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <h6 class="text-success" th:if="${ResetPassEmp ne null && ResetPassEmp eq employee.employeeID}">Reset Successfully</h6>
+                                        <h6 class="text-success" th:if="${ResetPassEmp ne null && ResetPassEmp eq employee.employeeID}">Đặt lại thành công</h6>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-10 text-center text-danger" th:unless="${EMPLOYEES_RESULT ne null}">
-                        <h2 th:unless="${ErrorAction ne null}">No result found!</h2>
+                        <h2 th:unless="${ErrorAction ne null}">Không tìm thấy kết quả!</h2>
                         <h2 th:if="${ErrorAction ne null}" th:text="${ErrorAction}"></h2>
                     </div>
                 </div>

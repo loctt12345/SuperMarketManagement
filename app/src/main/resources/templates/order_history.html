@@ -8,7 +8,7 @@ and open the template in the editor.
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <head>
-        <title>Home page</title>
+        <title>Lịch sử đơn hàng</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
@@ -25,16 +25,16 @@ and open the template in the editor.
             <header th:replace="header :: header"></header>
             <div class="content mt-3">
                 <div class="row justify-content-center mb-3">
-                    <h2>Order history</h2>
+                    <h2>Lịch sử đơn hàng</h2>
                 </div>
                 <div class="table-responsive-md">
                     <table class="table table-borderless">
                         <thead>
                             <tr class="bg-primary">
                                 <th>STT</th>
-                                <th>Order date</th>
-                                <th>Total</th>
-                                <th>Status</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Tổng</th>
+                                <th>Trạng thái</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -48,7 +48,7 @@ and open the template in the editor.
                                 <td th:text="${order.status}"></td>
                                 <td>
                                     <a th:href="@{/paying/orderProgress(orderID=${order.orderID})}">
-                                        View details...
+                                        Xem chi tiết...
                                     </a>
                                 </td>
                             </tr>

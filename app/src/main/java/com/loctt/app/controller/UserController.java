@@ -82,7 +82,7 @@ public class UserController {
                 if (encoder.matches(oldPassword, user.getPassword())) {
                     userService.updatePassword(user, newPassword);
                 } else {
-                    model.addAttribute("MSG", "Wrong password!!!");
+                    model.addAttribute("MSG", "Sai mật khẩu!!!");
                     return "change_password";
                 }
             } else {
@@ -91,7 +91,7 @@ public class UserController {
                 if (encoder.matches(oldPassword, emp.getPassword())) {
                     employeeService.updatePassword(emp, newPassword);
                 } else {
-                    model.addAttribute("MSG", "Wrong password!!!");
+                    model.addAttribute("MSG", "Sai mật khẩu!!!");
                     return "change_password";
                 }
             }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Home page</title>
+        <title>Trang chủ</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
@@ -28,13 +28,13 @@
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            Please confirm that you have finished packing your package?
+                            Vui lòng xác nhận rằng bạn đã đóng gói xong kiện hàng của mình chưa?
                         </div>
 
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success"  data-dismiss="modal" id="confirm">Confirm</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-success"  data-dismiss="modal" id="confirm">Xác nhận</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
                         </div>
 
                     </div>
@@ -47,13 +47,13 @@
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">Successfully</h4>
+                            <h4 class="modal-title">Thành công</h4>
                             <button type="button" class="close" data-dismiss="modal">×</button>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            Your package is updated to shipping status!!!!
+                            Gói hàng của bạn được cập nhật trạng thái vận chuyển!!!!
                         </div>
 
                         <!-- Modal footer -->
@@ -80,7 +80,8 @@
 
 
         </div>
-        <script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>
+        <!--<script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>-->
+        <script src="./js/html5-qrcode.js"></script>
         <script src="./js/qrcode_order.js"></script>
         <script src="./js/preventBackButton.js"></script>
     </body>

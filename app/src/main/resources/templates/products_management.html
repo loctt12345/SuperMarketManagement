@@ -27,27 +27,26 @@
                 <nav class="navbar navbar-light mb-3">
                     <a class="navbar-brand"></a>
                     <form class="form-inline" th:action="@{/admin/findProduct}">
-                        <input class="search-button form-control mr-sm-2" type="text" placeholder="Search"
+                        <input class="search-button form-control mr-sm-2" type="text" placeholder="Tìm kiếm"
                             aria-label="Search" th:value="${searchValue}" name="searchValue"/>
                         <input type="submit" class="btn btn-success mr-4" value="Search"/>
                         <select name="searchBy" class="btn bg-light border">
-                            <option th:if="${searchBy == 'id'}" th:value="id" selected="selected">ProductID</option>
-                            <option th:unless="${searchBy == 'id'}" th:value="id">ProductID</option>
-                            <option th:if="${searchBy == 'category'}" th:value="category" selected="selected">Category
+                            <option th:if="${searchBy == 'id'}" th:value="id" selected="selected">ID Sản phẩm</option>
+                            <option th:unless="${searchBy == 'id'}" th:value="id">ID Sản phẩm</option>
+                            <option th:if="${searchBy == 'category'}" th:value="category" selected="selected">Loại
                             </option>
-                            <option th:unless="${searchBy == 'category'}" th:value="category">Category</option>
-                            <option th:if="${searchBy == 'name'}" th:value="name" selected="selected">Name</option>
-                            <option th:unless="${searchBy == 'name'}" th:value="name">Name</option>
+                            <option th:unless="${searchBy == 'category'}" th:value="category">Loại</option>
+                            <option th:if="${searchBy == 'name'}" th:value="name" selected="selected">Tên</option>
+                            <option th:unless="${searchBy == 'name'}" th:value="name">Tên</option>
                         </select>
                     </form>
 
-                    <button class="btn btn-success" data-toggle="modal" data-target="#scannerToAddProduct" id="addNewProductBtn">Add new
-                        item</button>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#scannerToAddProduct" id="addNewProductBtn">Thêm sản phẩm mới</button>
                     <div class="modal fade" id="scannerToAddProduct">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Add new item</h4>
+                                    <h4 class="modal-title">Thêm sản phẩm mới</h4>
                                     <button type="button" id="scannerCloseBtn" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
@@ -62,46 +61,46 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Add new item</h4>
+                                    <h4 class="modal-title">Thêm sản phẩm mới</h4>
                                     <button type="button" id="closeAddModalBtn" class="close" data-dismiss="modal">&times;</button>
                                 </div>
                                 <div class="modal-body">
                                     <form th:action="@{/admin/add-new-product}" method="POST">
                                         <div class="form-group">
-                                            <label for="id">ProductID: </label>
+                                            <label for="id">ID Sản phẩm: </label>
                                             <input class="form-control" id="productID" type="text" name="id"
-                                                placeholder="Enter Product ID" />
+                                                placeholder="Nhập ID Sản phẩm" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="name">Product Name: </label>
+                                            <label for="name">Tên sản phẩm: </label>
                                             <input class="form-control" type="text" name="name"
-                                                placeholder="Enter Product Name" />
+                                                placeholder="Nhập tên sản phẩm" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Description: </label>
+                                            <label for="description">Mô tả: </label>
                                             <input class="form-control" type="text" name="description"
-                                                placeholder="Enter Product Description" />
+                                                placeholder="Nhập mô tả" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="category">Category: </label>
+                                            <label for="category">Loại: </label>
                                             <input class="form-control" type="text" name="category"
-                                                placeholder="Enter Product Category" />
+                                                placeholder="Nhập loại sản phẩm" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="sellPrice">Price: </label>
+                                            <label for="sellPrice">Giá: </label>
                                             <input class="form-control" type="number" name="sellPrice"
-                                                placeholder="Enter Sell Price" />
+                                                placeholder="Nhập giá" />
                                         </div>
                                         <div class="form-group">
-                                            <label for="image">Add Image: </label>
+                                            <label for="image">Thêm ảnh: </label>
                                             <input class="form-control" type="text" name="image"
-                                                placeholder="Input Link Image">
+                                                placeholder="Nhập đường dẫn ảnh">
                                         </div>
                                         <button class="btn btn-success" type="submit" name="">
-                                            Add
+                                            Thêm
                                         </button>
                                         <button type="button" class="btn btn-danger"
-                                            data-dismiss="modal">Cancel</button>
+                                            data-dismiss="modal">Hủy bỏ</button>
                                     </form>
                                 </div>
                             </div>
@@ -113,11 +112,11 @@
                         <thead>
                             <tr class="bg-light">
                                 <th class="col-md-1">ID</th>
-                                <th class="col-md-2">Image</th>
-                                <th class="col-md-5">Name</th>
-                                <th class="col-md-2">Category</th>
-                                <th class="col-md-1">Price</th>
-                                <th class="col-md-1">Action</th>
+                                <th class="col-md-2">Ảnh</th>
+                                <th class="col-md-5">Tên</th>
+                                <th class="col-md-2">Loại</th>
+                                <th class="col-md-1">Giá</th>
+                                <th class="col-md-1">Hành động</th>
                             </tr>
                         </thead>
 
@@ -137,29 +136,29 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Update Product</h4>
+                                                    <h4 class="modal-title">Cập nhật sản phẩm</h4>
                                                     <button type="button" class="close"
                                                         data-dismiss="modal">&times;</button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form th:action="@{/admin/update-product}" method="POST">
                                                         <div class="form-group">
-                                                            <label for="productName">Product Name: </label>
+                                                            <label for="productName">Tên sản phẩm: </label>
                                                             <input class="form-control" type="text" name="productName"
                                                                 th:value="${product.name}"
-                                                                placeholder="Enter Product Name" />
+                                                                placeholder="Nhập tên sản phẩm" />
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="productSellPrice">Price: </label>
+                                                            <label for="productSellPrice">Giá: </label>
                                                             <input class="form-control" type="number" name="sellPrice"
                                                                 th:value="${product.sellprice}"
-                                                                placeholder="Enter Price" />
+                                                                placeholder="Nhập giá" />
                                                         </div>
                                                         <button class="btn btn-success pr-3" type="submit">
-                                                            Update
+                                                            Cập nhật
                                                         </button>
                                                         <button type="button" class="btn btn-danger"
-                                                            data-dismiss="modal">Cancel</button>
+                                                            data-dismiss="modal">Hủy bỏ</button>
                                                         <input type="hidden" name="lastSearchValue"
                                                             th:value="${searchValue}" />
                                                         <input type="hidden" name="productID"
@@ -174,18 +173,18 @@
                                     <div class="ml-3 my-3 dropdown">
                                         <button type="button" class="btn btn-primary dropdown-toggle"
                                             id="dropDownButton" data-toggle="dropdown" aria-expanded="false">
-                                            Action
+                                            Hành động
                                             <span class="caret"></span>
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropDownButton">
                                             <li class="dropdown-item">
-                                                <input type="submit" value="Update" style="all: unset; cursor: pointer;"
+                                                <input type="submit" value="Cập nhật" style="all: unset; cursor: pointer;"
                                                 data-toggle="modal" data-target="#myModal1" name="" />
                                             </li>
                                             <li class="dropdown-item">
                                                 <a style="all: unset; cursor: pointer;"
                                                     th:href="@{/admin/delete-product(id=${product.productID},lastSearchValue=${searchValue},lastSearchBy=${searchBy})}">
-                                                    Delete
+                                                    Xóa
                                                 </a>
                                             </li>
                                         </ul>
@@ -201,13 +200,14 @@
                     </nav>
                 </div>
                 <div class="col-md-10 text-center text-danger" th:unless="${PRODUCTS_RESULT ne null}">
-                    <h2 th:unless="${ErrorAction ne null}">No result found!</h2>
+                    <h2 th:unless="${ErrorAction ne null}">Không tìm thấy kết quả!</h2>
                     <h2 th:if="${ErrorAction ne null}" th:text="${ErrorAction}"></h2>
                 </div>
             </div>
         </main>
     </div>
-    <script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>
+    <!--<script src="https://unpkg.com/html5-qrcode@2.3.4" type="text/javascript"></script>-->
+    <script src="./js/html5-qrcode.js"></script>
     <script type="text/javascript" th:src="@{/js/admin.js}"></script>
     <script th:src="@{/js/pagination.js}"></script>
     <script src="/js/admin_navbar.js"></script>

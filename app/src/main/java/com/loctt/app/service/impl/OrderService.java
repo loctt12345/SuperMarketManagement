@@ -140,7 +140,7 @@ public class OrderService implements IOrderService {
             primaryOrderRepository.save(order);
 
         } catch (NoSuchElementException ex) {
-            System.out.println("No " + orderId + " exist!!!!");
+            System.out.println("Không " + orderId + " tồn tại!!!!");
 
         }
     }
@@ -151,7 +151,7 @@ public class OrderService implements IOrderService {
             return primaryOrderRepository.findById(orderId).get();
 
         } catch (NoSuchElementException ex) {
-            System.out.println("No " + orderId + " exist!!!!");
+            System.out.println("Không " + orderId + " tồn tại!!!!");
 
         }
         return null;
@@ -179,7 +179,7 @@ public class OrderService implements IOrderService {
                                 .parse(year + "-" + month + "-" + lastDay)));
             }
         } catch (Exception e) {
-            System.out.println("error");
+            System.out.println("lỗi");
         }
         return profitWeekly;
     }
@@ -196,7 +196,7 @@ public class OrderService implements IOrderService {
                                 .parse(year + "-" + i + "-" + 20)));
             }
         } catch (ParseException e) {
-            System.out.println("error");
+            System.out.println("lỗi");
         }
         return profitMonthly;
     }

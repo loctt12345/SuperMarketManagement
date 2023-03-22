@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <head>
-        <title>Home page</title>
+        <title>Trang chủ</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
@@ -40,32 +40,32 @@
                     <ul class="navbar-nav mr-auto">
                         <div sec:authorize="isAnonymous()">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/">Trang chủ<span class="sr-only">(current)</span></a>
                             </li>
                         </div>
                         <div sec:authorize="hasRole('ROLE_USER')">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/">Trang chủ<span class="sr-only">(current)</span></a>
                             </li>
                         </div>
                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/admin-page">Home<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/admin-page">Trang chủ<span class="sr-only">(current)</span></a>
                             </li>
                         </div>
                         <div sec:authorize="hasRole('ROLE_DELIVERY_MAN')">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/shipStaff">Home<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/shipStaff">Trang chủ<span class="sr-only">(current)</span></a>
                             </li>
                         </div>
                         <div sec:authorize="hasRole('ROLE_STORAGE_MAN')">
                             <li class="nav-item active">
-                                <a class="nav-link" href="/repoStaff">Home<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="/repoStaff">Trang chủ<span class="sr-only">(current)</span></a>
                             </li>
                         </div>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About us</a>
+                            <a class="nav-link" href="#">Về chúng tôi</a>
                         </li>
                     </ul>
                 </div>
@@ -82,7 +82,7 @@
                         <div sec:authorize="isAnonymous()">
                             <li class="nav-item">
                                 <button type="button" class="btn btn-info btn-light ml-3 mr-3">
-                                    <a id="loginLink" th:href="@{/login}">Login</a>
+                                    <a id="loginLink" th:href="@{/login}">Đăng nhập</a>
                                 </button>
                             </li>
                         </div>
@@ -112,17 +112,17 @@
 
                                         </div>
                                         
-                                        <a class="dropdown-item" href="/user/profile">Profile</a>
+                                        <a class="dropdown-item" href="/user/profile">Thông tin cá nhân</a>
                                         <div th:if="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
-                                            <a class="dropdown-item" href="/orderHistory">Order history</a>
+                                            <a class="dropdown-item" href="/orderHistory">Lịch sử đặt hàng</a>
                                         </div>
                                         <div th:if="${#authentication.Principal.toString().contains('UserDetailsPrincipal')}">
                                             <div th:if="${#authentication.getPrincipal().getUser()}">
-                                                <a class="dropdown-item" href="/orderHistory">Order history</a>
+                                                <a class="dropdown-item" href="/orderHistory">Lịch sử đặt hàng</a>
                                             </div>
                                         </div>
                                         
-                                        <a class="dropdown-item" th:href="@{/logout}">Logout</a>
+                                        <a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a>
                                     </div>
                                 </div>
                             </li>

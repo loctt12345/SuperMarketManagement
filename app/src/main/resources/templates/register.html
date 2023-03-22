@@ -14,7 +14,7 @@
         <link rel="stylesheet" th:href="@{/css/register_form.css}">
         <link rel="stylesheet" href="css/hder-fter.css" />
         <script src="./js/register.js"></script>
-        <title>Register</title>
+        <title>Đăng ký</title>
     </head>
 
     <body>
@@ -32,14 +32,14 @@
                     <div class="col-md-8 mt-3 col-lg-6 col-xl-4 offset-xl-1">
                         <form th:action="@{/addUser}" method="post">
                             <div class="row justify-content-center mb-3 mt-2"> 
-                                <h1> Sign up</h1>
+                                <h1>Đăng ký</h1>
                             </div>
 
                             <!-- Username input -->
                             <div class="form-outline mb-4">
                                 <input type="text" id="username"
                                        class="form-control"
-                                       placeholder="Username" 
+                                       placeholder="Tên đăng nhập" 
                                        name="username"/>
                                 <span th:text="${username_error}"
                                       class="text text-danger"></span>
@@ -49,7 +49,7 @@
                             <div class="form-outline mb-4">
                                 <input type="text" id="registerName" 
                                        class="form-control"
-                                       placeholder="Full name"
+                                       placeholder="Họ và tên"
                                        name="fullname"/>
                             </div>
 
@@ -67,7 +67,7 @@
                             <div class="form-outline mb-4">
                                 <input type="password" id="password" 
                                        class="form-control"
-                                       placeholder="Password"
+                                       placeholder="Mật khẩu"
                                        onChange="check()"
                                        name="password"/>
                             </div>
@@ -76,7 +76,7 @@
                             <div class="form-outline mb-4">
                                 <input type="password" id="confirm_password" 
                                        class="form-control"
-                                       placeholder="Re-enter password"
+                                       placeholder="Nhập lại mật khẩu"
                                        onChange="check()"
                                        name="confirmPassword"/>
                             </div>
@@ -86,7 +86,7 @@
                                 <input type="tel" id="phone"
                                        pattern="[0-9]{10}"
                                        class="form-control"
-                                       placeholder="Phone number"
+                                       placeholder="Số điện thoại"
                                        name="phone">
                             </div>
                             
@@ -94,7 +94,7 @@
                             <div class="form-outline mb-4">
                                 <input type="text" id="address" 
                                        class="form-control"
-                                       placeholder="Address"
+                                       placeholder="Địa chỉ"
                                        name="address"/>
                             </div>
 
@@ -103,11 +103,11 @@
                                     class="btn btn-block mb-2"
                                     style="background-color: #8EFFAB;"
                                     >
-                                Sign up
+                                Đăng ký
                             </button>
                             <p class="small fw-bold mt-2 pt-1 mb-0">
-                                Already have an account? &nbsp
-                                <a href="/login"class="link-danger">Log in now</a>
+                                Đã có tài khoản? &nbsp
+                                <a href="/login"class="link-danger">Đăng nhập</a>
                             </p>
                         </form>
                     </div>
