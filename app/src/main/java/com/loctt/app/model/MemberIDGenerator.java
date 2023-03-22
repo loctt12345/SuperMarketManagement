@@ -18,13 +18,18 @@ import org.springframework.stereotype.Component;
  * @author loc12345
  */
 public class MemberIDGenerator implements IdentifierGenerator {
+
     @Override
-    public Serializable generate(SharedSessionContractImplementor session, Object obj)
-    {
-        Query q = session.createQuery("SELECT m.userID FROM User m ORDER BY m.userID DESC"); 
+    public Serializable generate(SharedSessionContractImplementor session, Object obj) {
+        Query q = session.createQuery("SELECT m.userID FROM User m ORDER BY m.userID DESC");
         q.setMaxResults(1);
-        String number = String.format("%03d",  Integer.parseInt(
-                q.getSingleResult().toString().substring(3)) + 1);
+        int num = 0;
+        try {
+            num = Integer.parseInt(
+                    q.getSingleResult().toString().substring(3));
+        } catch (Exception e) {
+        }
+        String number = String.format("%03d",num +1);
         return "CUS" + number;
     }
 }

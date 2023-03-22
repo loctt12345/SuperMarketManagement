@@ -34,7 +34,7 @@ public class UserController {
     IEmployeeService employeeService;
 
     @GetMapping("/user/profile")
-    public String showProfile(Authentication authentication, 
+    public String showProfile(Authentication authentication,
             Model model,
             HttpServletRequest request) {
         String userId = "";
@@ -102,9 +102,9 @@ public class UserController {
 
     @PostMapping("/user/update")
     public String updateProfile(
-            @RequestParam(name = "txtFullName") String fullName,
+            @RequestParam(name = "txtFullName", required = false) String fullName,
             @RequestParam(name = "txtPhone") String phone,
-            @RequestParam(name = "txtEmail") String email,
+            @RequestParam(name = "txtEmail", required = false) String email,
             @RequestParam(name = "txtAddress") String address,
             Authentication authentication) {
         String userId = "";
@@ -113,21 +113,28 @@ public class UserController {
             String gmail = ((CustomOAuth2User) authentication.getPrincipal())
                     .getEmail();
             userId = userService.findByEmail(gmail).getUserID();
+            User userUpdated = userService.findUserByID(userId);
+            if (userUpdated != null) {
+                userUpdated.setAddress(address);
+                userUpdated.setPhone(phone);
+
+                userService.updateProfile(userUpdated);
+            }
         } else {
             userId = ((UserDetailsPrincipal) authentication.getPrincipal())
                     .getUser().getUserID();
-        }
-        User userUpdated = userService.findUserByID(userId);
-        if (userUpdated != null) {
-            userUpdated.setFullName(fullName);
-            userUpdated.setAddress(address);
-            userUpdated.setEmail(email);
-            userUpdated.setPhone(phone);
+            User userUpdated = userService.findUserByID(userId);
+            if (userUpdated != null) {
+                userUpdated.setFullName(fullName);
+                userUpdated.setAddress(address);
+                userUpdated.setEmail(email);
+                userUpdated.setPhone(phone);
 
-            userService.updateProfile(userUpdated);
+                userService.updateProfile(userUpdated);
+            }
         }
 
-        return "redirect:/user/profile";
+        return "redirect:/logout";
     }
 
 }

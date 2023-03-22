@@ -4,6 +4,7 @@
  */
 package com.loctt.app.controller;
 
+import com.loctt.app.model.AuthenticationProvider;
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.CustomOAuth2User;
 import com.loctt.app.model.Employee;
@@ -343,7 +344,8 @@ public class DispatchController {
             model.addAttribute("ErrorUsername", "Please enter valid username");
             return "forgot_password_form";
         }
-        if (employeeService.findByUsername(username) != null) {
+        if (employeeService.findByUsername(username) != null
+                || userService.findByUsername(username).getAuthenticationProvider() == AuthenticationProvider.GOOGLE) {
             model.addAttribute("ErrorUsername", "Your account don't have permission to reset password");
             return "forgot_password_form";
         }

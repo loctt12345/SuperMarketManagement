@@ -37,16 +37,23 @@ public class OAuth2SuccessLoginHandler extends SimpleUrlAuthenticationSuccessHan
         String userEmail = oauthUser.getEmail();
         User customer = this.userService.findByUsername(userEmail);
         User userForCheckEmail = this.userService.findByEmail(userEmail);
-        if (userForCheckEmail != null) {
+        if (userForCheckEmail != null && 
+                userForCheckEmail.getAuthenticationProvider() == null) {
             response.sendRedirect("/logout?errorEmail=true");
         }
+        
         if (customer == null && userForCheckEmail == null) {
             //check valid email
             //if haven't register yet-> register
             User newCustomer = new User(oauthUser.getEmail(),
-                    oauthUser.getFullName(), userEmail, AuthenticationProvider.GOOGLE);
+                    oauthUser.getName(), userEmail, AuthenticationProvider.GOOGLE);
             newCustomer.setStatus(true);
             userService.createNewUser(newCustomer);
+            response.sendRedirect("/");
+            return;
+        }
+        
+        if (userForCheckEmail.getAuthenticationProvider() == AuthenticationProvider.GOOGLE) {
             response.sendRedirect("/");
         }
     }

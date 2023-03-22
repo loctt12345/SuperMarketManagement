@@ -38,22 +38,50 @@
                 <div class="profile align-items-center col-12 mt-3">
                     <h1>Hồ sơ cá nhân</h1>
                     <form class="form" action="/user/update" method="POST">
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Họ và tên:</label>
-                            <div class="col-lg-4">
-                                <input class="form-control" 
-                                       name="txtFullName"
-                                       type="text" th:value="${USER.fullName}">
+                        <div th:if="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Họ và tên:</label>
+                                <div class="col-lg-4">
+                                    <input class="form-control" 
+                                           name="txtFullName"
+                                           disabled
+                                           type="text" th:value="${USER.fullName}">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Email:</label>
-                            <div class="col-lg-4">
-                                <input class="form-control" 
-                                       name="txtEmail"
-                                       type="email" th:value="${USER.email}">
+                        <div th:unless="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Họ và tên:</label>
+                                <div class="col-lg-4">
+                                    <input class="form-control" 
+                                           name="txtFullName"
+                                           type="text" th:value="${USER.fullName}">
+                                </div>
                             </div>
                         </div>
+                        <div th:unless="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Email:</label>
+                                <div class="col-lg-4">
+                                    <input class="form-control" 
+                                           name="txtEmail"
+                                           type="email" th:value="${USER.email}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div th:if="${#authentication.Principal.toString().contains('CustomOAuth2User')}">
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">Email:</label>
+                                <div class="col-lg-4">
+                                    <input class="form-control" 
+                                           disabled
+                                           name="txtEmail"
+                                           type="email" th:value="${USER.email}">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Số điện thoại:</label>
                             <div class="col-lg-4">

@@ -25,8 +25,9 @@ public class WebSecurityConfig {
     private CustomOAuth2UserService oAuth2UserService;
     @Autowired
     private OAuth2SuccessLoginHandler oAuth2SuccessLoginHandler;
+
     @Bean
-    public OAuth2SuccessLogoutHandler oAuth2SuccessLogoutHandler(){
+    public OAuth2SuccessLogoutHandler oAuth2SuccessLogoutHandler() {
         return new OAuth2SuccessLogoutHandler();
     }
 
@@ -74,7 +75,8 @@ public class WebSecurityConfig {
         http.authorizeRequests()
                 .antMatchers("/login", "/", "/js/**", "/css/**",
                         "/product-detail", "/api/products/**",
-                        "/showBill", "/register", "/addUser", "/forgot_password").permitAll()
+                        "/showBill").permitAll()
+                .antMatchers("/register", "/addUser", "/forgot_password/**").anonymous()
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
                 .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard", "/admin-employee-page").hasRole("ADMIN")
