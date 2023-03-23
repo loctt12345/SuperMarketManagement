@@ -43,8 +43,8 @@ function loadProduct() {
                     });
                 }).catch((err) => {
                     document.getElementById('content').innerHTML = `
-                        <h2 class="row justify-content-center col-md-12 col-12"> The product is not in our super market </h2>
-                        <a class="row justify-content-center col-md-12 col-12" onclick="showForm()">You can suggest your product for us here!!!</a>
+                            <h2 class="row justify-content-center col-md-12 col-12"> Sản phẩm không có trong siêu thị của chúng tôi </h2>
+                        <a class="row justify-content-center col-md-12 col-12" onclick="showForm()">Bạn có thể đề xuất sản phẩm của bạn cho chúng tôi tại đây!!!</a>
                         `;
                 });
             }
