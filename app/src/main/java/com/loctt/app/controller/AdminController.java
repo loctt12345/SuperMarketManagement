@@ -233,7 +233,9 @@ public class AdminController {
     }
 
     @PostMapping("/update-employee")
-    public String updateEmployee(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
+    public String updateEmployee(@RequestParam Map<String, String> allParams,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         String employeeRole = allParams.get("role");
         String employeeSalaryAsString = allParams.get("salary");
         String employeeID = allParams.get("employeeID");
@@ -243,6 +245,14 @@ public class AdminController {
         String employeeAddress = allParams.get("address");
         String username = allParams.get("username");
         float employeeSalary = 0;
+        for (String param : allParams.keySet()) {
+            if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
+                System.out.println(param);
+                model.addAttribute("ErrorAction", "Vui lòng nhập các giá trị hợp lệ vào các trường");
+                return "employee_management";
+            }
+        }
+
         if (employeeSalaryAsString.trim().isEmpty()) {
             employeeSalary = employeeService.findByEmployeeID(employeeID).getSalary();
         } else {
@@ -252,7 +262,9 @@ public class AdminController {
                 ex.printStackTrace();
             }
         }
-        employeeService.updateEmployeeByAdmin(employeeID, employeeRole, employeeSalary);
+
+        employeeService
+                .updateEmployeeByAdmin(employeeID, username, employeeRole, employeeName, employeePhone, employeeMail, employeeAddress, employeeSalary);
         String lastSearchValue = allParams.get("lastSearchValue");
         String lastSearchBy = allParams.get("lastSearchBy");
         if (lastSearchBy.trim().isEmpty() || lastSearchValue.trim().isEmpty()) {
@@ -330,5 +342,5 @@ public class AdminController {
         model.addAttribute("LIST", productRecommendationService.getAll());
         return "product_recommendation";
     }
-    
+
 }

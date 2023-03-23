@@ -73,7 +73,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public void updateEmployeeByAdmin(String employeeID, String employeeRole, float employeeSalary) {
+    public void updateEmployeeByAdmin(String employeeID, String username, String employeeRole, String employeeName, String employeePhone, String employeeMail, String employeeAddress, float employeeSalary) {
         Employee employee = employeeRepository.findByEmployeeID(employeeID);
         if (!employeeRole.trim().isEmpty()) {
             Role role = new Role();
@@ -91,7 +91,12 @@ public class EmployeeService implements IEmployeeService {
             }
             employee.setRole(role);
         }
+        employee.setPhone(employeePhone);
+        employee.setAddress(employeeAddress);
+        employee.setFullName(employeeName);
+        employee.setEmail(employeeMail);
         employee.setSalary(employeeSalary);
+        employee.setUsername(username);
         employeeRepository.save(employee);
     }
 
@@ -111,7 +116,7 @@ public class EmployeeService implements IEmployeeService {
         employee.setPassword(encodedPassword);
         employeeRepository.save(employee);
     }
-    
+
     @Override
     public void updatePassword(Employee emp, String newPassword) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

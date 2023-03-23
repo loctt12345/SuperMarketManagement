@@ -76,7 +76,9 @@ public class WebSecurityConfig {
                 .antMatchers("/login", "/", "/js/**", "/css/**",
                         "/product-detail", "/api/products/**",
                         "/showBill").permitAll()
-                .antMatchers("/register", "/addUser", "/forgot_password/**").anonymous()
+                .antMatchers("/register", "/addUser",
+                        "/forgot_password/**", "/verifyMail",
+                        "/registerMail").anonymous()
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
                 .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard", "/admin-employee-page").hasRole("ADMIN")
