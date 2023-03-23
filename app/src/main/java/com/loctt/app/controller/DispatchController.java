@@ -340,7 +340,7 @@ public class DispatchController {
 
     @PostMapping("/forgot_password/sendMail")
     public String sendMailForResetPwd(@RequestParam(name = "username") String username, Model model, HttpServletRequest request) {
-        if (username.isEmpty()) {
+        if (username.isEmpty() || userService.findByUsername(username) == null) {
             model.addAttribute("ErrorUsername", "Vui lòng nhập tên người dùng hợp lệ");
             return "forgot_password_form";
         }

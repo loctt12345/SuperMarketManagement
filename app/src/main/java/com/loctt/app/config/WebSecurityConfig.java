@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,6 +30,11 @@ public class WebSecurityConfig {
     @Bean
     public OAuth2SuccessLogoutHandler oAuth2SuccessLogoutHandler() {
         return new OAuth2SuccessLogoutHandler();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
     }
 
     @Bean
@@ -65,7 +71,7 @@ public class WebSecurityConfig {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .failureUrl("/login?error=true")
+                .failureHandler(authenticationFailureHandler()).permitAll()
                 .defaultSuccessUrl("/authorize", true);
 
         http.logout();

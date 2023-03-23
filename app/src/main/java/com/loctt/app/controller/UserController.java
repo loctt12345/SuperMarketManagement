@@ -128,6 +128,7 @@ public class UserController {
                 userUpdated.setFullName(fullName);
                 userUpdated.setAddress(address);
                 userUpdated.setEmail(email);
+                userUpdated.setStatus(false);
                 userUpdated.setPhone(phone);
 
                 userService.updateProfile(userUpdated);
