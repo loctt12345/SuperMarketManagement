@@ -10,6 +10,6 @@ var check = function () {
         document.getElementById('confirm_password').setCustomValidity('');
     } else {
         document.querySelector('#confirm_password') 
-                .setCustomValidity('Passwords do not match');
+                .setCustomValidity('Mật khẩu không phù hợp');
     }
 }
