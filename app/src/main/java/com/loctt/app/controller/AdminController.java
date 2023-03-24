@@ -55,6 +55,19 @@ public class AdminController {
         List<ProductDetails> productDetails = new ArrayList<>();
         String searchBy = allParams.get("searchBy");
         String searchValue = allParams.get("searchValue");
+        String errorFields = allParams.get("ErrorFields");
+        String errorExisted = allParams.get("ErrorExisted");
+        if (errorFields != null) {
+            model.addAttribute("ErrorAction", "Vui lòng nhập giá trị hợp lệ!!!");
+        }
+        if (errorExisted != null) {
+            model.addAttribute("ErrorAction", "Sản phẩm đã tồn tại!!!");
+        }
+        if (searchBy.trim().isEmpty()) {
+            List<ProductDetails> listProduct = productService.findAll();
+            model.addAttribute("PRODUCTS_RESULT", listProduct);
+            return "products_management";
+        }
         if (searchBy != null && searchValue != null) {
             //search All Products by Category
             if (searchBy.equalsIgnoreCase("category") && this.productService.findByCategoryContaining(searchValue) != null) {
@@ -87,21 +100,40 @@ public class AdminController {
         String productCategory = allParams.get("category");
         String productImageLink = allParams.get("image");
         String sellPriceAsString = allParams.get("sellPrice");
-        if (productService.findByProductID(productID) != null) {
-            model.addAttribute("ErrorAction", "Sản phẩm đã có trong kho");
-            return "products_management";
-        }
+        String lastSearchBy = allParams.get("lastSearchBy");
+        String lastSearchValue = allParams.get("lastSearchValue");
+
         for (String param : allParams.keySet()) {
             if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
-                model.addAttribute("ErrorAction", "Vui lòng nhập các giá trị hợp lệ vào các trường");
-                return "products_management";
+                redirectAttributes.addAttribute("ErrorFields", true);
+//                if (lastSearchBy.trim().isEmpty()) {
+//                    return "redirect:/admin-page";
+//                }
+                redirectAttributes.addAttribute("searchBy", lastSearchBy);
+                redirectAttributes.addAttribute("searchValue", lastSearchValue);
+                return "redirect:/admin/findProduct";
             }
+        }
+        if (productService.findByProductID(productID) != null) {
+            redirectAttributes.addAttribute("ErrorExisted", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findProduct";
         }
         float productSellPrice = 0;
         try {
             productSellPrice = Float.parseFloat(sellPriceAsString);
         } catch (NumberFormatException ex) {
-            ex.printStackTrace();
+            redirectAttributes.addAttribute("ErrorFields", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findProduct";
         }
         ProductDetails newProduct = new ProductDetails(productID, productName, productDes, productCategory, productSellPrice, productImageLink);
         newProduct.setStatus(true);
@@ -115,6 +147,9 @@ public class AdminController {
     public String updateProduct(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
         String productID = allParams.get("productID");
         String productName = allParams.get("productName");
+        String lastSearchValue = allParams.get("lastSearchValue");
+        String lastSearchBy = allParams.get("lastSearchBy");
+
         if (productName.trim().isEmpty()) {
             productName = productService.findByProductID(productID).getName();
         }
@@ -126,7 +161,13 @@ public class AdminController {
             try {
                 sellPrice = Float.parseFloat(sellPriceAsString);
             } catch (NumberFormatException ex) {
-                ex.printStackTrace();
+                redirectAttributes.addAttribute("ErrorFields", true);
+//                if (lastSearchBy.trim().isEmpty()) {
+//                    return "redirect:/admin-page";
+//                }
+                redirectAttributes.addAttribute("searchBy", lastSearchBy);
+                redirectAttributes.addAttribute("searchValue", lastSearchValue);
+                return "redirect:/admin/findProduct";
             }
         }
         ProductDetails updateProduct = new ProductDetails();
@@ -138,8 +179,6 @@ public class AdminController {
         updateProduct.setSellprice(sellPrice);
         updateProduct.setStatus(true);
         productService.save(updateProduct);
-        String lastSearchValue = allParams.get("lastSearchValue");
-        String lastSearchBy = allParams.get("lastSearchBy");
         if (lastSearchBy.isEmpty() || lastSearchValue.isEmpty()) {
             return "redirect:/admin-page";
         } else {
@@ -173,6 +212,19 @@ public class AdminController {
         List<Employee> employeeList = new ArrayList<>();
         String searchBy = allParams.get("searchBy");
         String searchValue = allParams.get("searchValue");
+        String errorFields = allParams.get("ErrorFields");
+        String errorExisted = allParams.get("ErrorExisted");
+        if (errorFields != null) {
+            model.addAttribute("ErrorAction", "Vui lòng nhập giá trị hợp lệ!!!");
+        }
+        if (errorExisted != null) {
+            model.addAttribute("ErrorAction", "ID Nhân viên đã tồn tại!!!");
+        }
+        if (searchBy.trim().isEmpty()) {
+            List<Employee> listEmployee = employeeService.findAllForSearch();
+            model.addAttribute("EMPLOYEES_RESULT", listEmployee);
+            return "employee_management";
+        }
         if (searchBy != null && searchValue != null) {
             //search All Products by Category
             if (searchBy.equalsIgnoreCase("id")) {
@@ -209,14 +261,21 @@ public class AdminController {
         String employeeAddress = allParams.get("address");
         String employeeSalaryAsString = allParams.get("salary");
         String username = allParams.get("username");
+        String lastSearchBy = allParams.get("lastSearchBy");
+        String lastSearchValue = allParams.get("lastSearchValue");
         if (employeeService.findByUsername(username) != null) {
-            model.addAttribute("ErrorAction", "Tên người dùng đã tồn tại");
-            return "employee_management";
+            redirectAttributes.addAttribute("ErrorExisted", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-employee-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findEmployee";
         }
         for (String param : allParams.keySet()) {
             if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
-                System.out.println(param);
-                model.addAttribute("ErrorAction", "Vui lòng nhập các giá trị hợp lệ vào các trường");
+                //System.out.println(param);
+                model.addAttribute("ErrorFields", true);
                 return "employee_management";
             }
         }
@@ -224,7 +283,13 @@ public class AdminController {
         try {
             employeeSalary = Float.parseFloat(employeeSalaryAsString);
         } catch (NumberFormatException ex) {
-            ex.printStackTrace();
+            redirectAttributes.addAttribute("ErrorFields", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-employee-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findEmployee";
         }
         employeeService.createNewEmployee(username, employeeRole, employeeName, employeePhone, employeeMail, employeeAddress, employeeSalary);
         redirectAttributes.addAttribute("searchBy", "id");
@@ -244,11 +309,13 @@ public class AdminController {
         String employeeMail = allParams.get("email");
         String employeeAddress = allParams.get("address");
         String username = allParams.get("username");
+        String lastSearchValue = allParams.get("lastSearchValue");
+        String lastSearchBy = allParams.get("lastSearchBy");
         float employeeSalary = 0;
         for (String param : allParams.keySet()) {
             if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
-                System.out.println(param);
-                model.addAttribute("ErrorAction", "Vui lòng nhập các giá trị hợp lệ vào các trường");
+                //System.out.println(param);
+                model.addAttribute("ErrorFields", true);
                 return "employee_management";
             }
         }
@@ -259,14 +326,19 @@ public class AdminController {
             try {
                 employeeSalary = Float.parseFloat(employeeSalaryAsString);
             } catch (NumberFormatException ex) {
-                ex.printStackTrace();
+                redirectAttributes.addAttribute("ErrorFields", true);
+//                if (lastSearchBy.trim().isEmpty()) {
+//                    return "redirect:/admin-employee-page";
+//                }
+                redirectAttributes.addAttribute("searchBy", lastSearchBy);
+                redirectAttributes.addAttribute("searchValue", lastSearchValue);
+                return "redirect:/admin/findEmployee";
             }
         }
 
         employeeService
                 .updateEmployeeByAdmin(employeeID, username, employeeRole, employeeName, employeePhone, employeeMail, employeeAddress, employeeSalary);
-        String lastSearchValue = allParams.get("lastSearchValue");
-        String lastSearchBy = allParams.get("lastSearchBy");
+
         if (lastSearchBy.trim().isEmpty() || lastSearchValue.trim().isEmpty()) {
             return "redirect:/admin-employee-page";
         } else {
