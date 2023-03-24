@@ -18,11 +18,45 @@ and open the template in the editor.
     <body>
         <input type="hidden" th:value="${orderId}" id="orderId"/>
         <div class="container">
-            <div class="row justify-content-center mt-5 pt-3">
-                <div class="mt-5" id="qrcode" style="height:300px;width:300px;" v-loading="PanoramaInfo.bgenerateing"></div>
+            <div class="table-responsive-md" th:if="${LIST ne null}">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr class="bg-light">
+                            <th class="col-md-1">QRCode</th>
+                            <th class="col-md-1">UserID</th>
+                            <th class="col-md-2">Time</th>
+                            <th class="col-md-2">Total</th>
+                            <th class="col-md-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <input type='hidden' th:value='${LIST.size}' id='size'/>
+                        <tr class="product-row" th:each="row, iter : ${LIST}">
+                            <input th:id="${'id' + iter.index}" 
+                                   type="hidden" th:value="${row.orderID}"/>
+                            <td class="qr">
+                                <div th:id="${'orderid' + iter.index}"
+                                     v-loading="PanoramaInfo.bgenerateing"></div>
+                            </td>
+                            <td th:text="${row.userID}"></td>
+                            <td th:text="${row.time}"></td>
+
+                            <td class="total" th:text="${row.total}"></td>
+                            <td th:text="${row.status}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                    <ul class="pagination" id="pagination">
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-10 text-center text-danger" th:unless="${LIST ne null}">
+                <h2>Không tìm thấy kết quả!</h2>
             </div>
         </div>
+        </div>
         <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
-        <script src="./js/renderQR.js"></script>
+        <script src="/js/bill.js"></script>
     </body>
 </html>

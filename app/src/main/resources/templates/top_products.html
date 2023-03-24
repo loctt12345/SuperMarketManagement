@@ -62,11 +62,9 @@ and open the template in the editor.
                         <table class="table table-borderless">
                             <thead>
                                 <tr class="bg-light">
-                                    <th class="col-md-1">ID</th>
                                     <th class="col-md-2">Ảnh</th>
                                     <th class="col-md-5">Tên</th>
                                     <th class="col-md-2">Loại</th>
-                                    <th class="col-md-1">Giá</th>
                                     <th class="col-md-1">Đã bán được</th>
                                 </tr>
                             </thead>
@@ -74,13 +72,11 @@ and open the template in the editor.
                             <tbody>
 
                                 <tr class="product-row" th:each="pair : ${MAP}">
-                                    <td th:text="${pair.Key.productID}"></td>
                                     <td><img class="rounded img-fluid product-img" 
                                              th:src="@{${pair.Key.imageLink}}"
                                              alt="product image"/></td>
                                     <td th:text="${pair.Key.name}"></td>
                                     <td th:text="${pair.Key.category}"></td>
-                                    <td th:text="${pair.Key.sellprice}"></td>
                                     <td th:text="${pair.Value}"></td>
                                 </tr>
                             </tbody>

@@ -8,10 +8,12 @@ import com.loctt.app.model.AuthenticationProvider;
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.CustomOAuth2User;
 import com.loctt.app.model.Employee;
+import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.model.ProductRecommendation;
 import com.loctt.app.model.User;
 import com.loctt.app.model.UserDetailsPrincipal;
+import com.loctt.app.service.IOrderStatusService;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.EmployeeService;
@@ -86,6 +88,8 @@ public class DispatchController {
     }
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private IOrderStatusService orderStatusService;
 
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
@@ -153,8 +157,12 @@ public class DispatchController {
     }
 
     @GetMapping("/showBill")
-    public String showBill(@RequestParam(name = "orderId", required = false) String orderId, Model model) {
-        model.addAttribute("orderId", orderId);
+    public String showBill(Model model){
+        List<PrimaryOrder> list = orderService.getAllOrderByStatus();
+        for (PrimaryOrder order : list) {
+            order.setStatus(orderStatusService.findById(order.getStatusID()).getName());
+        }
+        model.addAttribute("LIST", list);
         return "bill";
     }
 
