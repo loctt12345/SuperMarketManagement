@@ -6,8 +6,10 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.Employee;
+import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.IOrderService;
+import com.loctt.app.service.IOrderStatusService;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.EmployeeService;
 import com.loctt.app.service.impl.OrderService;
@@ -49,6 +51,8 @@ public class AdminController {
     private IOrderService orderService;
     @Autowired
     private IProductRecommendationService productRecommendationService;
+    @Autowired
+    private IOrderStatusService orderStatusService;
 
     @GetMapping("/findProduct")
     public String findProducts(@RequestParam(required = false) Map<String, String> allParams, Model model) {
@@ -341,6 +345,44 @@ public class AdminController {
     public String showProductRecommendation(Model model) {
         model.addAttribute("LIST", productRecommendationService.getAll());
         return "product_recommendation";
+    }
+
+    @GetMapping("/order_management")
+    public String showOrder(Model model) {
+        List<PrimaryOrder> list = orderService.getAllOrderByStatus();
+        for (PrimaryOrder order : list) {
+            order.setStatus(orderStatusService.findById(order.getStatusID()).getName());
+        }
+        model.addAttribute("LIST", list);
+        model.addAttribute("LIST_STATUS", orderStatusService.findAll());
+        return "order_management";
+    }
+
+    @GetMapping("/order_detail")
+    public String showOrderDetail(
+            @RequestParam(value = "orderID") String orderID,
+            Model model) {
+        PrimaryOrder order = orderService.findByOrderID(orderID);
+        if (order != null) {
+            Map<ProductDetails, Integer> listProduct = orderService.getListProduct(orderID);
+            float total = 0;
+            for (Map.Entry<ProductDetails, Integer> product : listProduct.entrySet()) {
+                total += (float) product.getValue() * product.getKey().getSellprice();
+            }
+            model.addAttribute("PRODUCTS_IN_ORDER", listProduct);
+            model.addAttribute("TotalOfOrder", total);
+            model.addAttribute("order", order);
+        }
+        return "admin_order_detail";
+    }
+    
+    @GetMapping("/update_status")
+    public String updateStatus(
+            @RequestParam(value = "txtOrderId") String orderID,
+            @RequestParam(value = "txtStatus") int statusID
+    ) {
+        orderService.updateOrderStatus(orderID, statusID);
+        return "redirect:/admin/order_management";
     }
 
 }

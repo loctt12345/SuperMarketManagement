@@ -87,7 +87,9 @@ public class WebSecurityConfig {
                         "/registerMail").anonymous()
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
-                .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard", "/admin-employee-page").hasRole("ADMIN")
+                .antMatchers("/admin-page", "/admin/**", "/crawl", 
+                        "/dashboard", "/admin-employee-page",
+                        "/paying/**").hasRole("ADMIN")
                 .antMatchers("/shipStaff", "/shipper_summary_order",
                         "api/order/**").hasRole("DELIVERY_MAN")
                 .antMatchers("/repoStaff", "api/order/**").hasRole("STORAGE_MAN")
