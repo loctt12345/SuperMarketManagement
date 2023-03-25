@@ -31,14 +31,6 @@ Payment with PayPal.
 QRCode scanner for packaging product.
 ##### Feature for shipper 
 QRCode scanner for delivery.
-##### Contribute
-If you want to contribute to the project, you can follow these steps:
-Fork repository.
-Clone repository from your account: git clone https://github.com/loctt12345/SuperMarketManagement.git \
-Create a new branch: git checkout -b feature \
-Make changes and commit: git commit -m "Add feature" \
-Push changes to your branch: git push origin feature \
-Create a pull request and describe your changes.
 ##### Author
 Name: Tran Thien Loc\
 Email: trnthinlc@gmail.com
