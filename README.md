@@ -41,7 +41,7 @@ Push changes to your branch: git push origin feature \
 Create a pull request and describe your changes.
 ##### Author
 Name: Tran Thien Loc\
-Email: locttse160275@fpt.edu.vn
+Email: trnthinlc@gmail.com
 
 Thanks to the contributors who contributed to this project, including:\
 Lo Hung Khanh.\
