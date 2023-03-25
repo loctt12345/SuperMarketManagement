@@ -36,11 +36,8 @@ public class OAuth2SuccessLoginHandler extends SimpleUrlAuthenticationSuccessHan
         CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
         String userEmail = oauthUser.getEmail();
         User customer = this.userService.findByUsername(userEmail);
+        System.out.println(userEmail);
         User userForCheckEmail = this.userService.findByEmail(userEmail);
-        if (userForCheckEmail != null && 
-                userForCheckEmail.getAuthenticationProvider() == null) {
-            response.sendRedirect("/logout?errorEmail=true");
-        }
         
         if (customer == null && userForCheckEmail == null) {
             //check valid email
@@ -52,9 +49,10 @@ public class OAuth2SuccessLoginHandler extends SimpleUrlAuthenticationSuccessHan
             response.sendRedirect("/");
             return;
         }
-        
         if (userForCheckEmail.getAuthenticationProvider() == AuthenticationProvider.GOOGLE) {
             response.sendRedirect("/");
+        }else{
+            response.sendRedirect("/logout?errorEmail=true");
         }
     }
 
