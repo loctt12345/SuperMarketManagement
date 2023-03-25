@@ -13,12 +13,12 @@ function loadCart() {
             var div = document.createElement('div');
             div.className = "column-labels";
             div.innerHTML = `
-                    <label class="product-image">Image</label>
-                    <label class="product-details">Product</label>
-                    <label class="product-price">Price</label>
-                    <label class="product-quantity">Quantity</label>
-                    <label class="product-removal">Remove</label>
-                    <label class="product-line-price">Total</label>
+                    <label class="product-image">Hình ảnh</label>
+                    <label class="product-details">Sản phẩm</label>
+                    <label class="product-price">Giá</label>
+                    <label class="product-quantity">Số lượng</label>
+                    <label class="product-removal">Xóa</label>
+                    <label class="product-line-price">Tổng</label>
             `;
             list.appendChild(div);
             for (var k in data) {
@@ -46,7 +46,7 @@ function loadCart() {
                         </div>
                         <div class="product-removal">
                             <button class="remove-product" onclick="remove(${k})">
-                                Remove
+                                Xóa
                             </button>
                         </div>
                         <div class="product-line-price">
@@ -67,7 +67,7 @@ function loadCart() {
                         div.className = "totals";
                         div.innerHTML = `
                     <div class="totals-item">
-                        <label>Total:</label>
+                        <label>Tổng:</label>
                         <div class="totals-value" id="cart-subtotal">
                             ${data.toLocaleString('de-DE', {style: 'currency', currency: 'VND'})}
                         </div>
@@ -75,7 +75,7 @@ function loadCart() {
                     `;
                         list.appendChild(div);
                         let button = document.createElement('button');
-                        button.innerHTML = "Checkout";
+                        button.innerHTML = "Thanh toán";
                         button.className = "checkout";
                         button.onclick = function () {
                             window.location.href = "./showPaying"
@@ -90,12 +90,12 @@ function loadCart() {
             var div = document.createElement('div');
             div.className = "column-labels";
             div.innerHTML = `
-                    <label class="product-image">Image</label>
-                    <label class="product-details">Product</label>
-                    <label class="product-price">Price</label>
-                    <label class="product-quantity">Quantity</label>
-                    <label class="product-removal">Remove</label>
-                    <label class="product-line-price">Total</label>
+                    <label class="product-image">Hình ảnh</label>
+                    <label class="product-details">Sản phẩm</label>
+                    <label class="product-price">Giá</label>
+                    <label class="product-quantity">Số lượng</label>
+                    <label class="product-removal">Xóa</label>
+                    <label class="product-line-price">Tổng</label>
             `;
             list.appendChild(div);
         });

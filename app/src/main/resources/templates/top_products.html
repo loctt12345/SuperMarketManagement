@@ -9,7 +9,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Product Management</title>
+        <title>Sản phẩm bán chạy</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -28,7 +28,7 @@ and open the template in the editor.
                 <div class="container-fluid">
                     <form class="form-inline p-3 col-12" action="/admin/topproducts">
                         <div class="form-group mr-2">
-                            <label for="month" class="mr-1">Month:</label>
+                            <label for="month" class="mr-1">Tháng:</label>
                             <select class="form-control" id="month" name="month"
                                   >
                                 <option >1</option>
@@ -46,7 +46,7 @@ and open the template in the editor.
                             </select>
                         </div>
                         <div class="form-group mr-2">
-                            <label for="year" class="mr-1">Year:</label>
+                            <label for="year" class="mr-1">Năm:</label>
                             <select class="form-control" id="year" name="year">
                                 <option>2022</option>
                                 <option>2023</option>
@@ -54,7 +54,7 @@ and open the template in the editor.
                         </div>
                         <div class="form-group">
                             <button class="btn btn-info form-control" 
-                                    type="submit">Find</button>
+                                    type="submit">Tìm</button>
                         </div>
                     </form>
 
@@ -62,25 +62,21 @@ and open the template in the editor.
                         <table class="table table-borderless">
                             <thead>
                                 <tr class="bg-light">
-                                    <th class="col-md-1">ID</th>
-                                    <th class="col-md-2">Image</th>
-                                    <th class="col-md-5">Name</th>
-                                    <th class="col-md-2">Category</th>
-                                    <th class="col-md-1">Price</th>
-                                    <th class="col-md-1">Sold</th>
+                                    <th class="col-md-2">Ảnh</th>
+                                    <th class="col-md-5">Tên</th>
+                                    <th class="col-md-2">Loại</th>
+                                    <th class="col-md-1">Đã bán được</th>
                                 </tr>
                             </thead>
 
                             <tbody>
 
                                 <tr class="product-row" th:each="pair : ${MAP}">
-                                    <td th:text="${pair.Key.productID}"></td>
                                     <td><img class="rounded img-fluid product-img" 
                                              th:src="@{${pair.Key.imageLink}}"
                                              alt="product image"/></td>
                                     <td th:text="${pair.Key.name}"></td>
                                     <td th:text="${pair.Key.category}"></td>
-                                    <td th:text="${pair.Key.sellprice}"></td>
                                     <td th:text="${pair.Value}"></td>
                                 </tr>
                             </tbody>
@@ -91,7 +87,7 @@ and open the template in the editor.
                         </nav>
                     </div>
                     <div class="col-md-10 text-center text-danger" th:unless="${MAP ne null}">
-                        <h2>No result found!</h2>
+                        <h2>Không tìm thấy kết quả!</h2>
                     </div>
                 </div>
             </main>

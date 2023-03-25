@@ -24,13 +24,13 @@ public class SendMailService {
 
         helper.setFrom("marketwithscanner@gmail.com", "Market With Scanner");
         helper.setTo(email);
-        String mailSubject = "Verify your email";
+        String mailSubject = "Xác nhận email của bạn";
 
-        String content = "<p>Hello,</p>"
-                + "<p>You have change or create new account for Market With Scanner</p>"
-                + "<p>Enter the following code to verify your email: </p>"
+        String content = "<p>Xin chào,</p>"
+                + "<p>Bạn đã thay đổi hoặc tạo tài khoản mới cho Market With Scanner</p>"
+                + "<p>Nhập mã sau để xác minh email của bạn: </p>"
                 + "<p><h2>" + verificationCode + "</h2></p>"
-                + "<p>Ignore this email if you have not made the request</p>";
+                + "<p>Bỏ qua email này nếu bạn chưa thực hiện yêu cầu</p>";
         helper.setSubject(mailSubject);
         helper.setText(content, true);
         mailSender.send(message);
@@ -42,13 +42,13 @@ public class SendMailService {
 
         helper.setFrom("marketwithscanner@gmail.com", "Market With Scanner");
         helper.setTo(email);
-        String mailSubject = "Reset your password";
+        String mailSubject = "Đặt lại mật khẩu của bạn";
 
-        String content = "<p>Hello,</p>"
-                + "<p>You have requested to reset your password.</p>"
-                + "<p>Click the link below to change your password: </p>"
-                + "<p><b><a href=\"" + resetPasswordLink + "\">Change my password</a></b></p>"
-                + "<p>Ignore this email if you do remember your password, or you have not made the request</p>";
+        String content = "<p>Xin chào,</p>"
+                + "<p>Bạn đã yêu cầu đặt lại mật khẩu của mình.</p>"
+                + "<p>Nhấp vào liên kết bên dưới để thay đổi mật khẩu của bạn: </p>"
+                + "<p><b><a href=\"" + resetPasswordLink + "\">Thay đổi mật khẩu của tôi</a></b></p>"
+                + "<p>Bỏ qua email này nếu bạn nhớ mật khẩu của mình hoặc bạn chưa thực hiện yêu cầu</p>";
         helper.setSubject(mailSubject);
         helper.setText(content, true);
         mailSender.send(message);

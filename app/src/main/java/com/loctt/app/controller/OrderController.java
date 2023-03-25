@@ -18,6 +18,7 @@ import com.loctt.app.service.impl.ProductService;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -117,20 +118,24 @@ public class OrderController {
 
     @GetMapping("/paying/orderProgress")
     public String updateOrderStatus(@RequestParam(value = "orderID") String orderID,
-            Model model, Authentication authentication) {
+            Model model, Authentication authentication,
+            HttpServletRequest request) {
         if (orderID != null) {
-            String userId;
-            if (authentication.getPrincipal() instanceof CustomOAuth2User) {
-                // if user login with Gmail
-                String gmail = ((CustomOAuth2User) authentication.getPrincipal())
-                        .getEmail();
-                userId = userService.findByEmail(gmail).getUserID();
-            } else {
-                userId = ((UserDetailsPrincipal) authentication.getPrincipal())
-                        .getUser().getUserID();
+            String userId = null;
+            if (!request.isUserInRole("ROLE_ADMIN")) {
+                if (authentication.getPrincipal() instanceof CustomOAuth2User) {
+                    // if user login with Gmail
+                    String gmail = ((CustomOAuth2User) authentication.getPrincipal())
+                            .getEmail();
+                    userId = userService.findByEmail(gmail).getUserID();
+                } else {
+                    userId = ((UserDetailsPrincipal) authentication.getPrincipal())
+                            .getUser().getUserID();
+                }
             }
             PrimaryOrder order = orderService.findByOrderID(orderID);
-            if (order != null && order.getUserID().equals(userId)) {
+            if ((order != null && order.getUserID().equals(userId))
+                    || request.isUserInRole("ROLE_ADMIN")) {
                 Map<ProductDetails, Integer> listProduct = orderService.getListProduct(orderID);
                 float total = 0;
                 for (Map.Entry<ProductDetails, Integer> product : listProduct.entrySet()) {
@@ -139,8 +144,7 @@ public class OrderController {
                 model.addAttribute("PRODUCTS_IN_ORDER", listProduct);
                 model.addAttribute("TotalOfOrder", total);
                 model.addAttribute("order", order);
-            }
-            else {
+            } else {
                 return "redirect:/accessDenied";
             }
         }

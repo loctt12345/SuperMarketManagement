@@ -26,7 +26,7 @@ public interface IEmployeeService {
 
     public void createNewEmployee(String username, String employeeRole, String employeeName, String employeePhone, String employeeMail, String employeeAddress, float employeeSalary);
     
-    public void updateEmployeeByAdmin(String employeeID, String employeeRole, float employeeSalary );
+    public void updateEmployeeByAdmin(String employeeID, String username, String employeeRole, String employeeName, String employeePhone, String employeeMail, String employeeAddress, float employeeSalary);
     public void deleteById(String employeeID);
     public void updatePassword(Employee emp, String newPassword);
     public void resetPassword(String employeeID);

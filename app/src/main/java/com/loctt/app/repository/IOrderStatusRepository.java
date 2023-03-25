@@ -5,6 +5,7 @@
 package com.loctt.app.repository;
 
 import com.loctt.app.model.OrderStatus;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IOrderStatusRepository extends JpaRepository<OrderStatus, Integer>{
     OrderStatus findByorderStatusID(int id);
+    List<OrderStatus> findAll();
 }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quản lí đơn đặt hàng</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/admin.css" />
+        <link rel="stylesheet" href="/css/admin_navbar.css" />
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
+    </head>
+    <body>
+        <div class="page-wrapper chiller-theme toggled">
+
+            <header th:replace="admin_header :: header"></header>
+
+            <main class="page-content">
+                <div class="container-fluid">
+                    <div class="table-responsive-md" th:if="${LIST ne null}">
+                        <table class="table table-borderless">
+                            <thead>
+                                <tr class="bg-light">
+                                    <th class="col-md-1">QRCode</th>
+                                    <th class="col-md-1">UserID</th>
+                                    <th class="col-md-2">Time</th>
+                                    <th class="">Address</th>
+                                    <th class="col-md-2">Phone</th>
+                                    <th class="col-md-2">Email</th>
+                                    <th class="col-md-2">Total</th>
+                                    <th class="col-md-2">Status</th>
+                                    <th class="col-md-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <input type='hidden' th:value='${LIST.size}' id='size'/>
+                            <tr class="product-row" th:each="row, iter : ${LIST}">
+                            <input th:id="${'id' + iter.index}" 
+                                   type="hidden" th:value="${row.orderID}"/>
+                            <td class="qr">
+                                <div th:id="${'orderid' + iter.index}"
+                                     v-loading="PanoramaInfo.bgenerateing"></div>
+                            </td>
+                            <td th:text="${row.userID}"></td>
+                            <td th:text="${row.time}"></td>
+                            <td th:text="${row.shippingAddress}"></td>
+                            <td th:text="${row.phone}"></td>
+                            <td th:text="${row.email}"></td>
+
+                            <td class="total" th:text="${row.total}"></td>
+                            <td>
+                                <form action="update_status">
+                                    <input
+                                        type="hidden" th:value="${row.orderID}"
+                                        name="txtOrderId"
+                                    />
+                                    <input
+                                        type="hidden"
+                                        th:id="${'status' + iter.index}" 
+                                        th:value="${row.statusID}"/>
+                                    <select th:id="${'select' + iter.index}" 
+                                            name="txtStatus"
+                                            onchange="this.form.submit()"
+                                            >
+                                        <option 
+                                            th:each="option: ${LIST_STATUS}"
+                                            th:value="${option.orderStatusID}"
+                                            th:text="${option.name}">
+                                        </option>
+                                    </select>
+                                </form>
+                            </td>
+                            <td>
+                                <a th:href="${'order_detail?orderID=' + row.orderID}">
+                                    See detail...
+                                </a>
+                            </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+                            <ul class="pagination" id="pagination">
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-md-10 text-center text-danger" th:unless="${LIST ne null}">
+                        <h2>Không tìm thấy kết quả!</h2>
+                    </div>
+                </div>
+            </main>
+            <input type="hidden" id="_month" th:value="${MONTH}"/>
+            <input type="hidden" id="_year" th:value="${YEAR}"/>
+        </div>
+        <script type="text/javascript" th:src="@{/js/admin.js}"></script>
+        <script src="/js/admin_navbar.js"></script>
+        <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+        <script src="/js/order_management.js"></script>
+    </body>
+</html>

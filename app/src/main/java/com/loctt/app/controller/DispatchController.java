@@ -8,10 +8,12 @@ import com.loctt.app.model.AuthenticationProvider;
 import com.loctt.app.model.CartObject;
 import com.loctt.app.model.CustomOAuth2User;
 import com.loctt.app.model.Employee;
+import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.model.ProductRecommendation;
 import com.loctt.app.model.User;
 import com.loctt.app.model.UserDetailsPrincipal;
+import com.loctt.app.service.IOrderStatusService;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.CartService;
 import com.loctt.app.service.impl.EmployeeService;
@@ -86,6 +88,8 @@ public class DispatchController {
     }
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private IOrderStatusService orderStatusService;
 
     @ModelAttribute
     public void commonAttr(Model model, HttpSession session) {
@@ -153,8 +157,12 @@ public class DispatchController {
     }
 
     @GetMapping("/showBill")
-    public String showBill(@RequestParam(name = "orderId", required = false) String orderId, Model model) {
-        model.addAttribute("orderId", orderId);
+    public String showBill(Model model){
+        List<PrimaryOrder> list = orderService.getAllOrderByStatus();
+        for (PrimaryOrder order : list) {
+            order.setStatus(orderStatusService.findById(order.getStatusID()).getName());
+        }
+        model.addAttribute("LIST", list);
         return "bill";
     }
 
@@ -210,13 +218,13 @@ public class DispatchController {
         }
 
         if (error) {
-            model.addAttribute("ErrorAuthorizedMessages", "Invalid username or password");
+            model.addAttribute("ErrorAuthorizedMessages", "Sai tên đăng nhập hoặc mật khẩu");
         }
         if (errorVerify) {
-            model.addAttribute("ErrorAuthorizedMessages", "Cannot verify email");
+            model.addAttribute("ErrorAuthorizedMessages", "Không thể xác minh email");
         }
         if(errorGoogleEmail){
-            model.addAttribute("ErrorAuthorizedMessages","Email is existed");
+            model.addAttribute("ErrorAuthorizedMessages","Email đã tồn tại");
         }
         return "login_form";
     }
@@ -259,13 +267,13 @@ public class DispatchController {
             @RequestParam(name = "emailVerify", required = false) String emailVerifyError,
             Model model) {
         if (usernameError != null) {
-            model.addAttribute("username_error", "Username is existed!!!");
+            model.addAttribute("username_error", "Tên người dùng đã tồn tại!!!");
         }
         if (emailError != null) {
-            model.addAttribute("email_error", "Email is existed!!!");
+            model.addAttribute("email_error", "Email đã tồn tại!!!");
         }
         if (emailVerifyError != null) {
-            model.addAttribute("email_error", "Email cannot verified!!!");
+            model.addAttribute("email_error", "Email không thể xác minh!!!");
         }
         return "register";
     }
@@ -313,7 +321,7 @@ public class DispatchController {
         //clear unused attribute
         session.removeAttribute("VerificationRightFlow");
         if (errorVerify) {
-            model.addAttribute("ErrorVerification", "Invalid Verification Code");
+            model.addAttribute("ErrorVerification", "Mã xác minh không hợp lệ");
         }
         return "verify_code_page";
     }
@@ -340,13 +348,13 @@ public class DispatchController {
 
     @PostMapping("/forgot_password/sendMail")
     public String sendMailForResetPwd(@RequestParam(name = "username") String username, Model model, HttpServletRequest request) {
-        if (username.isEmpty()) {
-            model.addAttribute("ErrorUsername", "Please enter valid username");
+        if (username.isEmpty() || userService.findByUsername(username) == null) {
+            model.addAttribute("ErrorUsername", "Vui lòng nhập tên người dùng hợp lệ");
             return "forgot_password_form";
         }
         if (employeeService.findByUsername(username) != null
                 || userService.findByUsername(username).getAuthenticationProvider() == AuthenticationProvider.GOOGLE) {
-            model.addAttribute("ErrorUsername", "Your account don't have permission to reset password");
+            model.addAttribute("ErrorUsername", "Tài khoản của bạn không có quyền đặt lại mật khẩu");
             return "forgot_password_form";
         }
         String token = RandomString.make(45);
@@ -357,12 +365,12 @@ public class DispatchController {
             //Send email
             String email = userService.findByUsername(username).getEmail();
             sendMailService().setUpResetPasswordEmail(email, resetPasswordLink, mailSender);
-            model.addAttribute("SuccessSendMail", "We sent an email with instruction to " + email.split("@")[0].substring(0, 4) + "*******@" + email.split("@")[1]);
+            model.addAttribute("SuccessSendMail", "Chúng tôi đã gửi một email có hướng dẫn tới " + email.split("@")[0].substring(0, 4) + "*******@" + email.split("@")[1]);
 
         } catch (IllegalArgumentException e) {
             model.addAttribute("ErrorUsername", e.getMessage());
         } catch (UnsupportedEncodingException | MessagingException e) {
-            model.addAttribute("ErrorUsername", "Error while sending Email");
+            model.addAttribute("ErrorUsername", "Lỗi khi gửi Email");
         }
         return "forgot_password_form";
     }
@@ -375,12 +383,12 @@ public class DispatchController {
     @GetMapping("/forgot_password/enterNewPwd")
     public String resetPasswordPage(@RequestParam(name = "token") String token, Model model) {
         if (token.isEmpty()) {
-            model.addAttribute("ErrorToken", "Invalid Token");
+            model.addAttribute("ErrorToken", "Mã không hợp lệ");
             return "reset_password_form";
         }
             User customer = userService.findByResetPasswordToken(token);
             if (customer == null) {
-                model.addAttribute("ErrorToken", "Invalid Token");
+                model.addAttribute("ErrorToken", "Mã không hợp lệ");
             }
             model.addAttribute("token", token);
             return "reset_password_form";
@@ -392,7 +400,7 @@ public class DispatchController {
         User customer = userService.findByResetPasswordToken(token);
         System.out.println(customer.getAddress());
         if (customer == null) {
-            model.addAttribute("ErrorToken", "Invalid Token");
+            model.addAttribute("ErrorToken", "Mã không hợp lệ");
             return "reset_password_form";
         }
         userService.updatePassword(customer, newPassword);

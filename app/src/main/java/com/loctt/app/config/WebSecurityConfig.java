@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -29,6 +30,11 @@ public class WebSecurityConfig {
     @Bean
     public OAuth2SuccessLogoutHandler oAuth2SuccessLogoutHandler() {
         return new OAuth2SuccessLogoutHandler();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
     }
 
     @Bean
@@ -65,7 +71,7 @@ public class WebSecurityConfig {
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .failureUrl("/login?error=true")
+                .failureHandler(authenticationFailureHandler()).permitAll()
                 .defaultSuccessUrl("/authorize", true);
 
         http.logout();
@@ -76,10 +82,14 @@ public class WebSecurityConfig {
                 .antMatchers("/login", "/", "/js/**", "/css/**",
                         "/product-detail", "/api/products/**",
                         "/showBill").permitAll()
-                .antMatchers("/register", "/addUser", "/forgot_password/**").anonymous()
+                .antMatchers("/register", "/addUser",
+                        "/forgot_password/**", "/verifyMail",
+                        "/registerMail").anonymous()
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
-                .antMatchers("/admin-page", "/admin/**", "/crawl", "/dashboard", "/admin-employee-page").hasRole("ADMIN")
+                .antMatchers("/admin-page", "/admin/**", "/crawl", 
+                        "/dashboard", "/admin-employee-page",
+                        "/paying/**").hasRole("ADMIN")
                 .antMatchers("/shipStaff", "/shipper_summary_order",
                         "api/order/**").hasRole("DELIVERY_MAN")
                 .antMatchers("/repoStaff", "api/order/**").hasRole("STORAGE_MAN")

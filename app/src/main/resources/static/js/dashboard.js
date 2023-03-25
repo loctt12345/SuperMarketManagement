@@ -67,11 +67,11 @@ function drawCharts(barCreated) {
         }).then(function (response) {
             response.json().then(data => {
                 var barCreated = google.visualization.arrayToDataTable([
-                    ['Week', 'Revenue'],
-                    ['Week 1', data[0]],
-                    ['Week 2', data[1]],
-                    ['Week 3', data[2]],
-                    ['Week 4', data[3]],
+                    ['Tuần', 'Doanh thu'],
+                    ['Tuần 1', data[0]],
+                    ['Tuần 2', data[1]],
+                    ['Tuần 3', data[2]],
+                    ['Tuần 4', data[3]],
                 ]);
                 barChartByMonth.draw(barCreated, barOptions);
 
@@ -96,19 +96,19 @@ function drawCharts(barCreated) {
         }).then(function (response) {
             response.json().then(data => {
                 var barCreated = google.visualization.arrayToDataTable([
-                    ['Month', 'Revenue'],
-                    ['Jan', data[0]],
-                    ['Feb', data[1]],
-                    ['Mar', data[2]],
-                    ['April', data[3]],
-                    ['May', data[4]],
-                    ['June', data[5]],
-                    ['July', data[6]],
-                    ['Aug', data[7]],
-                    ['Sep', data[8]],
-                    ['Oct', data[9]],
-                    ['Nov', data[10]],
-                    ['Dec', data[11]]
+                    ['Tháng', 'Doanh thu'],
+                    ['Tháng 1', data[0]],
+                    ['Tháng 2', data[1]],
+                    ['Tháng 3', data[2]],
+                    ['Tháng 4', data[3]],
+                    ['Tháng 5', data[4]],
+                    ['Tháng 6', data[5]],
+                    ['Tháng 7', data[6]],
+                    ['Tháng 8', data[7]],
+                    ['Tháng 9', data[8]],
+                    ['Tháng 10', data[9]],
+                    ['Tháng 11', data[10]],
+                    ['Tháng 12', data[11]]
                 ]);
                 barChartByYear.draw(barCreated, barOptions);
 

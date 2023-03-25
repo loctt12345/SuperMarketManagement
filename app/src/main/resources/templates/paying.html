@@ -6,7 +6,7 @@
     and open the template in the editor.-->
 
     <head>
-        <title>Paying</title>
+        <title>Thanh toán</title>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
@@ -25,7 +25,7 @@
             <header th:replace="header :: header"></header>
             <div class="row mt-3 tittle justify-content-center">
                 <h1 class="text">
-                    Payment
+                    Thanh toán
                 </h1>
             </div>
 
@@ -34,20 +34,20 @@
                     <div class="form-group">
                         <input type="email" class="form-control" 
                                required
-                               placeholder="Enter email" id="email" 
+                               placeholder="Nhập Email" id="email" 
                                name="userEmail">
                     </div>
 
                     <div class="form-group">
                         <input type="text" class="form-control" 
                                required
-                               placeholder="Enter address" id="address" name="userAddress">
+                               placeholder="Nhập địa chỉ" id="address" name="userAddress">
                     </div>
 
                     <div class="form-group">
                         <input type="text" 
                                class="form-control" 
-                               placeholder="Enter phone number" 
+                               placeholder="Nhập số điện thoại" 
                                id="phone" name="userPhone"
                                pattern="[0-9]{10}"
                                required>
@@ -65,19 +65,19 @@
 
                     <div class="row justify-content-center">
                         <h3 >
-                            Total price: <span id="totalPrice"></span>
+                            Tổng giá tiền: <span id="totalPrice"></span>
                             <br/>
                             <input type="hidden" id="total" name="price" value="" />
                         </h3>
                     </div>
 
                     <div class="btnSubmit row mt-3 justify-content-center">
-                        <button type="submit" class="btn btn-primary">Continue</button>
+                        <button type="submit" class="btn btn-primary">Thanh toán</button>
                     </div>
 
                     <div class="row mt-3 justify-content-center">
                         <a href="./showCart">
-                            Add more products to cart
+                            Thêm sản phẩm vào giỏ hàng
                         </a>
                     </div>
                 </form>

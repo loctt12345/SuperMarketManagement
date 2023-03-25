@@ -6,8 +6,10 @@
 package com.loctt.app.controller;
 
 import com.loctt.app.model.Employee;
+import com.loctt.app.model.PrimaryOrder;
 import com.loctt.app.model.ProductDetails;
 import com.loctt.app.service.IOrderService;
+import com.loctt.app.service.IOrderStatusService;
 import com.loctt.app.service.IProductRecommendationService;
 import com.loctt.app.service.impl.EmployeeService;
 import com.loctt.app.service.impl.OrderService;
@@ -49,12 +51,27 @@ public class AdminController {
     private IOrderService orderService;
     @Autowired
     private IProductRecommendationService productRecommendationService;
+    @Autowired
+    private IOrderStatusService orderStatusService;
 
     @GetMapping("/findProduct")
     public String findProducts(@RequestParam(required = false) Map<String, String> allParams, Model model) {
         List<ProductDetails> productDetails = new ArrayList<>();
         String searchBy = allParams.get("searchBy");
         String searchValue = allParams.get("searchValue");
+        String errorFields = allParams.get("ErrorFields");
+        String errorExisted = allParams.get("ErrorExisted");
+        if (errorFields != null) {
+            model.addAttribute("ErrorAction", "Vui lòng nhập giá trị hợp lệ!!!");
+        }
+        if (errorExisted != null) {
+            model.addAttribute("ErrorAction", "Sản phẩm đã tồn tại!!!");
+        }
+        if (searchBy.trim().isEmpty()) {
+            List<ProductDetails> listProduct = productService.findAll();
+            model.addAttribute("PRODUCTS_RESULT", listProduct);
+            return "products_management";
+        }
         if (searchBy != null && searchValue != null) {
             //search All Products by Category
             if (searchBy.equalsIgnoreCase("category") && this.productService.findByCategoryContaining(searchValue) != null) {
@@ -87,21 +104,40 @@ public class AdminController {
         String productCategory = allParams.get("category");
         String productImageLink = allParams.get("image");
         String sellPriceAsString = allParams.get("sellPrice");
-        if (productService.findByProductID(productID) != null) {
-            model.addAttribute("ErrorAction", "Product already have in storage");
-            return "products_management";
-        }
+        String lastSearchBy = allParams.get("lastSearchBy");
+        String lastSearchValue = allParams.get("lastSearchValue");
+
         for (String param : allParams.keySet()) {
             if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
-                model.addAttribute("ErrorAction", "Please enter valid values in fields");
-                return "products_management";
+                redirectAttributes.addAttribute("ErrorFields", true);
+//                if (lastSearchBy.trim().isEmpty()) {
+//                    return "redirect:/admin-page";
+//                }
+                redirectAttributes.addAttribute("searchBy", lastSearchBy);
+                redirectAttributes.addAttribute("searchValue", lastSearchValue);
+                return "redirect:/admin/findProduct";
             }
+        }
+        if (productService.findByProductID(productID) != null) {
+            redirectAttributes.addAttribute("ErrorExisted", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findProduct";
         }
         float productSellPrice = 0;
         try {
             productSellPrice = Float.parseFloat(sellPriceAsString);
         } catch (NumberFormatException ex) {
-            ex.printStackTrace();
+            redirectAttributes.addAttribute("ErrorFields", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findProduct";
         }
         ProductDetails newProduct = new ProductDetails(productID, productName, productDes, productCategory, productSellPrice, productImageLink);
         newProduct.setStatus(true);
@@ -115,6 +151,9 @@ public class AdminController {
     public String updateProduct(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
         String productID = allParams.get("productID");
         String productName = allParams.get("productName");
+        String lastSearchValue = allParams.get("lastSearchValue");
+        String lastSearchBy = allParams.get("lastSearchBy");
+
         if (productName.trim().isEmpty()) {
             productName = productService.findByProductID(productID).getName();
         }
@@ -126,7 +165,13 @@ public class AdminController {
             try {
                 sellPrice = Float.parseFloat(sellPriceAsString);
             } catch (NumberFormatException ex) {
-                ex.printStackTrace();
+                redirectAttributes.addAttribute("ErrorFields", true);
+//                if (lastSearchBy.trim().isEmpty()) {
+//                    return "redirect:/admin-page";
+//                }
+                redirectAttributes.addAttribute("searchBy", lastSearchBy);
+                redirectAttributes.addAttribute("searchValue", lastSearchValue);
+                return "redirect:/admin/findProduct";
             }
         }
         ProductDetails updateProduct = new ProductDetails();
@@ -138,8 +183,6 @@ public class AdminController {
         updateProduct.setSellprice(sellPrice);
         updateProduct.setStatus(true);
         productService.save(updateProduct);
-        String lastSearchValue = allParams.get("lastSearchValue");
-        String lastSearchBy = allParams.get("lastSearchBy");
         if (lastSearchBy.isEmpty() || lastSearchValue.isEmpty()) {
             return "redirect:/admin-page";
         } else {
@@ -173,6 +216,19 @@ public class AdminController {
         List<Employee> employeeList = new ArrayList<>();
         String searchBy = allParams.get("searchBy");
         String searchValue = allParams.get("searchValue");
+        String errorFields = allParams.get("ErrorFields");
+        String errorExisted = allParams.get("ErrorExisted");
+        if (errorFields != null) {
+            model.addAttribute("ErrorAction", "Vui lòng nhập giá trị hợp lệ!!!");
+        }
+        if (errorExisted != null) {
+            model.addAttribute("ErrorAction", "ID Nhân viên đã tồn tại!!!");
+        }
+        if (searchBy.trim().isEmpty()) {
+            List<Employee> listEmployee = employeeService.findAllForSearch();
+            model.addAttribute("EMPLOYEES_RESULT", listEmployee);
+            return "employee_management";
+        }
         if (searchBy != null && searchValue != null) {
             //search All Products by Category
             if (searchBy.equalsIgnoreCase("id")) {
@@ -209,14 +265,21 @@ public class AdminController {
         String employeeAddress = allParams.get("address");
         String employeeSalaryAsString = allParams.get("salary");
         String username = allParams.get("username");
+        String lastSearchBy = allParams.get("lastSearchBy");
+        String lastSearchValue = allParams.get("lastSearchValue");
         if (employeeService.findByUsername(username) != null) {
-            model.addAttribute("ErrorAction", "Username is existed");
-            return "employee_management";
+            redirectAttributes.addAttribute("ErrorExisted", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-employee-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findEmployee";
         }
         for (String param : allParams.keySet()) {
             if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
-                System.out.println(param);
-                model.addAttribute("ErrorAction", "Please enter valid values in fields");
+                //System.out.println(param);
+                model.addAttribute("ErrorFields", true);
                 return "employee_management";
             }
         }
@@ -224,7 +287,13 @@ public class AdminController {
         try {
             employeeSalary = Float.parseFloat(employeeSalaryAsString);
         } catch (NumberFormatException ex) {
-            ex.printStackTrace();
+            redirectAttributes.addAttribute("ErrorFields", true);
+//            if (lastSearchBy.trim().isEmpty()) {
+//                return "redirect:/admin-employee-page";
+//            }
+            redirectAttributes.addAttribute("searchBy", lastSearchBy);
+            redirectAttributes.addAttribute("searchValue", lastSearchValue);
+            return "redirect:/admin/findEmployee";
         }
         employeeService.createNewEmployee(username, employeeRole, employeeName, employeePhone, employeeMail, employeeAddress, employeeSalary);
         redirectAttributes.addAttribute("searchBy", "id");
@@ -233,7 +302,9 @@ public class AdminController {
     }
 
     @PostMapping("/update-employee")
-    public String updateEmployee(@RequestParam Map<String, String> allParams, RedirectAttributes redirectAttributes) {
+    public String updateEmployee(@RequestParam Map<String, String> allParams,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         String employeeRole = allParams.get("role");
         String employeeSalaryAsString = allParams.get("salary");
         String employeeID = allParams.get("employeeID");
@@ -242,19 +313,36 @@ public class AdminController {
         String employeeMail = allParams.get("email");
         String employeeAddress = allParams.get("address");
         String username = allParams.get("username");
+        String lastSearchValue = allParams.get("lastSearchValue");
+        String lastSearchBy = allParams.get("lastSearchBy");
         float employeeSalary = 0;
+        for (String param : allParams.keySet()) {
+            if (allParams.get(param).trim().isEmpty() && !param.equalsIgnoreCase("lastSearchValue") && !param.equalsIgnoreCase("lastSearchBy")) {
+                //System.out.println(param);
+                model.addAttribute("ErrorFields", true);
+                return "employee_management";
+            }
+        }
+
         if (employeeSalaryAsString.trim().isEmpty()) {
             employeeSalary = employeeService.findByEmployeeID(employeeID).getSalary();
         } else {
             try {
                 employeeSalary = Float.parseFloat(employeeSalaryAsString);
             } catch (NumberFormatException ex) {
-                ex.printStackTrace();
+                redirectAttributes.addAttribute("ErrorFields", true);
+//                if (lastSearchBy.trim().isEmpty()) {
+//                    return "redirect:/admin-employee-page";
+//                }
+                redirectAttributes.addAttribute("searchBy", lastSearchBy);
+                redirectAttributes.addAttribute("searchValue", lastSearchValue);
+                return "redirect:/admin/findEmployee";
             }
         }
-        employeeService.updateEmployeeByAdmin(employeeID, employeeRole, employeeSalary);
-        String lastSearchValue = allParams.get("lastSearchValue");
-        String lastSearchBy = allParams.get("lastSearchBy");
+
+        employeeService
+                .updateEmployeeByAdmin(employeeID, username, employeeRole, employeeName, employeePhone, employeeMail, employeeAddress, employeeSalary);
+
         if (lastSearchBy.trim().isEmpty() || lastSearchValue.trim().isEmpty()) {
             return "redirect:/admin-employee-page";
         } else {
@@ -330,5 +418,43 @@ public class AdminController {
         model.addAttribute("LIST", productRecommendationService.getAll());
         return "product_recommendation";
     }
+
+    @GetMapping("/order_management")
+    public String showOrder(Model model) {
+        List<PrimaryOrder> list = orderService.getAllOrderByStatus();
+        for (PrimaryOrder order : list) {
+            order.setStatus(orderStatusService.findById(order.getStatusID()).getName());
+        }
+        model.addAttribute("LIST", list);
+        model.addAttribute("LIST_STATUS", orderStatusService.findAll());
+        return "order_management";
+    }
+
+    @GetMapping("/order_detail")
+    public String showOrderDetail(
+            @RequestParam(value = "orderID") String orderID,
+            Model model) {
+        PrimaryOrder order = orderService.findByOrderID(orderID);
+        if (order != null) {
+            Map<ProductDetails, Integer> listProduct = orderService.getListProduct(orderID);
+            float total = 0;
+            for (Map.Entry<ProductDetails, Integer> product : listProduct.entrySet()) {
+                total += (float) product.getValue() * product.getKey().getSellprice();
+            }
+            model.addAttribute("PRODUCTS_IN_ORDER", listProduct);
+            model.addAttribute("TotalOfOrder", total);
+            model.addAttribute("order", order);
+        }
+        return "admin_order_detail";
+    }
     
+    @GetMapping("/update_status")
+    public String updateStatus(
+            @RequestParam(value = "txtOrderId") String orderID,
+            @RequestParam(value = "txtStatus") int statusID
+    ) {
+        orderService.updateOrderStatus(orderID, statusID);
+        return "redirect:/admin/order_management";
+    }
+
 }

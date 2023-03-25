@@ -38,7 +38,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User customer = userService.findByUsername(username);
         if(customer != null && customer.getAuthenticationProvider() == AuthenticationProvider.GOOGLE){
-            throw new UsernameNotFoundException("User not found: " + customer);
+            throw new UsernameNotFoundException("Không tìm thấy người dùng: " + customer);
         }
         Employee employee = employeeService.findByUsername(username);
         //Check valid user
@@ -49,7 +49,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
         }
         //Check if user not verified
         if(customer != null && !customer.getStatus()){
-            throw new UsernameNotFoundException("User not verified!!!");
+            throw new UsernameNotFoundException("Người dùng chưa được xác minh!!!");
         }
         //Check valid employee
         if (employee != null && employee.isStatus()) {
@@ -59,7 +59,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
             //System.out.println(user.getAuthorities().toString());
             return user;
         } else {
-            throw new UsernameNotFoundException("User not found!!!");
+            throw new UsernameNotFoundException("Không tìm thấy người dùng!!!");
         }
     }
 
