@@ -32,7 +32,11 @@ function action() {
         },
         body: JSON.stringify({"txtOrderId" : x, "txtStatus" : "3"})
     }).then((response) => {
-        $('#success').modal('show');
+        if (response.status === 400) {
+            $('#failure').modal('show');
+        }
+        else 
+            $('#success').modal('show');
     });
 }
 

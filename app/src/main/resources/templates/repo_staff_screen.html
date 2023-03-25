@@ -64,6 +64,31 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="modal fade mt-5" id="failure">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title text text-danger">Lỗi</h4>
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            Gói hàng của bạn đã được đóng gói trước đó!
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info" id="reload">Ok</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
             <header th:replace="header :: header"></header>
             <!--Content-->
             <div class="content" id="content">
