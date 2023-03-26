@@ -130,12 +130,13 @@ public class UserController {
             User userUpdated = userService.findUserByID(userId);
             if (userUpdated != null
                     && (userService.findByEmailAndStatusTrue(email) == null || email.trim().equalsIgnoreCase(userUpdated.getEmail()))) {
-                userUpdated.setFullName(fullName);
-                userUpdated.setAddress(address);
-                userUpdated.setEmail(email);
+                
                 if (!email.trim().equalsIgnoreCase(userUpdated.getEmail())) {
                     userUpdated.setStatus(false);
                 }
+                userUpdated.setFullName(fullName);
+                userUpdated.setAddress(address);
+                userUpdated.setEmail(email);
                 userUpdated.setPhone(phone);
 
                 userService.updateProfile(userUpdated);
