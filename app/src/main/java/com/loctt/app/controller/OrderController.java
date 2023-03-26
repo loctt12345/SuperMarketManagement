@@ -127,7 +127,7 @@ public class OrderController {
                     // if user login with Gmail
                     String gmail = ((CustomOAuth2User) authentication.getPrincipal())
                             .getEmail();
-                    userId = userService.findByEmail(gmail).getUserID();
+                    userId = userService.findByEmailAndStatusTrue(gmail).getUserID();
                 } else {
                     userId = ((UserDetailsPrincipal) authentication.getPrincipal())
                             .getUser().getUserID();
@@ -159,7 +159,7 @@ public class OrderController {
             // if user login with Gmail
             String gmail = ((CustomOAuth2User) authentication.getPrincipal())
                     .getEmail();
-            userId = userService.findByEmail(gmail).getUserID();
+            userId = userService.findByEmailAndStatusTrue(gmail).getUserID();
         } else {
             userId = ((UserDetailsPrincipal) authentication.getPrincipal())
                     .getUser().getUserID();

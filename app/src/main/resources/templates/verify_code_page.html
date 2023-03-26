@@ -16,20 +16,20 @@
     <script src="https://kit.fontawesome.com/2e0789eef1.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" th:href="@{/css/login_form.css}">
     <link rel="stylesheet" href="css/hder-fter.css" />
-    <title>Email Verification</title>
+    <title>Xác minh Email</title>
 </head>
 
 <body>
     <div class="text-center">
         <div class="card text-center mx-auto mt-5" style="width: 300px;">
-            <div class="card-header h5 text-dark" style="background-color: #8EFFAB;">Verify Email</div>
+            <div class="card-header h5 text-dark" style="background-color: #8EFFAB;">Xác minh Email</div>
             <div class="card-body px-3">
                 <p class="card-text py-2">
-                    Enter the code that you received in your email
+                    Hãy nhập mã xác minh bạn nhận được tại email!
                 </p>
                 <form th:action="@{/registerMail}" method="post" class="p-0 border-0">
                     <div class="form-outline">
-                        <input type="text" name="verification_code" class="form-control my-3" placeholder="Enter your code" />
+                        <input type="text" name="verification_code" class="form-control my-3" placeholder="Nhập mã xác minh" />
                     </div>
                     <div class="d-flex justify-content-between
                                  align-items-center mb-2">
@@ -37,7 +37,7 @@
                             <span th:text="${ErrorVerification}" class="text-danger"></span>
                         </div>
                     </div>
-                    <button type="submit" class="btn w-100 h6 text-dark" style="background-color: #8EFFAB;">Confirm Email</button>
+                    <button type="submit" class="btn w-100 h6 text-dark" style="background-color: #8EFFAB;">Xác minh Email</button>
                 </form>
             </div>
         </div>

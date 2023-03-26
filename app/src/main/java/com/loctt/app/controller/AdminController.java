@@ -420,12 +420,24 @@ public class AdminController {
     }
 
     @GetMapping("/order_management")
-    public String showOrder(Model model) {
+    public String showOrder(Model model, @RequestParam(name = "page") int page) {
         List<PrimaryOrder> list = orderService.getAllOrderByStatus();
-        for (PrimaryOrder order : list) {
-            order.setStatus(orderStatusService.findById(order.getStatusID()).getName());
+        int maxResult = 10;
+        int fromItemIndex = (page - 1) * maxResult + 1;
+        int maxItemIndex = fromItemIndex + maxResult - 1;
+        int totalPage = list.size() / maxResult + 1;
+        if (list.size() % maxResult == 0) {
+            totalPage--;
         }
-        model.addAttribute("LIST", list);
+        List<PrimaryOrder> resultList = new ArrayList<>();
+        for (int i = fromItemIndex; i <= maxItemIndex; i++) {
+            list.get(i).setStatus(orderStatusService.findById(list.get(i).getStatusID()).getName());
+            resultList.add(list.get(i));
+            
+        }
+        model.addAttribute("PAGE_NUM", page);
+        model.addAttribute("ORDERS_NUMBER", totalPage);
+        model.addAttribute("LIST", resultList);
         model.addAttribute("LIST_STATUS", orderStatusService.findAll());
         return "order_management";
     }
@@ -447,7 +459,7 @@ public class AdminController {
         }
         return "admin_order_detail";
     }
-    
+
     @GetMapping("/update_status")
     public String updateStatus(
             @RequestParam(value = "txtOrderId") String orderID,

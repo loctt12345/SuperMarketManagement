@@ -18,6 +18,7 @@ public interface IUserRepository extends JpaRepository<User, String>{
     User findByUserIDAndStatus(String userID, boolean Status);
     User findByUsername(String username);
     User findByEmailAndStatus(String email, boolean Status);
+    User findByEmail(String email);
     User findByResetPasswordTokenAndStatus(String token, boolean Status);
     User findByVerificationCode(String verificationCode);
 }

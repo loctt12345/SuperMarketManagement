@@ -68,6 +68,9 @@
                                            type="email" th:value="${USER.email}">
                                 </div>
                             </div>
+                            <div th:if="${ErrorEmail ne null}">
+                                <span th:text="${ErrorEmail}" class="text-danger"></span>
+                            </div>
                         </div>
 
                         <div th:if="${#authentication.Principal.toString().contains('CustomOAuth2User')}">

@@ -36,13 +36,17 @@ public class UserController {
     @GetMapping("/user/profile")
     public String showProfile(Authentication authentication,
             Model model,
-            HttpServletRequest request) {
+            HttpServletRequest request,
+            @RequestParam(name = "errorEmail", required = false) String errorEmail) {
         String userId = "";
+        if(errorEmail != null){
+            model.addAttribute("ErrorEmail","Email đã tồn tại!!!");
+        }
         if (authentication.getPrincipal() instanceof CustomOAuth2User) {
             // if user login with Gmail
             String gmail = ((CustomOAuth2User) authentication.getPrincipal())
                     .getEmail();
-            userId = userService.findByEmail(gmail).getUserID();
+            userId = userService.findByEmailAndStatusTrue(gmail).getUserID();
             model.addAttribute("USER", userService.findUserByID(userId));
         } else if (authentication.getPrincipal() instanceof UserDetailsPrincipal) {
             if (request.isUserInRole("ROLE_USER")) {
@@ -112,7 +116,7 @@ public class UserController {
             // if user login with Gmail
             String gmail = ((CustomOAuth2User) authentication.getPrincipal())
                     .getEmail();
-            userId = userService.findByEmail(gmail).getUserID();
+            userId = userService.findByEmailAndStatusTrue(gmail).getUserID();
             User userUpdated = userService.findUserByID(userId);
             if (userUpdated != null) {
                 userUpdated.setAddress(address);
@@ -124,7 +128,7 @@ public class UserController {
             userId = ((UserDetailsPrincipal) authentication.getPrincipal())
                     .getUser().getUserID();
             User userUpdated = userService.findUserByID(userId);
-            if (userUpdated != null) {
+            if (userUpdated != null && userService.findByEmailAndStatusTrue(email) == null) {
                 userUpdated.setFullName(fullName);
                 userUpdated.setAddress(address);
                 userUpdated.setEmail(email);
@@ -132,6 +136,9 @@ public class UserController {
                 userUpdated.setPhone(phone);
 
                 userService.updateProfile(userUpdated);
+            }
+            else{
+                return "redirect:/user/profile?errorEmail";
             }
         }
 

@@ -45,7 +45,7 @@ public class UserService implements IUserService {
     }
     
     @Override
-    public User findByEmail(String email) {
+    public User findByEmailAndStatusTrue(String email) {
         return userRepository.findByEmailAndStatus(email, true);
     }
     
@@ -95,5 +95,10 @@ public class UserService implements IUserService {
     @Override
     public void updateUser(User user) {
         userRepository.save(user);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
