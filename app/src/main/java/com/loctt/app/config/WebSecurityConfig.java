@@ -88,8 +88,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/cart/**", "/showCart",
                         "/showPaying", "/paying/**").hasRole("USER")
                 .antMatchers("/admin-page", "/admin/**", "/crawl", 
-                        "/dashboard", "/admin-employee-page",
-                        "/paying/**").hasRole("ADMIN")
+                        "/dashboard", "/admin-employee-page").hasRole("ADMIN")
                 .antMatchers("/shipStaff", "/shipper_summary_order",
                         "api/order/**").hasRole("DELIVERY_MAN")
                 .antMatchers("/repoStaff", "api/order/**").hasRole("STORAGE_MAN")
