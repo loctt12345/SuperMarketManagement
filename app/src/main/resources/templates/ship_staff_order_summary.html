@@ -51,7 +51,7 @@ and open the template in the editor.
                             </tr>
                             <tr>
                                     <td>Tổng:</td>
-                                    <td th:text="${order.total}"></td>
+                                    <td th:text="${#numbers.formatDecimal(order.total,3,'POINT',0,'COMMA')}"></td>
                             </tr>
                             <tr>
                                 <td>ID Khách hàng:</td>

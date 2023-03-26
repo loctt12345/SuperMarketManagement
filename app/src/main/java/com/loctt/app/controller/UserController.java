@@ -39,8 +39,8 @@ public class UserController {
             HttpServletRequest request,
             @RequestParam(name = "errorEmail", required = false) String errorEmail) {
         String userId = "";
-        if(errorEmail != null){
-            model.addAttribute("ErrorEmail","Email đã tồn tại!!!");
+        if (errorEmail != null) {
+            model.addAttribute("ErrorEmail", "Email đã tồn tại!!!");
         }
         if (authentication.getPrincipal() instanceof CustomOAuth2User) {
             // if user login with Gmail
@@ -128,16 +128,18 @@ public class UserController {
             userId = ((UserDetailsPrincipal) authentication.getPrincipal())
                     .getUser().getUserID();
             User userUpdated = userService.findUserByID(userId);
-            if (userUpdated != null && userService.findByEmailAndStatusTrue(email) == null) {
+            if (userUpdated != null
+                    && (userService.findByEmailAndStatusTrue(email) == null || email.trim().equalsIgnoreCase(userUpdated.getEmail()))) {
                 userUpdated.setFullName(fullName);
                 userUpdated.setAddress(address);
                 userUpdated.setEmail(email);
-                userUpdated.setStatus(false);
+                if (!email.trim().equalsIgnoreCase(userUpdated.getEmail())) {
+                    userUpdated.setStatus(false);
+                }
                 userUpdated.setPhone(phone);
 
                 userService.updateProfile(userUpdated);
-            }
-            else{
+            } else {
                 return "redirect:/user/profile?errorEmail";
             }
         }
