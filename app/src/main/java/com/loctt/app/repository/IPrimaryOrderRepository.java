@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPrimaryOrderRepository extends JpaRepository<PrimaryOrder, String> {
     
-    List<PrimaryOrder> findAllByOrderByStatusID();
+    List<PrimaryOrder> findAllByOrderByStatusIDAscTimeDesc();
     
     PrimaryOrder findByOrderID(String orderID);
 

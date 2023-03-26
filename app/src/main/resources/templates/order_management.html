@@ -43,10 +43,13 @@ and open the template in the editor.
                             </thead>
                             <tbody>
                             <input type='hidden' th:value='${LIST.size}' id='size'/>
-                            <tr class="product-row" th:each="row, iter : ${LIST}">
+                            <tr class="product-row" 
+                                th:each="row, iter : ${LIST}"
+                                style="display : none"
+                            >
                             <input th:id="${'id' + iter.index}" 
                                    type="hidden" th:value="${row.orderID}"/>
-                            <td class="qr">
+                            <td class="qr"> 
                                 <div th:id="${'orderid' + iter.index}"
                                      v-loading="PanoramaInfo.bgenerateing"></div>
                             </td>
@@ -62,7 +65,7 @@ and open the template in the editor.
                                     <input
                                         type="hidden" th:value="${row.orderID}"
                                         name="txtOrderId"
-                                    />
+                                        />
                                     <input
                                         type="hidden"
                                         th:id="${'status' + iter.index}" 
@@ -102,7 +105,7 @@ and open the template in the editor.
             <input type="hidden" id="numOrders" th:value="${ORDERS_NUMBER}"/>
             <input type="hidden" id="pageNum" th:value="${PAGE_NUM}"/>
         </div>
-        <script type="text/javascript" src="https://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+        <script type="text/javascript" src="/js/qrlib.js"></script>
         <script src="/js/order_management.js"></script>
         <script th:src="@{/js/pagination.js}"></script>
         <script src="/js/admin_navbar.js"></script>

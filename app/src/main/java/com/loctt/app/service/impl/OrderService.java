@@ -222,6 +222,6 @@ public class OrderService implements IOrderService {
     
     @Override
     public List<PrimaryOrder> getAllOrderByStatus() {
-        return primaryOrderRepository.findAllByOrderByStatusID();
+        return primaryOrderRepository.findAllByOrderByStatusIDAscTimeDesc();
     }
 }

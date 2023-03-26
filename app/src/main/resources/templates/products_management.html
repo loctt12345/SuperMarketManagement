@@ -139,7 +139,9 @@
 
                             <tbody>
 
-                                <tr class="product-row" th:each="product : ${PRODUCTS_RESULT}">
+                                <tr class="product-row"
+                                    th:each="product : ${PRODUCTS_RESULT}"
+                                    style="display : none">
                                     <td th:text="${product.productID}"></td>
                                     <td><img class="rounded img-fluid product-img" th:src="@{${product.imageLink}}"
                                              alt="product image" /></td>

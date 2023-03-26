@@ -420,24 +420,25 @@ public class AdminController {
     }
 
     @GetMapping("/order_management")
-    public String showOrder(Model model, @RequestParam(name = "page") int page) {
+    public String showOrder(Model model /*,@RequestParam(name = "page", 
+            defaultValue = "1", required = false) int page*/) {
         List<PrimaryOrder> list = orderService.getAllOrderByStatus();
-        int maxResult = 10;
-        int fromItemIndex = (page - 1) * maxResult + 1;
-        int maxItemIndex = fromItemIndex + maxResult - 1;
-        int totalPage = list.size() / maxResult + 1;
-        if (list.size() % maxResult == 0) {
-            totalPage--;
-        }
-        List<PrimaryOrder> resultList = new ArrayList<>();
-        for (int i = fromItemIndex; i <= maxItemIndex; i++) {
-            list.get(i).setStatus(orderStatusService.findById(list.get(i).getStatusID()).getName());
-            resultList.add(list.get(i));
-            
-        }
-        model.addAttribute("PAGE_NUM", page);
-        model.addAttribute("ORDERS_NUMBER", totalPage);
-        model.addAttribute("LIST", resultList);
+//        int maxResult = 10;
+//        int fromItemIndex = (page - 1) * maxResult;
+//        int maxItemIndex = Math.min(fromItemIndex + maxResult - 1, list.size() - 1);
+//        int totalPage = list.size() / maxResult + 1;
+//        if (list.size() % maxResult == 0) {
+//            totalPage--;
+//        }
+//        List<PrimaryOrder> resultList = new ArrayList<>();
+//        for (int i = fromItemIndex; i <= maxItemIndex; i++) {
+//            list.get(i).setStatus(orderStatusService.findById(list.get(i).getStatusID()).getName());
+//            resultList.add(list.get(i));
+//        }
+//        model.addAttribute("PAGE_NUM", page);
+//        model.addAttribute("ORDERS_NUMBER", totalPage);
+//        model.addAttribute("LIST", resultList);
+        model.addAttribute("LIST", list);
         model.addAttribute("LIST_STATUS", orderStatusService.findAll());
         return "order_management";
     }

@@ -9,53 +9,89 @@
 var totalPage = parseInt(document.getElementById('numOrders').value);
 
 var currentPage = parseInt(document.getElementById('pageNum').value);
-$(document).ready(function () {
-    console.log("ready!");
 
-    window.onload = function ()
-    {
-        var size = parseInt(document.getElementById('size').value);
 
-        for (var i = 0; i < size; ++i) {
-            var x = document.getElementById('id' + i).value;
-            let qrcode = new QRCode(document.getElementById("orderid" + i),
-                    {
-                        text: x,
-                        width: 100,
-                        height: 100,
-                        colorDark: "#000000",
-                        colorLight: "#ffffff",
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-            document.getElementById('select' + i).value
-                    = document.getElementById('status' + i).value;
+window.onload = function ()
+{
+    var items = document.getElementsByClassName('product-row');
+    for (var i = 0; i < items.length; i++) {
+        if (i >= 0 && i < 6) {
+            items[i].style.display = 'table-row';
+        } else {
+            items[i].style.display = 'none';
         }
-
-        let totals = document.getElementsByClassName('total');
-        for (var i = 0; i < totals.length; ++i) {
-            var total = parseFloat(totals[i].innerHTML);
-            totals[i].innerHTML = total.toLocaleString('de-DE',
-                    {style: 'currency', currency: 'VND'});
-        }
-        document.getElementsByClassName('page-item')[0].className = 'page-item';
-        document.getElementsByClassName('page-item')[currentPage - 1].className = 'page-item active';
     }
-});
-var pagingCount = 0;
+
+
+
+//    let totals = document.getElementsByClassName('total');
+//    for (var i = 0; i < 6; ++i) {
+//        var total = parseFloat(totals[i].innerHTML);
+//        totals[i].innerHTML = total.toLocaleString('de-DE',
+//                {style: 'currency', currency: 'VND'});
+//    }
+//
+//    for (var i = 0; i < 6; ++i)
+//        document.getElementById('select' + i).value
+//                = document.getElementById('status' + i).value;
+//
+//    for (var i = 0; i < 6; ++i) {
+//        var x = document.getElementById('id' + i).value;
+//        let qrcode = new QRCode(document.getElementById("orderid" + i),
+//                {
+//                    text: x,
+//                    width: 100,
+//                    height: 100,
+//                    colorDark: "#000000",
+//                    colorLight: "#ffffff",
+//                    correctLevel: QRCode.CorrectLevel.H
+//                });
+//    }
+};
+
+let items = document.getElementsByClassName('product-row');
+let numPage = Math.floor(items.length / 6) + 1;
+var arrPage = [];
+
 $(function () {
     window.pagObj = $('#pagination').twbsPagination({
-        totalPages: totalPage,
+        totalPages: numPage,
         visiblePages: 10,
         onPageClick: function (event, page) {
-            console.log(event);
-            if (pagingCount !== 0) {
-                location.href =
-                        "/admin/order_management?page="
-                        + page;
-
-            } else {
+            
+            for (let i = 0; i < items.length; i++) {
+                if (i < (6 * (page - 1)) || i >= (6 * page)) {
+                    items[i].style.display = 'none';
+                } else {
+                    items[i].style.display = 'table-row';
+                }
             }
-            pagingCount++;
+            
+            if (arrPage.includes(page)) return;
+            arrPage.push(page);
+            let totals = document.getElementsByClassName('total');
+            for (var i = 6 * (page - 1); i < Math.min(6 * (page - 1) + 6, totals.length); ++i) {
+                var total = parseFloat(totals[i].innerHTML);
+                totals[i].innerHTML = total.toLocaleString('de-DE',
+                        {style: 'currency', currency: 'VND'});
+            }
+
+            for (var i = 6 * (page - 1); i < Math.min(6 * (page - 1) + 6, totals.length); ++i)
+                document.getElementById('select' + i).value
+                        = document.getElementById('status' + i).value;
+
+            for (var i = 6 * (page - 1); i < Math.min(6 * (page - 1) + 6, totals.length); ++i) {
+                var x = document.getElementById('id' + i).value;
+                let qrcode = new QRCode(document.getElementById("orderid" + i),
+                        {
+                            text: x,
+                            width: 100,
+                            height: 100,
+                            colorDark: "#000000",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H
+                        });
+            }
         }
     });
 });
