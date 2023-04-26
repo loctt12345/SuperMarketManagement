@@ -24,6 +24,7 @@
   </img> &nbsp;&nbsp; <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/admin_dashboard_profit.png" alt="Dashboard profit" width="25%"></img> &nbsp;&nbsp;
   <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/admin_order_management.png" alt="Order Management" width="25%"></img> &nbsp;&nbsp;
 </div>
+
 **2. Mobile view for customer**
 <div align="center">
   <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/login.png" alt="Login Page" width="25%">
@@ -31,6 +32,7 @@
   <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/product_details.png" alt="Product Detail" width="25%"></img> &nbsp;&nbsp;
   <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/cart.png" alt="Cart" width="25%"></img> &nbsp;&nbsp;
 </div>
+
 **3. Mobile view for employees**
 <div align="center">
   <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/shipper_home_scanner.png" alt="shipper home scanner" width="25%"></img> &nbsp;&nbsp; <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/storage_home_scanner.png" alt="storage man home scanner" width="25%"></img> &nbsp;&nbsp;
