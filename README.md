@@ -18,17 +18,23 @@
 
 ## Preview Screenshot
 
-<!-- **1. Website for admin and manager**
-
-**2. Android mobile application for customer**
+**1. Website for admininistrator**
 <div align="center">
-  <img src="https://raw.githubusercontent.com/fptu-team-404-not-found/co_tam_houseworker_mobile/main/document/imgs/customer_mobile_login.png" alt="Customer Mobile Login" width="25%"></img> &nbsp;&nbsp; <img src="https://raw.githubusercontent.com/fptu-team-404-not-found/co_tam_houseworker_mobile/main/document/imgs/customer_mobile_home.png" alt="Customer Mobile Home" width="25%"></img> &nbsp;&nbsp; <img src="https://raw.githubusercontent.com/fptu-team-404-not-found/co_tam_houseworker_mobile/main/document/imgs/customer_mobile_order_history.png" alt="Customer Mobile Order History" width="25%"></img> &nbsp;&nbsp; <img src="https://raw.githubusercontent.com/fptu-team-404-not-found/co_tam_houseworker_mobile/main/document/imgs/customer_mobile_order_rating.png" alt="Customer Mobile Order Rating" width="25%"></img>
+  <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/admin_management.png" alt="Homepage products management" width="25%">
+  </img> &nbsp;&nbsp; <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/admin_dashboard_profit.png" alt="Dashboard profit" width="25%"></img> &nbsp;&nbsp;
+  <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/admin_order_management.png" alt="Order Management" width="25%"></img> &nbsp;&nbsp;
 </div>
-
-**3. Android mobile application for houseworker**
+**2. Mobile view for customer**
 <div align="center">
-  <img src="https://raw.githubusercontent.com/fptu-team-404-not-found/co_tam_houseworker_mobile/main/document/imgs/houseworker_mobile_login.png" alt="Houseworker Mobile Login" width="25%"></img> &nbsp;&nbsp; <img src="https://raw.githubusercontent.com/fptu-team-404-not-found/co_tam_houseworker_mobile/main/document/imgs/houseworker_mobile_home.png" alt="Houseworker Mobile Home" width="25%"></img> &nbsp;&nbsp; <img src="https://raw.githubusercontent.com/fptu-team-404-not-found/co_tam_houseworker_mobile/main/document/imgs/houseworker_mobile_order_receiving.png" alt="Houseworker Mobile Order Receiving" width="25%"></img> 
-</div> -->
+  <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/login.png" alt="Login Page" width="25%">
+  </img> &nbsp;&nbsp; <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/customer_home.png" alt="Home" width="25%"></img> &nbsp;&nbsp;
+  <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/product_details.png" alt="Product Detail" width="25%"></img> &nbsp;&nbsp;
+  <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/cart.png" alt="Cart" width="25%"></img> &nbsp;&nbsp;
+</div>
+**3. Mobile view for employees**
+<div align="center">
+  <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/shipper_home_scanner.png" alt="shipper home scanner" width="25%"></img> &nbsp;&nbsp; <img src="https://github.com/loctt12345/SuperMarketManagement/blob/main/document/image/storage_home_scanner.png" alt="storage man home scanner" width="25%"></img> &nbsp;&nbsp;
+</div>
   
 ## Technology
 **1. Frontend**
@@ -56,7 +62,7 @@
   - Microsoft SQL Server Management Studio 19
 
 ## Functional requirements
-:point_right: [Check out here for more details]()
+:point_right: [Check out here for more details](https://github.com/loctt12345/SuperMarketManagement/blob/main/document/2023.Spring_Supermarket%20Management.docx)
 
 **1. Customer:**
 - Manage cart:
@@ -86,7 +92,7 @@
 
 
 ## Useful Resources
-[Database Script]()
+[Database Script](https://github.com/loctt12345/SuperMarketManagement/blob/main/document/SuperMarket.sql)
 
 ## Contributors
 **1. Mentors:**
